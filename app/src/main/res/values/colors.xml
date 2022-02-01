@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="first">#F0F4F4</color>
+    <color name="second">#FF4D3C</color>
+    <color name="third">#ADADAD</color>
+    <color name="fourth">#181725</color>
+    <color name="fifth">#FFECD1</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_color">#4C4F4D</color>
+    <color name="text_filed">#F2F3F2</color>
+    <color name="red">#D80032</color>
+    <color name="disabled">#7C7C7C</color>
+    <color name="main_color_2">#989A9D</color>
+</resources>

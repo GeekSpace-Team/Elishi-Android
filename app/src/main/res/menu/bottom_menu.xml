@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/first_icon"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/category"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/second_icon"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/add"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/third_icon"
+
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/fav"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/fourth_icon"
+        android:enabled="true"
+        />
+    <item
+        android:id="@+id/profile"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/fifth_icon"
+        android:enabled="true"
+        />
+</menu>

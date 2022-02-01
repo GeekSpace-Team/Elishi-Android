@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Elishi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Gözleg...</string>
+    <string name="gift">Sowgatlar</string>
+    <string name="new_products">Täze harytlar</string>
+    <string name="trend_products">Trend harytlar</string>
+    <string name="seeAll">Ählisi</string>
+    <string name="home_title">Sungat we senetçilik ýarmarkasy</string>
+    <string name="category">Kategoriýalar</string>
+    <string name="favorites">Halanlarym</string>
+    <string name="login">Içeri gir</string>
+    <string name="create_account">Agza bol</string>
+    <string name="profile">Hasabym</string>
+
+    <string name="content">With the idea of imparting programming
+      knowledge, Mr. Sandeep Jain, an IIT Roorkee alumnus started a
+      dream, GeeksforGeeks. Whether programming excites you or you feel
+      stifled, wondering how to prepare for interview questions or how to
+      ace data structures and algorithms, GeeksforGeeks is a one-stop solution.
+      With every tick of time, we are adding arrows in our quiver. From articles
+      on various computer science subjects to programming problems for practice,
+      from basic to premium courses, from technologies to entrance examinations,
+      we have been building ample content with superior quality. In a short span,
+      we have built a community of 1 Million+ Geeks around the world, 20,000+
+      Contributors and 500+ Campus Ambassadors in various colleges across the nation.
+      Our success stories include a lot of students who benefitted in their placements
+      and landed jobs at tech giants. Our vision is to build a gigantic network of
+      geeks and we are only a fraction of it yet.
+  </string>
+    <string name="more"><u>More</u></string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="bring_to_front">Bring to Front</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="help">Help</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="logout">Logout</string>
+
+    <string-array name="items">
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+    </string-array>
+</resources>

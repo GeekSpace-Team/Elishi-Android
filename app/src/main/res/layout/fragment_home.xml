@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/first"
+    tools:context=".Fragment.HomeFragment">
+
+
+
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_marginTop="50dp"
+                android:id="@+id/splashContainer2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:id="@+id/splashTitle2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:text="@string/home_title"
+                    android:textColor="@color/fourth"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/main_gradient"
+                    app:srcCompat="@drawable/search_icon"
+                    android:layout_gravity="center"
+                    android:padding="14dp"
+                    app:tint="@color/white" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/splashContainer2"
+                android:orientation="vertical">
+
+
+
+
+                <RelativeLayout
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/bannerSlider"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_height="115dp"/>
+
+                    <com.zhpan.indicator.IndicatorView
+                        android:id="@+id/indicator_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:layout_centerHorizontal="true"
+                        />
+
+
+
+
+                </RelativeLayout>
+
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:layout_marginStart="8dp"
+                   android:layout_marginEnd="8dp"
+                   android:layout_marginTop="22dp"
+                   android:id="@+id/shortCategory"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/vipUsers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginStart="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/newProductsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_products"
+                    android:textSize="20sp"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/fourth"
+                    android:layout_marginTop="22dp"
+                    />
+
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/new_products"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    />
+
+
+
+                <LinearLayout
+                    android:layout_marginTop="22dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/trendProductsTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trend_products"
+                        android:textSize="20sp"
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/fourth"
+                        android:layout_weight="1"
+                        />
+
+                    <TextView
+                        android:id="@+id/seeAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/seeAll"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/third"
+                        />
+                </LinearLayout>
+
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trend_products"
+                    android:layout_marginBottom="35dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    />
+
+
+
+
+
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+
+
+</RelativeLayout>

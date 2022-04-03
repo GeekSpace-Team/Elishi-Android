@@ -1,20 +1,26 @@
 package com.elishi.android.Fragment;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
+import android.transition.Fade;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,28 +28,53 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.airbnb.lottie.L;
+import com.bumptech.glide.Glide;
+import com.elishi.android.Activity.Search.SearchPage;
 import com.elishi.android.Adapter.Home.BannerSliderAdapter;
+import com.elishi.android.Adapter.Home.EventAdapter;
 import com.elishi.android.Adapter.Product.MultiSizeProductAdapter;
-import com.elishi.android.Adapter.Product.ProductAdapter;
 import com.elishi.android.Adapter.Category.ShortCategoryAdapter;
 import com.elishi.android.Adapter.Home.VipAdapter;
+import com.elishi.android.Api.APIClient;
+import com.elishi.android.Api.ApiInterface;
+import com.elishi.android.Common.AppSnackBar;
+import com.elishi.android.Common.Constant;
+import com.elishi.android.Common.EventType;
+import com.elishi.android.Common.PlaceHolderColors;
 import com.elishi.android.Common.Utils;
+import com.elishi.android.Modal.Home.Ads;
 import com.elishi.android.Modal.Home.BannerSlider;
 import com.elishi.android.Modal.Category.Category;
+import com.elishi.android.Modal.Home.Event;
+import com.elishi.android.Modal.Home.EventProducts;
+import com.elishi.android.Modal.Home.EventProductsBody;
+import com.elishi.android.Modal.Home.Events;
+import com.elishi.android.Modal.Home.GetHome;
 import com.elishi.android.Modal.Product.Product;
 import com.elishi.android.Modal.Profile.User;
+import com.elishi.android.Modal.Response.GBody;
 import com.elishi.android.R;
 import com.elishi.android.databinding.FragmentHomeBinding;
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.zhpan.indicator.IndicatorView;
 import com.zhpan.indicator.enums.IndicatorSlideMode;
 import com.zhpan.indicator.enums.IndicatorStyle;
 import com.zhpan.indicator.option.IndicatorOptions;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.elishi.android.Common.Constant.BANNER_DELAY;
 
@@ -51,21 +82,31 @@ public class HomeFragment extends Fragment {
 
     private View view;
     private Context context;
-    private TextView  splashTitle2;
-    private ScrollView scroll;
+    private NestedScrollView scroll;
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
-    private List<BannerSlider> sliderItems=new ArrayList<>();
+    private List<BannerSlider> sliderItems = new ArrayList<>();
     private Button oldActiveIndicator;
-    private Integer firstSize=0;
-    private RecyclerView shortCategory,new_products,vipUsers,trend_products;
-    private ArrayList<Category> shortCategories=new ArrayList<>();
-    private ArrayList<Product> newProducts=new ArrayList<>();
-    private ArrayList<Product> trendProducts=new ArrayList<>();
-    private ArrayList<User> vipUsersList=new ArrayList<>();
-    private TextView newProductsTitle,trendProductsTitle,seeAll;
+    private Integer firstSize = 0;
+    private RecyclerView shortCategory, new_products, vipUsers, trend_products;
+    private ArrayList<Category> shortCategories = new ArrayList<>();
+    private ArrayList<Product> newProducts = new ArrayList<>();
+    private ArrayList<Product> trendProducts = new ArrayList<>();
+    private ArrayList<User> vipUsersList = new ArrayList<>();
+    private TextView newProductsTitle, trendProductsTitle;
     private FragmentHomeBinding binding;
     private IndicatorView indicator_view;
+    private ArrayList<Ads> miniAds = new ArrayList<>();
+    private ArrayList<Ads> largeAds = new ArrayList<>();
+    private Integer miniAdsPos = 0;
+    private ArrayList<EventProducts> eventProducts = new ArrayList<>();
+    private int adsPos = 0;
+    private int eventPos = 0;
+    private int eventProductsPos = 0;
+    private ArrayList<Events> events = new ArrayList<>();
+    private Boolean isEvent = true;
+    private GBody<GetHome> body;
+
     public HomeFragment() {
     }
 
@@ -82,116 +123,271 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 //        view = inflater.inflate(R.layout.fragment_home, container, false);
+
         context = getContext();
+
         initComponents();
-        setRecycler();
+        setListener();
         setFonts();
+        getHome();
+
+        return view;
+    }
+
+    private void getHome() {
+        isEvent = true;
+        hideError();
+        binding.loading.setVisibility(View.VISIBLE);
+        view.findViewById(R.id.noInternetContainer).setVisibility(View.GONE);
+        binding.secondCon.setVisibility(View.GONE);
+        ApiInterface apiInterface = APIClient.getClient().create(ApiInterface.class);
+        Call<GBody<GetHome>> call = apiInterface.getHome("android", "Bearer " + Utils.getSharedPreference(context, "tkn"));
+        call.enqueue(new Callback<GBody<GetHome>>() {
+            @Override
+            public void onResponse(Call<GBody<GetHome>> call, Response<GBody<GetHome>> response) {
+                if (response.isSuccessful() && !response.body().getError() && response.body().getBody() != null) {
+                    binding.swipeRefresh.setRefreshing(false);
+                    hideError();
+                    body = response.body();
+                    if (body.getBody().getBanner() != null && body.getBody().getBanner().size() > 0) {
+                        sliderItems = body.getBody().getBanner();
+                        binding.bannerSlider.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.bannerSlider.setVisibility(View.GONE);
+                    }
+                    if (body.getBody().getMain_category() != null && body.getBody().getMain_category().size() > 0) {
+                        shortCategories = body.getBody().getMain_category();
+                        binding.shortCategory.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.shortCategory.setVisibility(View.GONE);
+                    }
+                    if (body.getBody().getNewProducts() != null && body.getBody().getNewProducts().size() > 0) {
+                        newProducts = body.getBody().getNewProducts();
+                        binding.newProducts.setVisibility(View.VISIBLE);
+                        binding.newProductsTitle.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.newProducts.setVisibility(View.GONE);
+                        binding.newProductsTitle.setVisibility(View.GONE);
+                    }
+                    if (body.getBody().getTrendProducts() != null && body.getBody().getTrendProducts().size() > 0) {
+                        trendProducts = body.getBody().getTrendProducts();
+                        binding.trendProducts.setVisibility(View.VISIBLE);
+                        binding.trendProductsTitle.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.trendProducts.setVisibility(View.GONE);
+                        binding.trendProductsTitle.setVisibility(View.GONE);
+                    }
+//                    if (body.getBody().getVip_users() != null && body.getBody().getVip_users().size() > 0) {
+//                        vipUsersList = body.getBody().getVip_users();
+//                        binding.vipUsers.setVisibility(View.VISIBLE);
+//                    } else {
+//                        binding.vipUsers.setVisibility(View.GONE);
+//                    }
+                    eventProducts.clear();
+                    if (body.getBody().getEventProducts() != null && body.getBody().getEventProducts().size() > 0) {
+                        eventProducts.addAll(body.getBody().getEventProducts());
+                    }
+                    miniAds.clear();
+                    largeAds.clear();
+                    if (body.getBody().getAds() != null && body.getBody().getAds().size() > 0) {
+                        for (Ads ads : body.getBody().getAds()) {
+                            if (ads.getStatus().equals("home_mini"))
+                                miniAds.add(ads);
+                            if (ads.getStatus().equals("home_large")) {
+                                largeAds.add(ads);
+                            }
+                        }
+                        binding.miniAds.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.miniAds.setVisibility(View.GONE);
+                    }
+
+                    events.clear();
+                    eventPos = 0;
+                    eventProductsPos = 0;
+                    adsPos = 0;
+                    ready();
+                } else if (response.body().getError()) {
+                    String msg = Utils.checkMessage(context, response.body().getMessage());
+                    showSnackbar(msg);
+                    showError();
+                } else {
+                    String msg = Utils.checkMessage(context, response.body().getMessage());
+                    showSnackbar(msg);
+                    showError();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GBody<GetHome>> call, Throwable t) {
+                showError();
+                binding.swipeRefresh.setRefreshing(false);
+            }
+        });
+
+    }
+
+
+    private void showSnackbar(String msg) {
+        if (!msg.isEmpty()) {
+            AppSnackBar snackBar = new AppSnackBar(context, view);
+            snackBar.setTitle(msg);
+            snackBar.actionText(R.string.cancel);
+            snackBar.show();
+        }
+    }
+
+    private void showError() {
+        view.findViewById(R.id.noInternetContainer).setVisibility(View.VISIBLE);
+        binding.secondCon.setVisibility(View.GONE);
+        binding.loading.setVisibility(View.GONE);
+    }
+
+    private void hideError() {
+        view.findViewById(R.id.noInternetContainer).setVisibility(View.GONE);
+        binding.secondCon.setVisibility(View.VISIBLE);
+        binding.loading.setVisibility(View.GONE);
+        binding.swipeRefresh.setRefreshing(false);
+    }
+
+    private void ready() {
         setShortCategory();
-        request();
         setNewProducts();
         setVipUsers();
         setTrendProducts();
         setBanner();
-        return view;
+        if (miniAds.size() <= 0) {
+            binding.miniAds.setVisibility(View.GONE);
+        } else {
+            setMiniAds();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                binding.miniAds.setClipToOutline(true);
+            }
+        }
+
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int pos = 0;
+                for (Event event : body.getBody().getEvents()) {
+                    events.add(new Events(event, EventType.EVENT));
+                }
+
+                if (events.size() > 0) {
+                    for (int i = 0; i < events.size(); i++) {
+                        if(i%2==0 && i>0 && eventProductsPos<eventProducts.size()){
+                            events.add(i,new Events(eventProducts.get(eventProductsPos), EventType.EVENT_PRODUCTS));
+                            eventProductsPos++;
+                        }
+                    }
+                    if(eventProductsPos<eventProducts.size()-1){
+                        for(int k=eventProductsPos;k<eventProducts.size();k++){
+                            events.add(new Events(eventProducts.get(k), EventType.EVENT_PRODUCTS));
+                        }
+                    }
+                } else {
+                    for (EventProducts eventProducts1 : eventProducts) {
+                        events.add(new Events(eventProducts1, EventType.EVENT_PRODUCTS));
+                    }
+                }
+
+                if(events.size()>0){
+                    for (int i = 0; i < events.size(); i++) {
+                        if(pos==8 && i>0 && adsPos<largeAds.size()){
+                            events.add(i,new Events(largeAds.get(adsPos), EventType.ADS));
+                            adsPos++;
+                            pos=0;
+                        }
+                        pos++;
+                    }
+                    if(adsPos<largeAds.size()-1){
+                        for(int k=adsPos;k<largeAds.size();k++){
+                            events.add(new Events(largeAds.get(k), EventType.ADS));
+                        }
+                    }
+                } else {
+                    for(Ads ads:largeAds){
+                        events.add(new Events(ads,EventType.ADS));
+                    }
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.events.setAdapter(new EventAdapter(events, context));
+                        binding.events.setLayoutManager(new LinearLayoutManager(context));
+//                        binding.events.setNestedScrollingEnabled(false);
+                        binding.events.setOverScrollMode(View.OVER_SCROLL_NEVER);
+                    }
+                });
+            }
+        });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                thread.start();
+            }
+        },1200);
+
+
+
+
+
+    }
+
+
+
+    private void setListener() {
+        view.findViewById(R.id.retry).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getHome();
+            }
+        });
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getHome();
+            }
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding=null;
+        binding = null;
     }
 
     private void setVipUsers() {
-        vipUsersList.clear();
-        vipUsersList.add(new User(1,"Halil","https://i.pinimg.com/originals/c5/ad/78/c5ad786533975271c16c365c87d7e7a5.jpg","vip"));
-        vipUsersList.add(new User(1,"Jeyhun","https://uifaces.co/our-content/donated/n4Ngwvi7.jpg","vip"));
-        vipUsersList.add(new User(1,"Jelil","https://www.ilounge.com/wp-content/uploads/2020/09/eYVoSxV5.jpg","vip"));
-        vipUsersList.add(new User(1,"Tylla","https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb","vip"));
-        vipUsersList.add(new User(1,"Annadurdy","https://media.carnegie.org/filer_public_thumbnails/filer_public/29/69/29691a84-ff9a-4aa9-98f7-8efdc6495bbd/jim_carrey_headshot.jpeg__1200x630_q85_subsampling-2.jpg","vip"));
-        vipUsersList.add(new User(1,"Mahri","https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=707b9c33066bf8808c934c8ab394dff6","vip"));
-        vipUsersList.add(new User(1,"Selbi","https://images.unsplash.com/photo-1496081081095-d32308dd6206?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=dd302358c7e18c27c4086e97caf85781","vip"));
-        VipAdapter vipAdapter=new VipAdapter(vipUsersList,context);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
+        VipAdapter vipAdapter = new VipAdapter(vipUsersList, context);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
         vipUsers.setAdapter(vipAdapter);
         vipUsers.setLayoutManager(linearLayoutManager);
-        vipUsers.setNestedScrollingEnabled(false);
-        OverScrollDecoratorHelper.setUpOverScroll(vipUsers, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
     }
 
     private void setNewProducts() {
-        newProducts.clear();
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://bulbandkey.com/blog/wp-content/uploads/2020/05/Tips-For-Home-handicraft-Feature-.jpg",true));
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://www.prattya.com/wp-content/uploads/2021/04/1_7YxApDhxLhfmX4x_bKzZEQ.jpeg",true));
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://www.crazypatterns.net/uploads/cache/items/2018/01/35661/needle-work-handicraft-bucket-600x450.jpg",false));
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://bulbandkey.com/blog/wp-content/uploads/2020/05/Tips-For-Home-handicraft-Feature-.jpg",false));
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://bulbandkey.com/blog/wp-content/uploads/2020/05/Tips-For-Home-handicraft-Feature-.jpg",true));
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://bulbandkey.com/blog/wp-content/uploads/2020/05/Tips-For-Home-handicraft-Feature-.jpg",false));
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://bulbandkey.com/blog/wp-content/uploads/2020/05/Tips-For-Home-handicraft-Feature-.jpg",true));
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://bulbandkey.com/blog/wp-content/uploads/2020/05/Tips-For-Home-handicraft-Feature-.jpg",false));
-        newProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://bulbandkey.com/blog/wp-content/uploads/2020/05/Tips-For-Home-handicraft-Feature-.jpg",true));
-        ProductAdapter productAdapter=new ProductAdapter(newProducts,context,true);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
+        MultiSizeProductAdapter productAdapter = new MultiSizeProductAdapter(newProducts, context, true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
         new_products.setAdapter(productAdapter);
         new_products.setLayoutManager(linearLayoutManager);
-        new_products.setNestedScrollingEnabled(false);
-        OverScrollDecoratorHelper.setUpOverScroll(new_products, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
     }
-    private void setTrendProducts() {
-        trendProducts.clear();
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://p4.wallpaperbetter.com/wallpaper/465/666/514/photography-depth-of-field-handicraft-wallpaper-preview.jpg",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://images.pexels.com/photos/1117272/pexels-photo-1117272.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://www.trtavaz.com.tr/uploads/photos/2019/02/15/bb47aa3470d340fbb12120fff1451a50.gif?w=640",false));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://i.pinimg.com/originals/99/1e/a7/991ea7a64d1e70cb148bbc50f73a529f.jpg",false));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://i2.wp.com/www.atavatan-turkmenistan.com/wp-content/uploads/2020/09/2-21.jpg?fit=591%2C392&ssl=1",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://www.ylymly.com/wp-content/uploads/2019/02/turkmen-shay-saypaeleri.jpg",false));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://www.turkmenmetbugat.gov.tm/storage/articles/1845/uUQ9bO954oxkG2c4AKcwjGFORv10xcBryjfpQDsJ9vAJYhNdaNuWI9lr2LsJ.jpg",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://ashgabat.in/wp-content/uploads/2021/06/6c4a03801ce7c36bcc4bbe76f539783b-450x3002-3.jpg",false));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://i.mycdn.me/i?r=AzEOxUXG5QgodWC3x6hM10CkvXQVcFiK4Dn3ujHQVNkWc_apV-FlrPFK6NMUXEEsv2I&fn=sqr_288",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://p4.wallpaperbetter.com/wallpaper/465/666/514/photography-depth-of-field-handicraft-wallpaper-preview.jpg",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://images.pexels.com/photos/1117272/pexels-photo-1117272.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://www.trtavaz.com.tr/uploads/photos/2019/02/15/bb47aa3470d340fbb12120fff1451a50.gif?w=640",false));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://i.pinimg.com/originals/99/1e/a7/991ea7a64d1e70cb148bbc50f73a529f.jpg",false));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://i2.wp.com/www.atavatan-turkmenistan.com/wp-content/uploads/2020/09/2-21.jpg?fit=591%2C392&ssl=1",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://www.ylymly.com/wp-content/uploads/2019/02/turkmen-shay-saypaeleri.jpg",false));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://www.turkmenmetbugat.gov.tm/storage/articles/1845/uUQ9bO954oxkG2c4AKcwjGFORv10xcBryjfpQDsJ9vAJYhNdaNuWI9lr2LsJ.jpg",true));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://ashgabat.in/wp-content/uploads/2021/06/6c4a03801ce7c36bcc4bbe76f539783b-450x3002-3.jpg",false));
-        trendProducts.add(new Product(1,"Nagşy maýda küýze",134.0,"https://i.mycdn.me/i?r=AzEOxUXG5QgodWC3x6hM10CkvXQVcFiK4Dn3ujHQVNkWc_apV-FlrPFK6NMUXEEsv2I&fn=sqr_288",true));
 
-//        GridLayoutManager gridLayoutManager=new GridLayoutManager(context, 2);
-        StaggeredGridLayoutManager sGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        MultiSizeProductAdapter productAdapter=new MultiSizeProductAdapter(trendProducts,context,false);
-        trend_products.setLayoutManager(sGridLayoutManager);
+    private void setTrendProducts() {
+        MultiSizeProductAdapter productAdapter = new MultiSizeProductAdapter(trendProducts, context, true);
+        trend_products.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         trend_products.setAdapter(productAdapter);
-        trend_products.setNestedScrollingEnabled(false);
     }
 
     private void setShortCategory() {
-        shortCategories.clear();
-        shortCategories.add(new Category(1,"https://images2.minutemediacdn.com/image/upload/c_crop,h_2164,w_3864,x_0,y_412/v1554737166/shape/mentalfloss/89961-istock-871610664.jpg?itok=1w3eWoI8","Sowgatlar"));
-        shortCategories.add(new Category(2,"https://www.history.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTc4MjEwMDg3NDg2MTA1MTk3/chocolate-gettyimages-473741340.jpg","Konditer"));
-        shortCategories.add(new Category(3,"https://nmk.com.tm/storage/app/uploads/public/612/cae/0b0/612cae0b09e82466046095.jpg","Tikincilik"));
-        shortCategories.add(new Category(4,"https://lh3.googleusercontent.com/proxy/olz8eip07-MD1-LXJMbIZlUC307UJ0Uof97IaudeW_8rRQ-KW9FuQ9oOdfZfyRuV9AnOHx55LFjIcYpA0YY-jltT0NXoZBBPg_RY5fq_9ML05Dwqv9oMDg","Sergiler"));
-        ShortCategoryAdapter shortCategoryAdapter=new ShortCategoryAdapter(shortCategories,context);
-        LinearLayoutManager layoutManager=new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
+        ShortCategoryAdapter shortCategoryAdapter = new ShortCategoryAdapter(shortCategories, context);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
         shortCategory.setAdapter(shortCategoryAdapter);
         shortCategory.setLayoutManager(layoutManager);
-        shortCategory.setNestedScrollingEnabled(false);
-        OverScrollDecoratorHelper.setUpOverScroll(shortCategory, OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
     }
 
-    private void request() {
-        hideSplash();
-    }
-
-
-
-
-    private void setRecycler() {
-
-    }
 
     private void initComponents() {
-        splashTitle2 = view.findViewById(R.id.splashTitle2);
         scroll = view.findViewById(R.id.scroll);
         viewPager2 = view.findViewById(R.id.bannerSlider);
         indicator_view = view.findViewById(R.id.indicator_view);
@@ -200,38 +396,33 @@ public class HomeFragment extends Fragment {
         newProductsTitle = view.findViewById(R.id.newProductsTitle);
         vipUsers = view.findViewById(R.id.vipUsers);
         trendProductsTitle = view.findViewById(R.id.trendProductsTitle);
-        seeAll = view.findViewById(R.id.seeAll);
         trend_products = view.findViewById(R.id.trend_products);
-        OverScrollDecoratorHelper.setUpOverScroll(scroll);
-
     }
 
     private void setFonts() {
-        splashTitle2.setTypeface(Utils.getBoldFont(context));
         newProductsTitle.setTypeface(Utils.getMediumFont(context));
         trendProductsTitle.setTypeface(Utils.getMediumFont(context));
-        seeAll.setTypeface(Utils.getRegularFont(context));
-    }
-
-    private void showSplash() {
-    }
-
-    private void hideSplash() {
+        binding.searchEdit.setTypeface(Utils.getRegularFont(context));
     }
 
 
+    private GridLayoutManager getLayoutManager() {
+        GridLayoutManager glm = new GridLayoutManager(context, 2);
+        glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if ((position + 1) % 5 == 0) {
+                    return 2;
+                }
+                return 1;
+            }
+        });
+        return glm;
+    }
 
 
     private void setBanner() {
-        sliderItems.clear();
-        sliderItems.add(new BannerSlider(1, "https://m.media-amazon.com/images/I/71hYZle8pUL._SL1500_.jpg",0));
-        sliderItems.add(new BannerSlider(1, "https://www.bannerbatterien.com/upload/filecache/Banner-Batterien-Windrder2-web_06b2d8d686e91925353ddf153da5d939.webp",0));
-        sliderItems.add(new BannerSlider(1, "https://www.phdmedia.com/russia/wp-content/uploads/sites/74/2017/08/Banner-for-TWiD-4-e1499162744863.jpg",0));
-        sliderItems.add(new BannerSlider(1, "https://w.wallha.com/ws/12/gXcqyb8U.jpg",0));
-
         setIndicators();
-
-
         viewPager2.setAdapter(new BannerSliderAdapter(sliderItems, viewPager2, context));
         viewPager2.setClipToPadding(false);
         viewPager2.setClipChildren(false);
@@ -247,9 +438,6 @@ public class HomeFragment extends Fragment {
             }
         });
         viewPager2.setPageTransformer(compositePageTransformer);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            viewPager2.setNestedScrollingEnabled(false);
-        }
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -269,15 +457,14 @@ public class HomeFragment extends Fragment {
     }
 
     private void setIndicators() {
-        int pos=0;
-        for(BannerSlider slider:sliderItems){
+        int pos = 0;
+        for (BannerSlider slider : sliderItems) {
             slider.setPosition(pos);
-            sliderItems.set(pos,slider);
+            sliderItems.set(pos, slider);
             pos++;
         }
-
-        IndicatorOptions options=new IndicatorOptions();
-        options.setSliderColor(context.getResources().getColor(R.color.third),context.getResources().getColor(R.color.second));
+        IndicatorOptions options = new IndicatorOptions();
+        options.setSliderColor(context.getResources().getColor(R.color.third), context.getResources().getColor(R.color.second));
         options.setSliderHeight(context.getResources().getDimension(R.dimen.sliderCircle));
         options.setSliderWidth(context.getResources().getDimension(R.dimen.sliderCircle), context.getResources().getDimension(R.dimen.sliderRound));
         options.setSlideMode(IndicatorSlideMode.SCALE);
@@ -318,8 +505,41 @@ public class HomeFragment extends Fragment {
         @Override
         public void run() {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
+            setMiniAds();
+
         }
     };
+
+    private void setMiniAds() {
+        if (miniAds.size() > 0 && miniAdsPos < miniAds.size()) {
+            final int min = 0;
+            final int max = PlaceHolderColors.PLACEHOLDERS.length - 1;
+            final int r = new Random().nextInt((max - min) + 1) + min;
+            String imageUrl = miniAds.get(miniAdsPos).getAds_image();
+            String extension = "";
+            if (imageUrl.contains(".")) {
+                extension = imageUrl.substring(imageUrl.lastIndexOf("."));
+            }
+            if (extension.toLowerCase().contains("gif")) {
+                Glide.with(context)
+                        .asGif()
+                        .load(Constant.IMAGE_URL + imageUrl)
+                        .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                        .thumbnail(0.25f)
+                        .into(binding.miniAds);
+            } else {
+                Glide.with(context)
+                        .load(Constant.IMAGE_URL + imageUrl)
+                        .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                        .thumbnail(0.25f)
+                        .into(binding.miniAds);
+            }
+            miniAdsPos++;
+        } else {
+            miniAdsPos=0;
+            setMiniAds();
+        }
+    }
 
     @Override
     public void onPause() {

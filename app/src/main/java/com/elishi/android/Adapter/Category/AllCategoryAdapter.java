@@ -13,13 +13,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.elishi.android.Common.PlaceHolderColors;
 import com.elishi.android.Common.Utils;
+import com.elishi.android.Fragment.Product.Products;
 import com.elishi.android.Modal.Category.AllCategory;
 import com.elishi.android.R;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.ViewHolder> {
     private ArrayList<AllCategory> allCategories = new ArrayList<>();
@@ -68,6 +71,13 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
             }
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.hideAdd(new Products(),Products.class.getSimpleName(),fragmentManager,R.id.content);
+            }
+        });
+
     }
 
 
@@ -78,15 +88,17 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
         View view=LayoutInflater.from(context).inflate(R.layout.category_template_1, imgContainer,false);
         ImageView img1=view.findViewById(R.id.img1);
         ImageView img2=view.findViewById(R.id.img2);
-
+        final int min = 0;
+        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
+        final int r = new Random().nextInt((max - min) + 1) + min;
         Glide.with(context)
                 .load(category.getImages().get(0))
-                .placeholder(R.drawable.placeholder)
+                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(img1);
 
         Glide.with(context)
                 .load(category.getImages().get(1))
-                .placeholder(R.drawable.placeholder)
+                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(img2);
 
         imgContainer.removeAllViews();
@@ -96,10 +108,12 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
     private void setTemplate1(LinearLayout imgContainer, AllCategory category) {
         View view=LayoutInflater.from(context).inflate(R.layout.category_template_3, imgContainer,false);
         ImageView img1=view.findViewById(R.id.img1);
-
+        final int min = 0;
+        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
+        final int r = new Random().nextInt((max - min) + 1) + min;
         Glide.with(context)
                 .load(category.getImages().get(0))
-                .placeholder(R.drawable.placeholder)
+                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(img1);
 
 
@@ -114,19 +128,23 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
             ImageView img2=view.findViewById(R.id.img2);
             ImageView img3=view.findViewById(R.id.img3);
 
+            final int min = 0;
+            final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
+            final int r = new Random().nextInt((max - min) + 1) + min;
+
             Glide.with(context)
                     .load(category.getImages().get(0))
-                    .placeholder(R.drawable.placeholder)
+                    .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                     .into(img1);
 
             Glide.with(context)
                     .load(category.getImages().get(1))
-                    .placeholder(R.drawable.placeholder)
+                    .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                     .into(img2);
 
             Glide.with(context)
                     .load(category.getImages().get(2))
-                    .placeholder(R.drawable.placeholder)
+                    .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                     .into(img3);
 
             imgContainer.removeAllViews();
@@ -143,19 +161,23 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
         ImageView img2=view.findViewById(R.id.img2);
         ImageView img3=view.findViewById(R.id.img3);
 
+        final int min = 0;
+        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
+        final int r = new Random().nextInt((max - min) + 1) + min;
+
         Glide.with(context)
                 .load(category.getImages().get(0))
-                .placeholder(R.drawable.placeholder)
+                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(img1);
 
         Glide.with(context)
                 .load(category.getImages().get(1))
-                .placeholder(R.drawable.placeholder)
+                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(img2);
 
         Glide.with(context)
                 .load(category.getImages().get(2))
-                .placeholder(R.drawable.placeholder)
+                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(img3);
 
         imgContainer.removeAllViews();

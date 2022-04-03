@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/first"
+    tools:context=".Activity.Search.SearchPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/white_round">
+
+
+            <com.elishi.android.View.CustomViews.AppEditText
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toStartOf="@id/searchBtn"
+                android:background="@android:color/transparent"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:textColor="@color/fourth"
+                android:textColorHint="@color/solid"
+                android:textSize="14sp"
+                app:editTextFont="regular" />
+
+            <ImageView
+                android:id="@+id/searchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/main_gradient"
+                android:padding="12dp"
+                app:srcCompat="@drawable/ic_search_icon"
+                app:tint="@color/white" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/searchDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/top_search"
+                android:textColor="@color/fourth"
+                android:textSize="16sp"
+                app:tvFont="medium" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topSearchRec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:id="@+id/historyTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/search_history"
+                android:textColor="@color/fourth"
+                android:textSize="16sp"
+                app:tvFont="medium" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchHistoryRec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/searchResultContainer"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:id="@+id/searchResultTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/search_result"
+                android:textColor="@color/fourth"
+                android:textSize="16sp"
+                app:tvFont="medium" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResultRec"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="90"
+                android:layout_marginTop="12dp" />
+
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/loadMoreProgress"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </RelativeLayout>
+
+</RelativeLayout>

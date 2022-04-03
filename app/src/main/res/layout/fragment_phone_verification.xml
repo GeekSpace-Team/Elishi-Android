@@ -22,7 +22,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Введите свой номер телефона"
+                android:text="@string/enter_phone"
                 android:textColor="@color/fourth"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Номер телефона"
+                android:text="@string/phone_number_title"
                 android:textColor="@color/disabled"
                 android:textSize="16sp" />
 
@@ -106,16 +106,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
-            app:tint="@color/white" />
+            app:tint="@color/realWhite" />
 
         <ProgressBar
             android:id="@+id/progress"
-            android:visibility="invisible"
-            android:layout_centerInParent="true"
             android:layout_width="30dp"
             android:layout_height="30dp"
 
-            />
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

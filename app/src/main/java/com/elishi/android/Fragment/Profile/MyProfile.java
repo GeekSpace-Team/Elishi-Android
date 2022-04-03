@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,10 +30,14 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.elishi.android.Activity.MainActivity;
 import com.elishi.android.Adapter.Profile.TabAdapter;
+import com.elishi.android.Common.AppAlertDialog;
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Fragment.CategoryFragment;
+import com.elishi.android.Fragment.Constant.ConstantPage;
 import com.elishi.android.Fragment.HomeFragment;
+import com.elishi.android.Fragment.Settings.Settings;
 import com.elishi.android.Listener.AppBarStateChangeListener;
 import com.elishi.android.R;
 import com.elishi.android.databinding.FragmentMyProfileBinding;
@@ -46,7 +52,7 @@ public class MyProfile extends Fragment {
     private Context context;
     private FragmentMyProfileBinding binding;
     private boolean isImageLoaded=false;
-    private String profileImageUrl="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
+    private String profileImageUrl="";
     private FragmentManager fragmentManager;
     public MyProfile() {
 
@@ -83,7 +89,7 @@ public class MyProfile extends Fragment {
     private void setColors() {
         if(!profileImageUrl.trim().isEmpty()) {
             if(isImageLoaded)
-                setColorToolbar(R.color.white);
+                setColorToolbar(R.color.realWhite);
             else
                 setColorToolbar(R.color.fourth);
         } else{
@@ -93,31 +99,33 @@ public class MyProfile extends Fragment {
 
     private void setImage(String profileImageUrl) {
 
-        Glide.with(context)
-                .load(profileImageUrl)
-                .placeholder(R.drawable.image_round_bg)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+        if(!profileImageUrl.trim().isEmpty()){
+            Glide.with(context)
+                    .load(profileImageUrl)
+                    .placeholder(R.drawable.image_round_bg)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
 
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        if(!profileImageUrl.trim().isEmpty()){
-                            BitmapDrawable drawable = (BitmapDrawable) resource;
-                            Bitmap bitmap = drawable.getBitmap();
-                            Bitmap blurred = Utils.blurRenderScript(bitmap, 25,context);//second parametre is radius
-                            binding.blurImage.setImageBitmap(blurred);
-                            setColorToolbar(R.color.white);
-                        } else{
-                            setColorToolbar(R.color.fourth);
+                            return false;
                         }
-                        isImageLoaded=true;
-                        return true;
-                    }
-                }).into(binding.blurImage);
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            if(!profileImageUrl.trim().isEmpty()){
+                                BitmapDrawable drawable = (BitmapDrawable) resource;
+                                Bitmap bitmap = drawable.getBitmap();
+                                Bitmap blurred = Utils.blurRenderScript(bitmap, 25,context);//second parametre is radius
+                                binding.blurImage.setImageBitmap(blurred);
+                                setColorToolbar(R.color.realWhite);
+                            } else{
+                                setColorToolbar(R.color.fourth);
+                            }
+                            isImageLoaded=true;
+                            return true;
+                        }
+                    }).into(binding.blurImage);
+        }
 
         Glide.with(context)
                 .load(profileImageUrl)
@@ -126,7 +134,6 @@ public class MyProfile extends Fragment {
     }
 
     private void setTabs() {
-        binding.tabLayout1.setupWithViewPager(binding.viewPager, false);
         binding.tabLayout2.setupWithViewPager(binding.viewPager, false);
         TabAdapter adapter = new TabAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new MyProducts(), "");
@@ -137,8 +144,6 @@ public class MyProfile extends Fragment {
         ColorStateList csl = ColorStateList.valueOf(colorInt);
         Drawable drawable=tintDrawable(context,R.drawable.ic_my_products,csl);
 
-        binding.tabLayout1.getTabAt(0).setIcon(drawable);
-        binding.tabLayout1.getTabAt(1).setIcon(R.drawable.ic_my_holidays);
         binding.tabLayout2.getTabAt(0).setIcon(drawable);
         binding.tabLayout2.getTabAt(1).setIcon(R.drawable.ic_my_holidays);
 
@@ -146,17 +151,20 @@ public class MyProfile extends Fragment {
     }
 
     private void setListener() {
+        CoordinatorLayout.LayoutParams lm= (CoordinatorLayout.LayoutParams) binding.con1.getLayoutParams();
         binding.appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 if(state==State.COLLAPSED){
-                    binding.tabLayout1.setVisibility(View.VISIBLE);
-                    binding.tabLayout2.setVisibility(View.GONE);
                     setColorToolbar(R.color.fourth);
+                    binding.tabLayout2.setBackgroundColor(context.getResources().getColor(R.color.white));
+                    lm.topMargin=0;
+                    binding.con1.setLayoutParams(lm);
                 } else if(state==State.EXPANDED){
-                    binding.tabLayout1.setVisibility(View.GONE);
-                    binding.tabLayout2.setVisibility(View.VISIBLE);
                     setColors();
+                    binding.tabLayout2.setBackgroundResource(R.drawable.tab_round_bg);
+                    lm.topMargin= (int) context.getResources().getDimension(R.dimen.marginTop);
+                    binding.con1.setLayoutParams(lm);
                 }
             }
         });
@@ -199,21 +207,73 @@ public class MyProfile extends Fragment {
         TextView helpTV=bottomSheetDialog.findViewById(R.id.helpTV);
         TextView editTV=bottomSheetDialog.findViewById(R.id.editTV);
         TextView logoutTV=bottomSheetDialog.findViewById(R.id.logoutTV);
+        LinearLayout settingsContainer=bottomSheetDialog.findViewById(R.id.settingsContainer);
+        LinearLayout aboutContainer=bottomSheetDialog.findViewById(R.id.aboutContainer);
+        LinearLayout helpContainer=bottomSheetDialog.findViewById(R.id.helpContainer);
+        LinearLayout editProfile=bottomSheetDialog.findViewById(R.id.editProfile);
+        LinearLayout logout=bottomSheetDialog.findViewById(R.id.logout);
         settingsTV.setTypeface(Utils.getRegularFont(context));
         aboutTV.setTypeface(Utils.getRegularFont(context));
         helpTV.setTypeface(Utils.getRegularFont(context));
         editTV.setTypeface(Utils.getRegularFont(context));
         logoutTV.setTypeface(Utils.getRegularFont(context));
+
+        settingsContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                Utils.hideAdd(new Settings(),Settings.class.getSimpleName(),getFragmentManager(),R.id.content);
+                MainActivity.fifthFragment=new Settings();
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                AppAlertDialog dialog=new AppAlertDialog(context);
+                dialog.setTitle(context.getResources().getString(R.string.is_logout));
+                dialog.setAlertListener(new AppAlertDialog.AlertListener() {
+                    @Override
+                    public void onCancelClickListener() {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onOkClickListener() {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+        helpContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                ConstantPage constantPage=new ConstantPage();
+                constantPage.type="help";
+                Utils.hideAdd(constantPage,ConstantPage.class.getSimpleName(),getFragmentManager(),R.id.content);
+                MainActivity.fifthFragment=constantPage;
+            }
+        });
+
+        aboutContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                ConstantPage constantPage=new ConstantPage();
+                constantPage.type="about";
+                Utils.hideAdd(constantPage,ConstantPage.class.getSimpleName(),getFragmentManager(),R.id.content);
+                MainActivity.fifthFragment=constantPage;
+            }
+        });
+
+
         bottomSheetDialog.show();
     }
 
     private void setTabsColor(int position, int unSelected) {
         int tabIconColor = ContextCompat.getColor(context, R.color.second);
-        binding.tabLayout1.getTabAt(position).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-
-        tabIconColor = ContextCompat.getColor(context, R.color.text_color);
-        binding.tabLayout1.getTabAt(unSelected).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-
         tabIconColor = ContextCompat.getColor(context, R.color.second);
         binding.tabLayout2.getTabAt(position).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
 
@@ -234,5 +294,11 @@ public class MyProfile extends Fragment {
         DrawableCompat.setTintList(drawable, stateList);
         DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_IN);
         return drawable;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding=null;
     }
 }

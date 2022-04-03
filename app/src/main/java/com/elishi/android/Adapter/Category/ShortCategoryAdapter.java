@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.elishi.android.Common.Constant;
+import com.elishi.android.Common.PlaceHolderColors;
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Modal.Category.Category;
 import com.elishi.android.R;
@@ -20,6 +22,7 @@ import com.google.android.material.card.MaterialCardView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ShortCategoryAdapter extends RecyclerView.Adapter<ShortCategoryAdapter.ViewHolder> {
     private ArrayList<Category> categories=new ArrayList<>();
@@ -42,12 +45,24 @@ public class ShortCategoryAdapter extends RecyclerView.Adapter<ShortCategoryAdap
     @Override
     public void onBindViewHolder(@NonNull @NotNull ShortCategoryAdapter.ViewHolder holder, int position) {
         Category category=categories.get(position);
-        holder.CategoryText.setText(category.getName());
+        holder.CategoryText.setText(category.getCategory_name_tm());
+        if(Utils.getLanguage(context).equals("ru")){
+            holder.CategoryText.setText(category.getCategory_name_ru());
+        } else if(Utils.getLanguage(context).equals("en")){
+            holder.CategoryText.setText(category.getCategory_name_en());
+        }
         holder.CategoryText.setTypeface(Utils.getBoldFont(context));
+        final int min = 0;
+        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
+        final int r = new Random().nextInt((max - min) + 1) + min;
         Glide.with(context)
-                .load(category.getImage())
-                .placeholder(R.drawable.placeholder)
+                .load(Constant.IMAGE_URL+category.getImage())
+                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(holder.CategoryImage);
+
+        if(category.getStatus()!=3){
+            holder.statusBg.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -56,7 +71,7 @@ public class ShortCategoryAdapter extends RecyclerView.Adapter<ShortCategoryAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout CategoryCon;
+        RelativeLayout CategoryCon,statusBg;
         ImageView CategoryImage;
         MaterialCardView CategoryCard;
         TextView CategoryText;
@@ -66,6 +81,7 @@ public class ShortCategoryAdapter extends RecyclerView.Adapter<ShortCategoryAdap
             CategoryCon=itemView.findViewById(R.id.CategoryCon);
             CategoryImage=itemView.findViewById(R.id.CategoryImage);
             CategoryCard=itemView.findViewById(R.id.imgCard);
+            statusBg=itemView.findViewById(R.id.statusBg);
         }
     }
 }

@@ -14,17 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Modal.Location.Region;
 import com.elishi.android.Modal.Location.SubLocation;
+import com.elishi.android.Modal.Response.PublicAPI.SubLocations;
 import com.elishi.android.R;
 
 import java.util.ArrayList;
 
 public class SubLocationAdapter extends RecyclerView.Adapter<SubLocationAdapter.ViewHolder> {
-    private ArrayList<SubLocation> subLocations=new ArrayList<>();
+    private ArrayList<SubLocations> subLocations=new ArrayList<>();
     private Context context;
     private Dialog dialog;
     private ImageView oldImg=null;
 
-    public SubLocationAdapter(ArrayList<SubLocation> subLocations, Context context, Dialog dialog) {
+    public SubLocationAdapter(ArrayList<SubLocations> subLocations, Context context, Dialog dialog) {
         this.subLocations = subLocations;
         this.context = context;
         this.dialog = dialog;
@@ -39,8 +40,8 @@ public class SubLocationAdapter extends RecyclerView.Adapter<SubLocationAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SubLocation subLocation=subLocations.get(position);
-        holder.title.setText(subLocation.getTitle_tm());
+        SubLocations subLocation=subLocations.get(position);
+        holder.title.setText(subLocation.getDistrict_name_tm());
 
         holder.title.setTypeface(Utils.getRegularFont(context));
 

@@ -35,4 +35,10 @@ public class HolidayView extends Fragment {
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding=null;
+    }
 }

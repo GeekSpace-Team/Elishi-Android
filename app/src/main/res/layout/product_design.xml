@@ -19,13 +19,31 @@
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/image"
+            android:layout_height="180dp">
+
+            <RelativeLayout
+                android:id="@+id/sliderContainer"
                 android:layout_width="match_parent"
-                android:layout_height="138dp"
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="12dp" />
+                android:layout_height="180dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/bannerSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:transitionName="fade" />
+
+                <com.zhpan.indicator.IndicatorView
+                    android:id="@+id/indicator_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp" />
+
+
+
+
+            </RelativeLayout>
             <ImageView
                 android:id="@+id/fav"
                 android:layout_width="30dp"
@@ -35,6 +53,60 @@
                 android:background="@drawable/cyrcle"
                 android:padding="7dp"
                 app:srcCompat="@drawable/ic_fav" />
+
+            <LinearLayout
+                android:id="@+id/statusContainer"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/master_status_background"
+                android:layout_width="wrap_content"
+                android:padding="4dp"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/statusIcon"
+                    android:layout_width="15dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginStart="3dp"
+                    app:srcCompat="@drawable/ic_master_icon"
+                    />
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:id="@+id/productStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/master_product"
+                    android:layout_marginEnd="3dp"
+                    android:padding="0dp"
+                    app:tvFont="bold"
+                    android:textSize="8sp"
+                    android:textColor="@color/realWhite"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/statusDescBg"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/status_desc_bg"
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:id="@+id/productStatusDesc"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:text="Master tarapyndan kepillendilen"
+                    android:layout_marginEnd="3dp"
+                    android:padding="0dp"
+                    app:tvFont="bold"
+                    android:textSize="9sp"
+                    android:textColor="@color/realWhite"
+                    />
+            </LinearLayout>
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -53,6 +125,7 @@
         android:text="Nagşy maýda küýze"
         android:textColor="@color/fourth"
         android:textSize="12sp"
+        android:singleLine="true"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"/>
 

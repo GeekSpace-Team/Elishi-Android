@@ -90,4 +90,10 @@ public class MyHolidays extends Fragment {
         binding.rec.setLayoutManager(new LinearLayoutManager(context));
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding=null;
+    }
 }

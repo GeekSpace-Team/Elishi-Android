@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ElishiEditText">
+        <attr name="label" format="string"/>
+        <attr name="placeholder" format="string"/>
+        <attr name="android:inputType"/>
+        <attr name="android:gravity"/>
+        <attr name="customHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="ElishiSelect">
+        <attr name="labelSelect" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="AppTextView">
+        <attr name="tvFont" format="enum">
+            <enum name="black" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="light" value="2"/>
+            <enum name="medium" value="3"/>
+            <enum name="regular" value="4"/>
+            <enum name="thin" value="5"/>
+            <enum name="ultra" value="6"/>
+            <enum name="mrc" value="7"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="AppEditText">
+        <attr name="editTextFont" format="enum">
+            <enum name="black" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="light" value="2"/>
+            <enum name="medium" value="3"/>
+            <enum name="regular" value="4"/>
+            <enum name="thin" value="5"/>
+            <enum name="ultra" value="6"/>
+        </attr>
+    </declare-styleable>
+</resources>

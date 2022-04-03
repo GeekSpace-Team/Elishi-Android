@@ -65,7 +65,7 @@ public class CategoryFragment extends Fragment {
         ArrayList<String> img1 = new ArrayList<>();
         img1.add("https://okcredit-blog-images-prod.storage.googleapis.com/2021/03/Handicraft-Business1--1-.jpg");
         ArrayList<String> img2 = new ArrayList<>();
-        img2.add("https://media.mehrnews.com/d/2018/07/23/4/2841436.jpg");
+        img2.add("");
         img2.add("https://images.pexels.com/photos/1117272/pexels-photo-1117272.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
         ArrayList<String> img3 = new ArrayList<>();
         img3.add("https://cdn.s3waas.gov.in/s3577ef1154f3240ad5b9b413aa7346a1e/uploads/bfi_thumb/2019121752-1-olw8qulb5f5and2erqsskrfk2l65nbof2neab3mj7q.jpg");
@@ -94,4 +94,6 @@ public class CategoryFragment extends Fragment {
         categoryRec=view.findViewById(R.id.categoryRec);
         scroll=view.findViewById(R.id.scroll);
     }
+
+
 }

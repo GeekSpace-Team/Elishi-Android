@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/first">
+
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_baseline_close_24"
+            app:tint="@color/fourth"
+            android:layout_marginEnd="16dp"
+            />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/title"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tvFont="medium"
+            android:textSize="16sp"
+            android:textColor="@color/fourth"
+            android:text="@string/filter"
+            />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/clear"
+            android:text="@string/clear"
+            android:textSize="12sp"
+            app:tvFont="medium"
+            android:textColor="@color/second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_below="@id/topBar"
+        android:background="@color/stroke"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/acceptBtn"
+        android:layout_below="@id/line1"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/acceptBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/filter_bg"
+        android:text="@string/filterle"
+        android:textAllCaps="false"
+        android:textColor="@color/realWhite"
+        android:textSize="14sp" />
+
+</RelativeLayout>

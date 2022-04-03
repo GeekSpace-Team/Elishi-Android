@@ -29,6 +29,7 @@ public class RegistRoot extends Fragment {
     private View tabView;
     private RelativeLayout bg;
     private TextView tv,splashTitle2;
+    public static RegistRoot INSTANCE;
 
     public RegistRoot() {
     }
@@ -44,11 +45,24 @@ public class RegistRoot extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_regist_root, container, false);
         context = getContext();
+        INSTANCE=this;
         initComponents();
         setTabs();
         setFonts();
         setFontsToTabs();
         return view;
+    }
+
+    public static RegistRoot get(){
+        return INSTANCE;
+    }
+
+    public TabLayout getTabLayout(){
+        return tabLayout;
+    }
+
+    public ViewPager getViewPager(){
+        return viewPager;
     }
 
     private void setFontsToTabs() {
@@ -118,4 +132,6 @@ public class RegistRoot extends Fragment {
         viewPager = view.findViewById(R.id.pager);
         splashTitle2 = view.findViewById(R.id.splashTitle2);
     }
+
+
 }

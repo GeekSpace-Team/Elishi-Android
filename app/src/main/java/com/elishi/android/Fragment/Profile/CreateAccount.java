@@ -23,6 +23,7 @@ import com.elishi.android.Adapter.Location.RegionAdapter;
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Modal.Location.Region;
 import com.elishi.android.Modal.Location.SubLocation;
+import com.elishi.android.Modal.Response.PublicAPI.Locations;
 import com.elishi.android.R;
 import com.elishi.android.databinding.FragmentCreateAccountBinding;
 
@@ -36,7 +37,16 @@ public class CreateAccount extends Fragment {
     private View view;
     private Context context;
     private FragmentCreateAccountBinding binding;
+    private String phoneNumber="";
     public CreateAccount() {
+    }
+
+    public static CreateAccount newInstance(String phoneNumber) {
+        Bundle args = new Bundle();
+        args.putString("phoneNumber",phoneNumber);
+        CreateAccount fragment = new CreateAccount();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -50,6 +60,11 @@ public class CreateAccount extends Fragment {
                              Bundle savedInstanceState) {
         binding=FragmentCreateAccountBinding.inflate(inflater,container,false);
         view=binding.getRoot();
+        try {
+            this.phoneNumber = getArguments().getString("phoneNumber");
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
         context=getContext();
         setFonts();
         setListener();
@@ -101,19 +116,8 @@ public class CreateAccount extends Fragment {
         ImageView close=dialog.findViewById(R.id.close);
 
         dialogTitle.setTypeface(Utils.getMediumFont(context));
-        ArrayList<Region> regions=new ArrayList<>();
-        ArrayList<SubLocation> subLocations=new ArrayList<>();
-        subLocations.add(new SubLocation("1","Ашгабат","Ashgabat"));
-        subLocations.add(new SubLocation("1","Анев","Anew"));
-        subLocations.add(new SubLocation("1","Кака","Kaka"));
-
-        regions.add(new Region("1","Ахал","Ahal",subLocations));
-        regions.add(new Region("1","Балкан","Balkan",subLocations));
-        regions.add(new Region("1","Мары","Mary",subLocations));
-        regions.add(new Region("1","Лебап","Lebap",subLocations));
-        regions.add(new Region("1","Дашогуз","Dashoguz",subLocations));
-
-        regionRec.setAdapter(new RegionAdapter(regions,context,dialog));
+        ArrayList<Locations> locations=new ArrayList<>();
+        regionRec.setAdapter(new RegionAdapter(locations,context,dialog));
         regionRec.setLayoutManager(new LinearLayoutManager(context));
 
         close.setOnClickListener(new View.OnClickListener() {
@@ -133,5 +137,11 @@ public class CreateAccount extends Fragment {
         window.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         dialog.show();
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding=null;
     }
 }

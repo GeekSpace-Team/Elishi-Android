@@ -31,7 +31,6 @@
         android:layout_marginTop="12dp"
         android:layout_centerHorizontal="true"
         android:text="Username"
-        android:singleLine="true"
         android:maxLength="15"
         android:textColor="@color/fourth"
         android:textSize="12sp"

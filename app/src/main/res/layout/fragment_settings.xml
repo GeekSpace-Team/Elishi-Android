@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/first"
+    tools:context=".Fragment.Settings.Settings">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/titleContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24"
+                    app:tint="@color/fourth" />
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/settings"
+                    app:tvFont="medium"
+                    android:textColor="@color/fourth"
+                    android:textSize="18sp" />
+                <ImageView
+                    android:id="@+id/mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_baseline_nights_stay_24"
+                    app:tint="@color/fourth" />
+            </LinearLayout>
+
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:id="@+id/selectLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/select_language"
+                app:tvFont="medium"
+                android:textColor="@color/fourth"
+                android:textSize="18sp"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/tmLangContainer"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/tmLang"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/gradient_cyrcle"
+                        android:padding="2dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/ic_tm" />
+
+
+                    </RelativeLayout>
+
+                    <com.elishi.android.View.CustomViews.AppTextView
+                        android:id="@+id/tmLangTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tmLang"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:text="Türkmen"
+                        android:textColor="@color/fourth"
+                        android:textSize="12sp"
+                        app:tvFont="medium" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:alpha="0.3"
+                    android:id="@+id/ruLangContainer"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/ruLang"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/disble_cyrcle"
+                        android:padding="2dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/ic_ru" />
+
+
+                    </RelativeLayout>
+
+                    <com.elishi.android.View.CustomViews.AppTextView
+                        android:id="@+id/ruLangTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ruLang"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:text="Русский"
+                        android:textColor="@color/fourth"
+                        android:textSize="12sp"
+                        app:tvFont="medium" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:alpha="0.3"
+                    android:id="@+id/enLangContainer"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/enLang"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/disble_cyrcle"
+                        android:padding="2dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/en" />
+
+
+                    </RelativeLayout>
+
+                    <com.elishi.android.View.CustomViews.AppTextView
+                        android:id="@+id/enLangTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/enLang"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="6dp"
+                        android:text="English"
+                        android:textColor="@color/fourth"
+                        android:textSize="12sp"
+                        app:tvFont="medium" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+</RelativeLayout>

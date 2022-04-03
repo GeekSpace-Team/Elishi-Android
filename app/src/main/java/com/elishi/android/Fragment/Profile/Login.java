@@ -30,4 +30,6 @@ public class Login extends Fragment {
         getFragmentManager().beginTransaction().replace(R.id.loginRoot,new PhoneVerification("login"),PhoneVerification.class.getSimpleName()).commit();
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
+
+
 }

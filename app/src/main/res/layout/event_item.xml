@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_marginTop="16dp"
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/corner_radius"
+        android:scaleType="fitXY"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:id="@+id/eventProducts"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.elishi.android.View.CustomViews.AppTextView
+            app:tvFont="bold"
+            android:id="@+id/eventTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/trend_products"
+            android:textSize="16sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:singleLine="true"
+            android:textColor="@color/fourth"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventRec"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

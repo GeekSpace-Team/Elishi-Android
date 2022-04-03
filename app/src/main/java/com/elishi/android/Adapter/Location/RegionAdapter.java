@@ -18,18 +18,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Modal.Location.Region;
+import com.elishi.android.Modal.Response.PublicAPI.Locations;
 import com.elishi.android.R;
 
 import java.util.ArrayList;
 
 public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder> {
-    private ArrayList<Region> regions=new ArrayList<>();
+    private ArrayList<Locations> regions=new ArrayList<>();
     private Context context;
     private Dialog dialog;
     RecyclerView old_rec = null;
     ImageView old_arrow = null;
 
-    public RegionAdapter(ArrayList<Region> regions, Context context, Dialog dialog) {
+    public RegionAdapter(ArrayList<Locations> regions, Context context, Dialog dialog) {
         this.regions = regions;
         this.context = context;
         this.dialog = dialog;
@@ -45,7 +46,7 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
-        Region region=regions.get(position);
+        Locations region=regions.get(position);
         holder.con.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,9 +58,9 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder
             }
         });
 
-        holder.region.setText(region.getTitle_tm());
+        holder.region.setText(region.getRegion_name_tm());
         holder.region.setTypeface(Utils.getRegularFont(context));
-        SubLocationAdapter subLocationAdapter=new SubLocationAdapter(region.getSubLocations(),context,dialog);
+        SubLocationAdapter subLocationAdapter=new SubLocationAdapter(region.getSub_locations(),context,dialog);
         holder.subLocationRec.setAdapter(subLocationAdapter);
         holder.subLocationRec.setLayoutManager(new LinearLayoutManager(context));
     }

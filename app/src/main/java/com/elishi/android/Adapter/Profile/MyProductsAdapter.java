@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.elishi.android.Common.PlaceHolderColors;
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Modal.Profile.MyProduct;
 import com.elishi.android.R;
@@ -21,6 +22,7 @@ import com.elishi.android.databinding.MyProductItemBinding;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
     private ArrayList<MyProduct> myProducts=new ArrayList<>();
@@ -42,9 +44,12 @@ public class MyProductsAdapter extends RecyclerView.Adapter<MyProductsAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MyProduct product=myProducts.get(position);
+        final int min = 0;
+        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
+        final int r = new Random().nextInt((max - min) + 1) + min;
         Glide.with(context)
                 .load(product.getImage())
-                .placeholder(R.drawable.placeholder)
+                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(binding.image);
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

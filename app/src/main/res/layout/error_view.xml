@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="16dp"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_no_internet"
+        android:layout_gravity="center_horizontal"
+        app:tint="@color/solid" />
+
+    <com.elishi.android.View.CustomViews.AppTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Something went wrong"
+        app:tvFont="medium"
+        android:textSize="20sp"
+        android:textColor="@color/fourth"
+        android:layout_marginTop="12dp"
+        />
+
+    <Button
+        android:id="@+id/retryButton"
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:text="Gaýtadan barla"
+        android:background="@drawable/main_gradient"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

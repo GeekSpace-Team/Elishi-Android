@@ -2,10 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/CategoryCon"
-    android:layout_width="wrap_content"
+    android:layout_width="120dp"
     android:layout_height="wrap_content"
     >
 
+
+
+
+    <RelativeLayout
+        android:id="@+id/imgCardBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <com.google.android.material.card.MaterialCardView
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -13,7 +20,7 @@
         android:id="@+id/imgCard"
         app:cardCornerRadius="15dp"
         app:cardElevation="3dp"
-        app:cardBackgroundColor="#7839787A"
+        app:cardBackgroundColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -29,18 +36,38 @@
                 app:riv_corner_radius="15dp" />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
 
-
+    <RelativeLayout
+        android:layout_alignParentEnd="true"
+        android:id="@+id/statusBg"
+        android:background="@drawable/new_status_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_status"
+            android:textColor="@color/realWhite"
+            android:textSize="10sp"
+            android:paddingStart="10sp"
+            android:paddingEnd="10dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            />
+    </RelativeLayout>
     <TextView
         android:layout_marginStart="8dp"
         android:id="@+id/CategoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imgCard"
+        android:layout_below="@id/imgCardBg"
         android:layout_marginTop="10dp"
         android:text="@string/gift"
         android:textColor="@color/fourth"
         android:textSize="13sp"
         android:textStyle="bold" />
+
+
 
 </RelativeLayout>

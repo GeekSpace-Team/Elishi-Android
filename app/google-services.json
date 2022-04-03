@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "509394662153",
+    "project_id": "elishi-d4682",
+    "storage_bucket": "elishi-d4682.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509394662153:android:088e2e856447e9147019d8",
+        "android_client_info": {
+          "package_name": "com.elishi.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509394662153-qoar63tjhh6nvq3pek29stf8dd845etj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEwtyF7o8xKMlz25D5LLX4EmLkJ1HBoR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509394662153-qoar63tjhh6nvq3pek29stf8dd845etj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

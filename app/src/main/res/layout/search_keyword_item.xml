@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/itemBg"
+        android:background="@drawable/white_round"
+        android:padding="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#Haly"
+            app:tvFont="regular"
+            android:textSize="14sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/fourth"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

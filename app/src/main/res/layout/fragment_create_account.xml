@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:background="@android:color/transparent"
-                android:hint="Ваше полное имя"
+                android:hint="@string/full_name"
                 android:textColorHint="@color/disabled"
                 android:textColor="@color/fourth"
                 android:textSize="14sp"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:background="@android:color/transparent"
-                android:text="Ваше место жительства"
+                android:text="@string/your_address"
                 android:textColorHint="@color/disabled"
                 android:textColor="@color/disabled"
                 android:textSize="14sp"
@@ -93,11 +93,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="22dp"
             android:background="@drawable/main_gradient"
-            android:text="Сохранять"
+            android:text="@string/save"
             android:paddingStart="30dp"
             android:paddingEnd="30dp"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/realWhite"
             />
 
     </LinearLayout>

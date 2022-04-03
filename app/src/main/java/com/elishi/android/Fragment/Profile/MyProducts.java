@@ -60,4 +60,10 @@ public class MyProducts extends Fragment {
         binding.myProductsRec.setAdapter(new MyProductsAdapter(myProducts,context));
         binding.myProductsRec.setLayoutManager(new GridLayoutManager(context,3));
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding=null;
+    }
 }

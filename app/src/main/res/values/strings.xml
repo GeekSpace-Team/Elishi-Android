@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Elishi</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="search">Gözleg...</string>
     <string name="gift">Sowgatlar</string>
     <string name="new_products">Täze harytlar</string>
@@ -13,8 +13,72 @@
     <string name="login">Içeri gir</string>
     <string name="create_account">Agza bol</string>
     <string name="profile">Hasabym</string>
+    <string name="more"><u>Doly görkez</u></string>
+    <string name="edit">Üýtgetmek</string>
+    <string name="delete">Pozmak</string>
+    <string name="bring_to_front">Ýokary geçirmek</string>
+    <string name="settings">Sazlamalar</string>
+    <string name="about">Biz barada</string>
+    <string name="help">Kömek</string>
+    <string name="edit_profile">Hasaby üýtgetmek</string>
+    <string name="logout">Ulgamdan çykmak</string>
+    <string name="clear"><u>Arassala</u></string>
+    <string name="name">Harydyň ady</string>
+    <string name="address">Salgysy</string>
+    <string name="size">Ölçegi</string>
+    <string name="user">Ulanyjy</string>
+    <string name="top_search">Meşhur gözlegler:</string>
+    <string name="search_history">Gözleg taryhy:</string>
+    <string name="account_not_found">Bu telefon belgide hasap tapylmady</string>
+    <string name="do_you_want_regist">Agza bolmak isleýäňizmi?</string>
+    <string name="no">Ýok</string>
+    <string name="yes">Hawa</string>
+    <string name="discount">Arzanladysh</string>
+    <string name="add_product">Haryt goşmak</string>
+    <string name="enter_name">Harydyň ady:*</string>
+    <string name="enter_product_name">Haryt adyny giriziň...</string>
+    <string name="price">Baha:</string>
+    <string name="select_category">Kategoriýasyny saýla:*</string>
+    <string name="size_">Ölçegi:</string>
+    <string name="phone_number">Telefon belgi:*</string>
+    <string name="description_product">Harydyň doly maglumady:</string>
+    <string name="product_desc_">Harydyň doly maglumaty...</string>
+    <string name="select_main_image">Esasy suraty saýla:*</string>
+    <string name="click_to_select_image">Suraty saýlamak üçin bas</string>
+    <string name="select_other_image">Goşmaça suratlary saýla:</string>
+    <string name="save">Ýatda saklat</string>
+    <string name="full_name">Doly adyňyz</string>
+    <string name="your_address">Siziň salgyňyz</string>
+    <string name="filterle">Filterle</string>
+    <string name="enter_phone">Telefon belgiňizi giriziň</string>
+    <string name="phone_number_title">Telefon belgiňiz</string>
+    <string name="sort">Tertiplemek</string>
+    <string name="filter">Filter</string>
+    <string name="verify_code">Sms arkaly gelen tassyklaýjy kody giriziň</string>
+    <string name="verify_code_">Tassyklaýjy kod:</string>
+    <string name="verify_code__">Gaýtadan ugratmak</string>
+    <string name="first_state">Başdaky ýagdaý</string>
+    <string name="price_up">Baha artýan</string>
+    <string name="price_down">Baha kemelýän</string>
+    <string name="from_a">A-dan Z-a</string>
+    <string name="form_z">Z-dan A-a</string>
+    <string name="cancel">Aýyr</string>
 
-    <string name="content">With the idea of imparting programming
+    <string-array name="items">
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+        <item>One</item>
+    </string-array>
+
+
+    <string name="content" translatable="false">With the idea of imparting programming
       knowledge, Mr. Sandeep Jain, an IIT Roorkee alumnus started a
       dream, GeeksforGeeks. Whether programming excites you or you feel
       stifled, wondering how to prepare for interview questions or how to
@@ -29,26 +93,22 @@
       and landed jobs at tech giants. Our vision is to build a gigantic network of
       geeks and we are only a fraction of it yet.
   </string>
-    <string name="more"><u>More</u></string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    <string name="bring_to_front">Bring to Front</string>
-    <string name="settings">Settings</string>
-    <string name="about">About</string>
-    <string name="help">Help</string>
-    <string name="edit_profile">Edit profile</string>
-    <string name="logout">Logout</string>
-
-    <string-array name="items">
-        <item>One</item>
-        <item>One</item>
-        <item>One</item>
-        <item>One</item>
-        <item>One</item>
-        <item>One</item>
-        <item>One</item>
-        <item>One</item>
-        <item>One</item>
-        <item>One</item>
-    </string-array>
+    <string name="search_result">Gözleg netijesi</string>
+    <string name="select_language">Dil saýla:</string>
+    <string name="is_logout">Ulgamdan çykmak?</string>
+    <string name="phone">Telefon belgisi</string>
+    <string name="category_">Kategoriýasy</string>
+    <string name="also_product">Meňzeş harytlar:</string>
+    <string name="call">Jaň etmek</string>
+    <string name="no_internet">Internet ýok</string>
+    <string name="master_product">Master</string>
+    <string name="vip_product">VIP önümi</string>
+    <string name="user_info">Ulanyjy</string>
+    <string name="error_message">Ýalňyşlyk ýüze çykdy!</string>
+    <string name="fill_out">Maglumatlary doly giriziň</string>
+    <string name="day_products">Günüň harytlary</string>
+    <string name="congratulations">Gutlaglar</string>
+    <string name="new_status">Täze</string>
+    <string name="try_again">Täzeden Barla</string>
+    <string name="vip_ulanyjylar">Vip ulanyjylar</string>
 </resources>

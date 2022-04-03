@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/transparent"
+    android:layout_height="wrap_content">
+
+
+    <View
+        android:layout_width="70dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/stroke"
+        />
+
+    <com.elishi.android.View.CustomViews.AppTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/sort"
+        android:textColor="@color/fourth"
+        android:textSize="16sp"
+        app:tvFont="medium"
+        />
+
+
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/firstButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:checked="true"
+                android:id="@+id/first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checked_bg"
+                />
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/first_state"
+                android:textColor="@color/fourth"
+                android:textSize="12sp"
+                android:layout_marginStart="12dp"
+                app:tvFont="regular"
+                android:labelFor="@+id/first"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/stroke"/>
+
+        <LinearLayout
+            android:id="@+id/secondButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checked_bg"
+                />
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/price_up"
+                android:textColor="@color/fourth"
+                android:textSize="12sp"
+                android:layout_marginStart="12dp"
+                app:tvFont="regular"
+                android:labelFor="@+id/first"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/stroke"/>
+
+        <LinearLayout
+            android:id="@+id/thirdButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checked_bg"
+                />
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/price_down"
+                android:textColor="@color/fourth"
+                android:textSize="12sp"
+                android:layout_marginStart="12dp"
+                app:tvFont="regular"
+                android:labelFor="@+id/first"
+                />
+        </LinearLayout>
+
+
+        <View
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/stroke"/>
+
+        <LinearLayout
+            android:id="@+id/fourthButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/fourth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checked_bg"
+                />
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/from_a"
+                android:textColor="@color/fourth"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"
+                app:tvFont="regular"
+                android:labelFor="@+id/first"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/stroke"/>
+
+        <LinearLayout
+            android:id="@+id/fifthButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/fifth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checked_bg"
+                />
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/form_z"
+                android:textColor="@color/fourth"
+                android:layout_marginStart="12dp"
+                android:textSize="12sp"
+                app:tvFont="regular"
+                android:labelFor="@+id/first"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:background="@color/stroke"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cancel"
+        android:padding="16dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            app:tvFont="medium"
+            android:textSize="16sp"
+            android:textColor="@color/second"
+            />
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

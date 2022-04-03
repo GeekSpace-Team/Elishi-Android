@@ -1,7 +1,9 @@
 package com.elishi.android.Common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -28,11 +30,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.elishi.android.Modal.Response.Message;
 import com.elishi.android.R;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static android.content.Context.MODE_PRIVATE;
+
+import java.util.Locale;
 
 public class Utils {
     public static void hideAdd(Fragment fragment, String tagFragmentName, FragmentManager mFragmentManager, int frame) {
@@ -50,7 +55,7 @@ public class Utils {
         } else {
             fragmentTransaction.show(fragmentTemp);
         }
-
+        fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
         fragmentTransaction.setPrimaryNavigationFragment(fragmentTemp);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNowAllowingStateLoss();
@@ -73,7 +78,7 @@ public class Utils {
         } else {
             fragmentTransaction.show(fragmentTemp);
         }
-
+        fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
         fragmentTransaction.setPrimaryNavigationFragment(fragmentTemp);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNowAllowingStateLoss();
@@ -107,6 +112,25 @@ public class Utils {
     public static Typeface getThinFont(Context context) {
         Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Gordita Thin.otf");
         return font;
+    }
+
+    public static Typeface getBlackFont(Context context) {
+        Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Gordita Black.otf");
+        return font;
+    }
+
+    public static Typeface getUltraFont(Context context) {
+        Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Gordita Ultra.otf");
+        return font;
+    }
+    public static Typeface getMRC(Context context) {
+        Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/m_rc.ttf");
+        return font;
+    }
+
+
+    public static Typeface getFontByName(Context context,String name) {
+        return Typeface.createFromAsset(context.getAssets(), "fonts/"+name);
     }
 
 
@@ -217,6 +241,45 @@ public class Utils {
         return result;
     }
 
+    public static void setLocale(String lang, Context context) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+        //saved data to shared preferences
+        SharedPreferences.Editor editor = context.getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        editor.putString("My_Lang", lang);
+        editor.apply();
+    }
+
+    // load language saved in shared preferences
+    public static void loadLocal(Context context) {
+        SharedPreferences share = context.getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        String languages = share.getString("My_Lang", "");
+        Utils.setLocale(languages, context);
+    }
+
+
+    public static String getLanguage(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("Settings", MODE_PRIVATE);
+        String value = prefs.getString("My_Lang", "tm");
+        return value;
+    }
+
+    public static String checkMessage(Context context, Message message){
+        if(message==null){
+            return "";
+        }
+        String msg = message.getTm();
+        if(Utils.getLanguage(context).equals("ru")){
+            msg=message.getRu();
+        }
+        if(Utils.getLanguage(context).equals("en")){
+            msg=message.getEn();
+        }
+        return msg;
+    }
 
 
 }

@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/download"
+        android:id="@+id/settingsContainer"
         android:background="?android:attr/selectableItemBackground"
         android:padding="8dp">
 
@@ -27,7 +27,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_settings"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            app:tint="@color/fourth" />
 
         <TextView
             android:id="@+id/settingsTV"
@@ -44,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/shareLinearLayout"
+        android:id="@+id/aboutContainer"
         android:background="?android:attr/selectableItemBackground"
         android:padding="8dp">
 
@@ -52,6 +53,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_about"
+            app:tint="@color/fourth"
             android:layout_margin="8dp"/>
 
         <TextView
@@ -70,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/uploadLinearLaySout"
+        android:id="@+id/helpContainer"
         android:background="?android:attr/selectableItemBackground"
         android:padding="8dp">
 
@@ -78,6 +80,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_help"
+            app:tint="@color/fourth"
             android:layout_margin="8dp"/>
 
         <TextView
@@ -96,7 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/copyLinearLayout"
+        android:id="@+id/editProfile"
         android:background="?android:attr/selectableItemBackground"
         android:padding="8dp">
 
@@ -104,6 +107,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_edit"
+            app:tint="@color/fourth"
             android:layout_margin="8dp"/>
 
         <TextView
@@ -121,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/delete"
+        android:id="@+id/logout"
         android:background="?android:attr/selectableItemBackground"
         android:padding="8dp">
 
@@ -129,7 +133,9 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_logout"
-            android:layout_margin="8dp"/>
+            app:tint="@color/fourth"
+            android:layout_margin="8dp"
+            />
 
         <TextView
             android:id="@+id/logoutTV"

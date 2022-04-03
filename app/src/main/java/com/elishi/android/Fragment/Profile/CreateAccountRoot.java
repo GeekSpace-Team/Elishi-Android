@@ -32,4 +32,6 @@ public class CreateAccountRoot extends Fragment {
         getFragmentManager().beginTransaction().replace(R.id.createAccountRoot,new PhoneVerification("createAccount"),PhoneVerification.class.getSimpleName()).commit();
         return inflater.inflate(R.layout.fragment_create_account_root, container, false);
     }
+
+
 }

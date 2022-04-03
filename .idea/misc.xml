@@ -3,52 +3,123 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/.gradle/wrapper/dists/gradle-6.1.1-all/caches/transforms-2/files-2.1/0ff151c4cb436e35353ffe8b6b65da5a/jetified-swipeback-1.0.4/res/layout/swipeback_default.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-hdpi/bottom_sheet_round.xml" value="0.37962962962962965" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-hdpi/main_gradient.xml" value="0.37962962962962965" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-hdpi/main_gradient_round.xml" value="0.37962962962962965" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-v24/first_icon.xml" value="0.3111111111111111" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-v24/gradient.xml" value="0.38153846153846155" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-v24/image_round_bg.xml" value="0.38153846153846155" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-xhdpi/checked_icon.xml" value="0.38153846153846155" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-xhdpi/filter_bg.xml" value="0.38153846153846155" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-xhdpi/tab_indicator.xml" value="0.3592592592592593" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable-xhdpi/tab_indiçator.xml" value="0.3592592592592593" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/checked_bg.xml" value="0.38153846153846155" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/corner_radius.xml" value="0.3138888888888889" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/cyrcle.xml" value="0.3875" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/disble_cyrcle.xml" value="0.3398148148148148" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/first_color_round.xml" value="0.38153846153846155" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/gradient_cyrcle.xml" value="0.3875" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/ic_baseline_person_outline_24.xml" value="0.37962962962962965" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/ic_baseline_radio_button_unchecked_24.xml" value="0.38153846153846155" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/ic_gradient_button.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/ic_no_internet.xml" value="0.3101851851851852" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/ic_person.xml" value="0.3398148148148148" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/ic_profile.xml" value="0.3398148148148148" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/ic_tm_flag.xml" value="0.3875" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/lef_round.xml" value="0.3731481481481482" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/loc_bg.xml" value="0.38153846153846155" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/main_gradient.xml" value="0.3592592592592593" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/master_status_background.xml" value="0.3138888888888889" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/new_status_background.xml" value="0.3138888888888889" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/outline_button.xml" value="0.3101851851851852" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/person_icon.xml" value="0.37962962962962965" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/plc.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/product_bg.xml" value="0.3875" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/rounded.xml" value="0.38153846153846155" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/rounded_background.xml" value="0.38153846153846155" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/skeleton_bg_round.xml" value="0.38153846153846155" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/status_desc_bg.xml" value="0.3138888888888889" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/tab_round_bg.xml" value="0.38153846153846155" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/top_round.xml" value="0.37962962962962965" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/transparent_alert_bg.xml" value="0.3398148148148148" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/transparent_gradient.xml" value="0.38153846153846155" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/vip_status_background.xml" value="1.4125" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/drawable/white_round.xml" value="0.38153846153846155" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/activity_main.xml" value="0.31666666666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/activity_product_page.xml" value="0.33" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/activity_product_view.xml" value="0.18" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/activity_search_page.xml" value="0.22" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/alert_dialog.xml" value="0.33" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/all_category_design.xml" value="0.19692307692307692" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/app_snackbar.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/back_view.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/banner_item.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/category_template_1.xml" value="0.19692307692307692" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/category_template_2.xml" value="0.19692307692307692" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/category_template_3.xml" value="0.19692307692307692" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/category_template_4.xml" value="0.19692307692307692" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/custom_2.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/custom_dropdown_layout.xml" value="0.2" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/custom_tab_item.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/dialog_no_account.xml" value="0.36564102564102563" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/elishi_select.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/elishi_text_area.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/error_view.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/event_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/filter_dialog.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/filter_item_design.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/filter_list_design.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_add_product.xml" value="0.19834710743801653" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_category.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_constant_page.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_create_account.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_create_account_root.xml" value="0.37135416666666665" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_holiday_view.xml" value="0.25" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_favorites.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_filter_dialog.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_filter_items.xml" value="0.33" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_filter_list.xml" value="0.22" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_holiday_view.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_login.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_my_holidays.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_my_products.xml" value="0.37135416666666665" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_my_profile.xml" value="0.34127979924717694" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_phone_verification.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_my_profile.xml" value="0.22" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_phone_verification.xml" value="0.22" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_products.xml" value="0.22" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_profile.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_profile_root.xml" value="0.37135416666666665" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_regist_root.xml" value="0.37135416666666665" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_verify_code.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_regist_root.xml" value="0.22" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_settings.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/fragment_verify_code.xml" value="0.22" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/location_design.xml" value="0.37135416666666665" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/menu_dialog.xml" value="0.37135416666666665" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/my_holiday_item.xml" value="0.337037037037037" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/master_status_background.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/menu_dialog.xml" value="0.33" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/my_custom_edit_text.xml" value="0.22" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/my_holiday_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/my_product_item.xml" value="0.37135416666666665" />
-        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/select_location_dialog.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/no_internet.xml" value="0.1" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/product_design.xml" value="0.33" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/product_image.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/product_image_slider.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/product_page_bottom_sheet.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/search_history_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/search_keyword_item.xml" value="0.7333333333333334" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/select_location_dialog.xml" value="0.22" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/short_category.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/skeleton_cyrcle.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/skeleton_home.xml" value="0.25" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/skeleton_product.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/skeleton_round.xml" value="0.2" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/sort_dialog.xml" value="0.10185185185185185" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/sub_loc_design.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/tab.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/unselecttab.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/layout/vip_user.xml" value="0.2" />
         <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/menu/actions.xml" value="0.337037037037037" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/menu/bottom_menu.xml" value="0.753968253968254" />
+        <entry key="..\:/Users/User/Downloads/FirebaseRealtimeDatabase-Android-master/Elishi/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.38153846153846155" />
       </map>
     </option>
   </component>

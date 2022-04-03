@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/container"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/con2"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/title2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/discount"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textSize="14sp"
+            app:tvFont="regular"
+            android:textColor="@color/fourth"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_height="15dp"
+            app:tint="@color/fourth" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/con1"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"
+                app:tvFont="regular"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:textColor="@color/fourth"
+                />
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(0)"
+                app:tvFont="medium"
+                android:layout_marginStart="3dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"
+                android:textColor="@color/second"
+                />
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="15dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+            app:tint="@color/fourth" />
+
+
+    </LinearLayout>
+    <View
+        android:id="@+id/stroke"
+        android:layout_below="@id/con1"
+        android:background="@color/stroke"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_height="0.4dp"/>
+</RelativeLayout>

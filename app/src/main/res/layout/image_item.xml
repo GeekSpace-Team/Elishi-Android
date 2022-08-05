@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="10dp" />
+
+    <ImageView
+        android:id="@+id/remove"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/remove_img_bg"
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@drawable/ic_baseline_delete_outline_24"
+        app:tint="@color/realWhite"
+        android:padding="6dp"
+        />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/in_progress"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/remove_img_bg"
+        android:layout_alignParentEnd="true"
+        android:padding="6dp"
+        >
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/error"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/red_transparent"
+        android:layout_centerInParent="true"
+        android:padding="6dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="0dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_baseline_error_outline_24"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:tint="@color/realWhite" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/success"
+        android:layout_width="36dp"
+        android:visibility="gone"
+        android:layout_height="36dp"
+        app:cardBackgroundColor="@color/success_transparent"
+        android:layout_centerInParent="true"
+        android:padding="6dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="0dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_centerInParent="true"
+                app:srcCompat="@drawable/ic_baseline_check_circle_outline_24"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:tint="@color/realWhite" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/addImageButton"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/ic_add_image"
+        app:tint="@color/fourth" />
+
+
+
+</RelativeLayout>

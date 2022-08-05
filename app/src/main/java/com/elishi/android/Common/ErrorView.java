@@ -34,7 +34,7 @@ public class ErrorView {
         final int r = new Random().nextInt((max - min) + 1) + min;
         Glide.with(context)
                 .load(imageUrl)
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(binding.image);
     }
     public void setImage(Drawable drawable){

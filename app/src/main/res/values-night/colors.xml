@@ -5,7 +5,7 @@
     <color name="third">#ADADAD</color>
     <color name="fourth">#FFFFFF</color>
     <color name="fifth">#FFECD1</color>
-    <color name="white">#1F1B24 </color>
+    <color name="white">#171717 </color>
     <color name="text_color">#FFFFFF</color>
     <color name="tab_text_color">#4C4F4D</color>
     <color name="text_filed">#1F1B24</color>
@@ -19,6 +19,7 @@
     <color name="realWhite">#FFFFFF</color>
     <color name="realBlack">#181725</color>
     <color name="transpaerntbg">#F2121212</color>
+    <color name="gray3">#828282</color>
     <!--  Placeholder colors  -->
     <color name="placeholder1">#f7ede2</color>
     <color name="placeholder2">#ddbea9</color>
@@ -31,4 +32,21 @@
     <color name="placeholder9">#ece4db</color>
     <color name="placeholder10">#fefae0</color>
     <color name="placeholder11">#e9ecef</color>
+
+
+    <!--  Sub category colors  -->
+    <color name="sub_color_1">#E6DFF8</color>
+    <color name="sub_color_2">#FFEE9F</color>
+    <color name="sub_color_3">#F3D3FE</color>
+    <color name="sub_color_4">#CBCCFF</color>
+    <color name="sub_color_5">#FDC3BE</color>
+    <color name="sub_color_6">#E0F5FE</color>
+    <color name="sub_color_7">#BCF68C</color>
+    <color name="sub_color_8">#EDDFC9</color>
+    <color name="sub_color_9">#E9DFFE</color>
+    <color name="sub_color_10">#A7F1B6</color>
+
+    <color name="dialogBg">#251D3A</color>
+
+    <color name="titleColor">#757474</color>
 </resources>

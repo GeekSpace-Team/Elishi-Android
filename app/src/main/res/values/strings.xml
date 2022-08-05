@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Elishi</string>
+    <string name="app_name">Elisi</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="search">Gözleg...</string>
@@ -19,7 +19,7 @@
     <string name="bring_to_front">Ýokary geçirmek</string>
     <string name="settings">Sazlamalar</string>
     <string name="about">Biz barada</string>
-    <string name="help">Kömek</string>
+    <string name="help">Gizlinlik syýasaty</string>
     <string name="edit_profile">Hasaby üýtgetmek</string>
     <string name="logout">Ulgamdan çykmak</string>
     <string name="clear"><u>Arassala</u></string>
@@ -29,40 +29,40 @@
     <string name="user">Ulanyjy</string>
     <string name="top_search">Meşhur gözlegler:</string>
     <string name="search_history">Gözleg taryhy:</string>
-    <string name="account_not_found">Bu telefon belgide hasap tapylmady</string>
+    <string name="account_not_found">Bu telefon belgide hasap tapylmady!</string>
     <string name="do_you_want_regist">Agza bolmak isleýäňizmi?</string>
     <string name="no">Ýok</string>
     <string name="yes">Hawa</string>
-    <string name="discount">Arzanladysh</string>
-    <string name="add_product">Haryt goşmak</string>
+    <string name="discount">Arzanladyş</string>
+    <string name="add_product">Harydy goşmak</string>
     <string name="enter_name">Harydyň ady:*</string>
-    <string name="enter_product_name">Haryt adyny giriziň...</string>
+    <string name="enter_product_name">Harydyň adyny giriziň...</string>
     <string name="price">Baha:</string>
     <string name="select_category">Kategoriýasyny saýla:*</string>
     <string name="size_">Ölçegi:</string>
     <string name="phone_number">Telefon belgi:*</string>
-    <string name="description_product">Harydyň doly maglumady:</string>
-    <string name="product_desc_">Harydyň doly maglumaty...</string>
+    <string name="description_product">Haryt barada doly maglumat:</string>
+    <string name="product_desc_">Harydyň doly maglumatyny giriziň...</string>
     <string name="select_main_image">Esasy suraty saýla:*</string>
-    <string name="click_to_select_image">Suraty saýlamak üçin bas</string>
+    <string name="click_to_select_image">Suraty saýlamak üçin basyň</string>
     <string name="select_other_image">Goşmaça suratlary saýla:</string>
-    <string name="save">Ýatda saklat</string>
+    <string name="save">Ýatda sakla</string>
     <string name="full_name">Doly adyňyz</string>
     <string name="your_address">Siziň salgyňyz</string>
-    <string name="filterle">Filterle</string>
+    <string name="filterle">Filtrlemek</string>
     <string name="enter_phone">Telefon belgiňizi giriziň</string>
     <string name="phone_number_title">Telefon belgiňiz</string>
     <string name="sort">Tertiplemek</string>
-    <string name="filter">Filter</string>
-    <string name="verify_code">Sms arkaly gelen tassyklaýjy kody giriziň</string>
+    <string name="filter">Filtr</string>
+    <string name="verify_code">SMS arkaly gelen tassyklaýjy kody giriziň</string>
     <string name="verify_code_">Tassyklaýjy kod:</string>
     <string name="verify_code__">Gaýtadan ugratmak</string>
-    <string name="first_state">Başdaky ýagdaý</string>
-    <string name="price_up">Baha artýan</string>
-    <string name="price_down">Baha kemelýän</string>
-    <string name="from_a">A-dan Z-a</string>
-    <string name="form_z">Z-dan A-a</string>
-    <string name="cancel">Aýyr</string>
+    <string name="first_state">Başlangyç ýagdaýy</string>
+    <string name="price_up">Arzandan gymmata</string>
+    <string name="price_down">Gymmatdan arzana</string>
+    <string name="from_a">Senesi: köneden-täzä</string>
+    <string name="form_z">Senesi: täzeden-könä</string>
+    <string name="cancel">Ýatyrmak</string>
 
     <string-array name="items">
         <item>One</item>
@@ -93,16 +93,16 @@
       and landed jobs at tech giants. Our vision is to build a gigantic network of
       geeks and we are only a fraction of it yet.
   </string>
-    <string name="search_result">Gözleg netijesi</string>
-    <string name="select_language">Dil saýla:</string>
-    <string name="is_logout">Ulgamdan çykmak?</string>
+    <string name="search_result">Gözlegiň netijesi</string>
+    <string name="select_language">Dili saýla:</string>
+    <string name="is_logout">Hasabyňyzdan çykmak isleýärsiňizmi?</string>
     <string name="phone">Telefon belgisi</string>
     <string name="category_">Kategoriýasy</string>
     <string name="also_product">Meňzeş harytlar:</string>
     <string name="call">Jaň etmek</string>
     <string name="no_internet">Internet ýok</string>
     <string name="master_product">Master</string>
-    <string name="vip_product">VIP önümi</string>
+    <string name="vip_product">VIP önüm</string>
     <string name="user_info">Ulanyjy</string>
     <string name="error_message">Ýalňyşlyk ýüze çykdy!</string>
     <string name="fill_out">Maglumatlary doly giriziň</string>
@@ -110,5 +110,80 @@
     <string name="congratulations">Gutlaglar</string>
     <string name="new_status">Täze</string>
     <string name="try_again">Täzeden Barla</string>
-    <string name="vip_ulanyjylar">Vip ulanyjylar</string>
+    <string name="vip_ulanyjylar">VIP ulanyjylar</string>
+    <string name="page_not_available">Bu bölüm wagtlaýynça işlemeýär!</string>
+    <string name="please_update">Täzeliklerden habarly bolmak üçin ykjam programmany täzelemeli.</string>
+    <string name="update_app">Täzele</string>
+    <string name="status">Status:</string>
+    <string name="cancel_reason">Ret edilmeginiň sebäbi:</string>
+
+    <!--  Product Status  -->
+    <string name="pending_product">Garaşylýar</string>
+    <string name="active_product">Tassyklanyldy</string>
+    <string name="master_product_st">Master önümi</string>
+    <string name="vip_product_st">VIP önümi</string>
+    <string name="canceled_product">Ret edildi</string>
+    <string name="no_data">Maglumat ýok</string>
+    <string name="email">Elektron poçtaňyz</string>
+    <string name="man">Erkek</string>
+    <string name="women">Aýal</string>
+    <string name="your_located_place">Ýerleşýän ýeriňiz</string>
+    <string name="email_verify">E-mail gelen kody giriziň</string>
+    <string name="set_permission">Rugsat bermeli</string>
+    <string name="must_first_image">Esasy suraty saýlaň</string>
+    <string name="must_name">Harydyň adyny giriziň</string>
+    <string name="must_category">Kategoriýany saýlaň</string>
+    <string name="product_adding">Haryt goşulýar</string>
+    <string name="please_wait">Biraz garaşyň...</string>
+    <string name="successfully_added">Üstünlikli goşuldy</string>
+    <string name="get_code"><u>Kod al</u></string>
+    <string name="details">Giňişleýin</string>
+    <string name="images">Suratlar</string>
+    <string name="similar">Meňzeş harytlar</string>
+    <string name="add_fav">Halanlaryma goş</string>
+    <string name="options">Goşmaça</string>
+    <string name="add">Goşmak</string>
+    <string name="call_to_user">Jaň etmek</string>
+    <string name="calls">Jaň</string>
+    <string name="share">Paýlaş</string>
+    <string name="shareProduct">Önümi paýlaş</string>
+    <string name="send">Ugrat</string>
+    <string name="shareAsImage">Surat görnüşde paýlaş</string>
+    <string name="removeFav">Halanlarymdan aýyrmak</string>
+    <string name="remove">Aýyrmak</string>
+    <string name="reachLimit">Önümleriň sany çäklendirildi</string>
+    <string name="toAddMore">Has köp önüm goşmak üçin şu telefon belgi bilen habarlaşyň <b><font color="#FD654C"><u>+99362737222</u></font></b></string>
+    <string name="no_login">Hasap tapylmady</string>
+    <string name="please_login">Bu bölümi ulanmak üçin hasaba girmegiňizi haýyş edýäris</string>
+    <string name="must_verify_code">Telefon belgini tassyklaň</string>
+    <string name="verify_code_wrong">Tassyklaýjy kod nädogry</string>
+    <string name="successfully_updated">Üstünlikli üýtgetdildi</string>
+    <string name="product_updating">Haryt üýtgedilýär</string>
+    <string name="ok">Ok</string>
+    <string name="pay_attention">Üns beriň</string>
+    <string name="do_you_want_delete">Bu önümi pozmak isleýärsiňizmi?</string>
+    <string name="no_favs">Halanlarym ýok</string>
+    <string name="products">Harytlar</string>
+    <string name="accept_privacy">Düzgünnamany okadym we kabul edýärin</string>
+    <string name="must_accept_policy">Düzgünnamany kabul ediň</string>
+    <string name="intro_title_1">Elişi ykjam programmasy</string>
+    <string name="intro_message_1">Islendik pursat üçin sowgatlar!</string>
+    <string name="intro_title_2">Özboluşly</string>
+    <string name="intro_message_2">Her bir eser özboluşly!</string>
+    <string name="intro_title_3">Elden-ele</string>
+    <string name="intro_message_3">Eserleri öz eýesinden satyn almak mümkinçiligi!</string>
+    <string name="home_intro_title">Baş sahypa</string>
+    <string name="home_message">Bu sahypada täze önümler, geçirilýän çäreler we trend harytlar görkeziler</string>
+    <string name="category_message">Bu sahypada, ýerleşdirilen kategoriýalary görüp bilersiňiz</string>
+    <string name="add_product_message">Bu bölümde täze harytlary goşup bilersiňiz</string>
+    <string name="favorites_message">Bu bölümde siz öz halan harytlaryňyzy belläp aýratynlykda goýup bilersiňiz</string>
+    <string name="profile_message">Bu sahypada siz öz hasabyňyzy dolandyryp bilersiňiz</string>
+    <string name="next">Indiki</string>
+    <string name="must_login">Bu bölümi ulanmak üçin hasabyňyzy dörediň</string>
+    <string name="must_login_title">Agza boluň</string>
+    <string name="reclam">Reklama</string>
+    <string name="feedBack">Baha bermek</string>
+    <string name="mester_privacy">Master tarapyndan kepillendilen</string>
+    <string name="read_more2">Doly oka</string>
+    <string name="splash_description">El işleriniň döredijilik dünýäsine hoş geldiňiz!</string>
 </resources>

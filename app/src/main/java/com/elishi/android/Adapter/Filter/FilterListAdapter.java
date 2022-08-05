@@ -15,7 +15,9 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elishi.android.Common.FilterType;
 import com.elishi.android.Common.Utils;
+import com.elishi.android.Fragment.Product.Products;
 import com.elishi.android.Fragment.ProductFilter.FilterItems;
 import com.elishi.android.Modal.Filter.FilterList;
 import com.elishi.android.R;
@@ -33,6 +35,7 @@ public class FilterListAdapter extends RecyclerView.Adapter<FilterListAdapter.Vi
         this.arrayList = arrayList;
         this.context = context;
         this.fragmentManager = supportFragmentManager;
+        Utils.loadLocal(context);
     }
 
     @NonNull
@@ -47,16 +50,42 @@ public class FilterListAdapter extends RecyclerView.Adapter<FilterListAdapter.Vi
     public void onBindViewHolder(@NonNull @NotNull FilterListAdapter.ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
         FilterList filterList=arrayList.get(position);
-        holder.title.setText(filterList.getTitle_ru());
+        holder.title.setText(filterList.getTitle_tm());
+        if(Utils.getLanguage(context).equals("ru")){
+            holder.title.setText(filterList.getTitle_ru());
+        }
+
+        if(Utils.getLanguage(context).equals("en")){
+            holder.title.setText(filterList.getTitle_en());
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.hideAdd(new FilterItems(filterList.getFilterItems()),
-                        FilterItems.class.getSimpleName()+"_"+filterList.getId(),
-                        fragmentManager,
-                        R.id.filterRoot);
+                fragmentManager.beginTransaction().replace(R.id.filterRoot,new FilterItems(filterList,holder.title.getText().toString(),arrayList),FilterItems.class.getSimpleName()).commitNow();
+
             }
         });
+
+        if(filterList.getType().equals(FilterType.CATEGORY)){
+            holder.count.setText("("+Products.sub_category.size()+")");
+        }
+
+        if(filterList.getType().equals(FilterType.PRICE)){
+            if(Products.min!=null && Products.max!=null){
+                holder.count.setText("("+Products.min+" TMT - "+Products.max+" TMT)");
+            } else {
+                holder.count.setText("(0)");
+            }
+        }
+
+        if(filterList.getType().equals(FilterType.STATUS)){
+            holder.count.setText("("+Products.status.size()+")");
+        }
+
+        if(filterList.getType().equals(FilterType.LOCATION)){
+            holder.count.setText("("+Products.region.size()+")");
+        }
     }
 
     @Override

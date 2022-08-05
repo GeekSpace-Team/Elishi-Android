@@ -23,8 +23,9 @@ public class User {
     private String region_name_tm;
     private String region_name_ru;
     private String region_name_en;
+    private Integer count_product;
 
-    public User(Integer id, String fullname, String address, String phone_number, String profile_image, Integer user_type_id, Integer region_id, String email, String notification_token, Integer gender, Integer status, String created_at, String updated_at, String token, String user_type, Integer product_limit, String district_name_tm, String district_name_ru, String district_name_en, String region_name_tm, String region_name_ru, String region_name_en) {
+    public User(Integer id, String fullname, String address, String phone_number, String profile_image, Integer user_type_id, Integer region_id, String email, String notification_token, Integer gender, Integer status, String created_at, String updated_at, String token, String user_type, Integer product_limit, String district_name_tm, String district_name_ru, String district_name_en, String region_name_tm, String region_name_ru, String region_name_en, Integer count_product) {
         this.id = id;
         this.fullname = fullname;
         this.address = address;
@@ -47,6 +48,7 @@ public class User {
         this.region_name_tm = region_name_tm;
         this.region_name_ru = region_name_ru;
         this.region_name_en = region_name_en;
+        this.count_product = count_product;
     }
 
     public Integer getId() {
@@ -223,5 +225,13 @@ public class User {
 
     public void setRegion_name_en(String region_name_en) {
         this.region_name_en = region_name_en;
+    }
+
+    public Integer getCount_product() {
+        return count_product;
+    }
+
+    public void setCount_product(Integer count_product) {
+        this.count_product = count_product;
     }
 }

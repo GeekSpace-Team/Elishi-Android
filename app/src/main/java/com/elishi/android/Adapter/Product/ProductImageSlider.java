@@ -17,6 +17,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.elishi.android.Activity.Product.ProductPage;
+import com.elishi.android.Activity.Product.ProductView;
+import com.elishi.android.Common.Constant;
 import com.elishi.android.Common.PlaceHolderColors;
 import com.elishi.android.R;
 
@@ -44,23 +46,34 @@ public class ProductImageSlider extends RecyclerView.Adapter<ProductImageSlider.
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
         String bannerSlider=sliderItems.get(position);
         final int min = 0;
-        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
+        final int max = PlaceHolderColors.PLACEHOLDERS.length - 1;
         final int r = new Random().nextInt((max - min) + 1) + min;
-
-        Glide.with(context)
-                .load(bannerSlider)
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                .into(holder.imageView);
+        String extension = "";
+        if (bannerSlider.contains(".")) {
+            extension = bannerSlider.substring(bannerSlider.lastIndexOf("."));
+        }
+        if (extension.toLowerCase().contains("gif")) {
+            Glide.with(context)
+                    .asGif()
+                    .load(bannerSlider)
+                    .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                    .thumbnail(0.25f)
+                    .into(holder.imageView);
+        } else {
+            Glide.with(context)
+                    .load(bannerSlider)
+                    .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                    .thumbnail(0.25f)
+                    .into(holder.imageView);
+        }
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ProductPage.class);
+                Intent intent = new Intent(context, ProductView.class);
                 intent.putExtra("id", productId);
                 intent.putExtra("image", bannerSlider);
                 context.startActivity(intent);
-                ((Activity)context).overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
-
             }
         });
     }

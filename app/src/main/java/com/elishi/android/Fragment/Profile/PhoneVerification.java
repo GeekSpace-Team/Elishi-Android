@@ -38,8 +38,16 @@ public class PhoneVerification extends Fragment {
     private String which="";
     private View view;
     private Context context;
-    public PhoneVerification(String which) {
-        this.which=which;
+    public PhoneVerification() {
+    }
+
+    public static PhoneVerification newInstance(String wh) {
+
+        Bundle args = new Bundle();
+        args.putString("which",wh);
+        PhoneVerification fragment = new PhoneVerification();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -53,6 +61,11 @@ public class PhoneVerification extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPhoneVerificationBinding.inflate(inflater, container, false);
+        try{
+            which= getArguments().getString("which");
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
         view = binding.getRoot();
         context=getContext();
         setViews();
@@ -92,7 +105,7 @@ public class PhoneVerification extends Fragment {
                 }
                 showProgress();
                 ApiInterface apiInterface= APIClient.getClient().create(ApiInterface.class);
-                Call<GBody<UserBody>> call=apiInterface.phoneVerification(new PhoneCode("+993"+binding.phone.getText().toString(),""));
+                Call<GBody<UserBody>> call=apiInterface.phoneVerification(new PhoneCode("+993"+binding.phone.getText().toString(),"",which));
                 call.enqueue(new Callback<GBody<UserBody>>() {
                     @Override
                     public void onResponse(Call<GBody<UserBody>> call, Response<GBody<UserBody>> response) {
@@ -128,7 +141,7 @@ public class PhoneVerification extends Fragment {
                     @Override
                     public void onFailure(Call<GBody<UserBody>> call, Throwable t) {
                         AppSnackBar snackBar=new AppSnackBar(context,view);
-                        snackBar.setTitle(t.getMessage());
+                        snackBar.setTitle(R.string.error_message);
                         snackBar.actionText(R.string.cancel);
                         snackBar.show();
                         hideProgress();

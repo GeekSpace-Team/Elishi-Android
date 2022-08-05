@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.Product.Description">
+
+    <LinearLayout
+        android:id="@+id/details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+
+
+
+           <RelativeLayout
+               android:layout_marginTop="16dp"
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <com.elishi.android.View.CustomViews.AppTextView
+                   android:id="@+id/sizeCon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/size"
+                   android:textColor="@color/titleColor"
+                   android:textSize="14sp"
+                   app:tvFont="medium" />
+
+               <com.elishi.android.View.CustomViews.AppTextView
+                   android:id="@+id/size"
+                   android:layout_alignParentEnd="true"
+                   android:layout_toEndOf="@+id/sizeCon"
+                   android:textAlignment="textEnd"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="1dp"
+                   android:text="12x16” (30.5x40.6 м)"
+                   android:textColor="@color/fourth"
+                   android:textSize="14sp"
+                   app:tvFont="medium" />
+
+           </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:id="@+id/addRessCon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address"
+                    android:textColor="@color/titleColor"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@+id/addRessCon"
+                    android:textAlignment="textEnd"
+                    android:layout_marginTop="1dp"
+                    android:lineSpacingExtra="8dp"
+                    android:text="Aşgabat"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+            </RelativeLayout>
+
+           <RelativeLayout
+               android:layout_marginTop="16dp"
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <com.elishi.android.View.CustomViews.AppTextView
+                   android:id="@+id/phoneNumberCon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/phone"
+                   android:textColor="@color/titleColor"
+                   android:textSize="14sp"
+                   app:tvFont="medium" />
+
+               <com.elishi.android.View.CustomViews.AppTextView
+                   android:id="@+id/phoneNumber"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentEnd="true"
+                   android:layout_toEndOf="@+id/phoneNumberCon"
+                   android:textAlignment="textEnd"
+                   android:layout_marginTop="1dp"
+                   android:lineSpacingExtra="8dp"
+                   android:text="+99362737222"
+                   android:textColor="@color/fourth"
+                   android:textSize="14sp"
+                   app:tvFont="medium" />
+           </RelativeLayout>
+
+           <RelativeLayout
+               android:layout_marginTop="16dp"
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <com.elishi.android.View.CustomViews.AppTextView
+                   android:id="@+id/categoryCon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/category_"
+                   android:textColor="@color/titleColor"
+                   android:textSize="14sp"
+                   app:tvFont="medium" />
+
+               <com.elishi.android.View.CustomViews.AppTextView
+                   android:id="@+id/category"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="1dp"
+                   android:layout_alignParentEnd="true"
+                   android:layout_toEndOf="@+id/categoryCon"
+                   android:textAlignment="textEnd"
+                   android:lineSpacingExtra="8dp"
+                   android:text="Haly önümleri"
+                   android:textColor="@color/fourth"
+                   android:textSize="14sp"
+                   app:tvFont="medium" />
+
+           </RelativeLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/adsCard"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="15dp"
+                app:strokeWidth="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+                    <ImageView
+                        android:id="@+id/adsImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/rounded_background"
+                        />
+                    <com.elishi.android.View.CustomViews.AppTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        app:tvFont="bold"
+                        android:textSize="12sp"
+                        android:textColor="@color/realWhite"
+                        android:background="@drawable/remove_img_bg"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="22dp"
+                        android:paddingBottom="3dp"
+                        android:paddingTop="3dp"
+                        android:text="@string/reclam"
+                        />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

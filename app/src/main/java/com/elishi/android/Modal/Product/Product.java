@@ -1,11 +1,13 @@
 package com.elishi.android.Modal.Product;
 
+import com.elishi.android.Modal.Home.Ads;
+
 import java.util.ArrayList;
 
 public class Product {
     private Integer id;
     private String product_name;
-    private Integer price;
+    private Double price;
     private Integer status;
     private String description;
     private Integer sub_category_id;
@@ -37,7 +39,12 @@ public class Product {
     private Integer isfav;
     private ArrayList<Images> images=new ArrayList<>();
 
-    public Product(Integer id, String product_name, Integer price, Integer status, String description, Integer sub_category_id, Integer user_id, Boolean is_popular, String size, String phone_number, String updated_at, String created_at, Integer view_count, String cancel_reason, String fullname, String region_name_tm, String region_name_ru, String region_name_en, String district_name_tm, String district_name_ru, String district_name_en, String address, String profile_image, String email, Integer gender, String user_phone_number, String sub_category_name_en, String sub_category_name_ru, String sub_category_name_tm, String user_type, Integer product_limit, Integer isfav, ArrayList<Images> images) {
+    // For ads
+    private Ads ads;
+
+    private String layout_type;
+
+    public Product(Integer id, String product_name, Double price, Integer status, String description, Integer sub_category_id, Integer user_id, Boolean is_popular, String size, String phone_number, String updated_at, String created_at, Integer view_count, String cancel_reason, String fullname, String region_name_tm, String region_name_ru, String region_name_en, String district_name_tm, String district_name_ru, String district_name_en, String address, String profile_image, String email, Integer gender, String user_phone_number, String sub_category_name_en, String sub_category_name_ru, String sub_category_name_tm, String user_type, Integer product_limit, Integer isfav, ArrayList<Images> images) {
         this.id = id;
         this.product_name = product_name;
         this.price = price;
@@ -73,8 +80,33 @@ public class Product {
         this.images = images;
     }
 
+    public Product(Ads ads, String layout_type) {
+        this.ads = ads;
+        this.layout_type = layout_type;
+    }
+
+    public Product(String layout_type) {
+        this.layout_type = layout_type;
+    }
+
     public Integer getId() {
         return id;
+    }
+
+    public Ads getAds() {
+        return ads;
+    }
+
+    public void setAds(Ads ads) {
+        this.ads = ads;
+    }
+
+    public String getLayout_type() {
+        return layout_type;
+    }
+
+    public void setLayout_type(String layout_type) {
+        this.layout_type = layout_type;
     }
 
     public void setId(Integer id) {
@@ -89,11 +121,11 @@ public class Product {
         this.product_name = product_name;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -337,7 +369,7 @@ public class Product {
         this.images = images;
     }
 
-    public class Images{
+    public static class Images{
         private Integer id;
         private String small_image;
         private String large_image;

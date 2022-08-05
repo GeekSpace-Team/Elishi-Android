@@ -27,7 +27,7 @@ public class Login extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getFragmentManager().beginTransaction().replace(R.id.loginRoot,new PhoneVerification("login"),PhoneVerification.class.getSimpleName()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.loginRoot,PhoneVerification.newInstance("login"),PhoneVerification.class.getSimpleName()).commit();
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 

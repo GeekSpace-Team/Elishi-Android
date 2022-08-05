@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,13 +15,22 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.elishi.android.Adapter.Category.AllCategoryAdapter;
+import com.elishi.android.Api.APIClient;
+import com.elishi.android.Api.ApiInterface;
+import com.elishi.android.Common.AppSnackBar;
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Modal.Category.AllCategory;
+import com.elishi.android.Modal.Response.GBody;
 import com.elishi.android.R;
+import com.elishi.android.databinding.FragmentCategoryBinding;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class CategoryFragment extends Fragment {
@@ -31,6 +41,8 @@ public class CategoryFragment extends Fragment {
     private ArrayList<AllCategory> allCategories=new ArrayList<>();
     private RecyclerView categoryRec;
     private ScrollView scroll;
+    private FragmentCategoryBinding binding;
+    private MaterialCardView retry;
     public CategoryFragment() {
     }
 
@@ -44,46 +56,73 @@ public class CategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.fragment_category, container, false);
+        binding=FragmentCategoryBinding.inflate(inflater,container,false);
         context=getContext();
+        view=binding.getRoot();
         initComponents();
         setFonts();
-        setAllCategories();
-        setRecycler();
-        return view;
+        getCategories();
+        return binding.getRoot();
+    }
+
+    private void getCategories() {
+        hideError();
+        binding.loading.setVisibility(View.VISIBLE);
+        view.findViewById(R.id.noInternetContainer).setVisibility(View.GONE);
+        binding.recContainer.setVisibility(View.GONE);
+        ApiInterface apiInterface= APIClient.getClient().create(ApiInterface.class);
+        Call<GBody<ArrayList<AllCategory>>> call=apiInterface.getCategories();
+        call.enqueue(new Callback<GBody<ArrayList<AllCategory>>>() {
+            @Override
+            public void onResponse(Call<GBody<ArrayList<AllCategory>>> call, Response<GBody<ArrayList<AllCategory>>> response) {
+                if(response.isSuccessful() && response.body()!=null && response.body().getBody()!=null && !response.body().getError()){
+                    hideError();
+                    allCategories=response.body().getBody();
+                    setRecycler();
+                } else {
+                    String msg = Utils.checkMessage(context, response.body().getMessage());
+                    if(!msg.isEmpty())
+                        showSnackbar(msg);
+                    showError();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GBody<ArrayList<AllCategory>>> call, Throwable t) {
+                showError();
+            }
+        });
+    }
+
+    private void showSnackbar(String msg) {
+        if (!msg.isEmpty()) {
+            AppSnackBar snackBar = new AppSnackBar(context, view);
+            snackBar.setTitle(msg);
+            snackBar.actionText(R.string.cancel);
+            snackBar.show();
+        }
+    }
+
+    private void showError() {
+        view.findViewById(R.id.noInternetContainer).setVisibility(View.VISIBLE);
+        binding.recContainer.setVisibility(View.GONE);
+        binding.loading.setVisibility(View.GONE);
+    }
+
+    private void hideError() {
+        view.findViewById(R.id.noInternetContainer).setVisibility(View.GONE);
+        binding.recContainer.setVisibility(View.VISIBLE);
+        binding.loading.setVisibility(View.GONE);
     }
 
     private void setRecycler() {
-        categoryRec.setAdapter(new AllCategoryAdapter(allCategories,context,getFragmentManager()));
+        categoryRec.setAdapter(new AllCategoryAdapter(allCategories,context,getFragmentManager(),binding.subCategory));
         categoryRec.setLayoutManager(new LinearLayoutManager(context));
-        categoryRec.setNestedScrollingEnabled(false);
-        OverScrollDecoratorHelper.setUpOverScroll(scroll);
+        categoryRec.setNestedScrollingEnabled(true);
+//        OverScrollDecoratorHelper.setUpOverScroll(scroll);
     }
 
-    private void setAllCategories() {
-        allCategories.clear();
-        ArrayList<String> img1 = new ArrayList<>();
-        img1.add("https://okcredit-blog-images-prod.storage.googleapis.com/2021/03/Handicraft-Business1--1-.jpg");
-        ArrayList<String> img2 = new ArrayList<>();
-        img2.add("");
-        img2.add("https://images.pexels.com/photos/1117272/pexels-photo-1117272.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
-        ArrayList<String> img3 = new ArrayList<>();
-        img3.add("https://cdn.s3waas.gov.in/s3577ef1154f3240ad5b9b413aa7346a1e/uploads/bfi_thumb/2019121752-1-olw8qulb5f5and2erqsskrfk2l65nbof2neab3mj7q.jpg");
-        img3.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRECJQpDpAtv7qraOG-VMHFBj_i8K_mnh2kyIavipRlzjY7GY0eIWs714WnSldsXn3q_i8&usqp=CAU");
-        img3.add("https://media.mehrnews.com/d/2018/07/23/4/2841436.jpg");
-        allCategories.add(new AllCategory(1,img2,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img3,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img1,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img2,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img1,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img3,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img2,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img3,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img1,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img2,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img1,"Title tm","Title ru","Title en"));
-        allCategories.add(new AllCategory(1,img3,"Title tm","Title ru","Title en"));
-    }
+
 
     private void setFonts() {
         title.setTypeface(Utils.getBoldFont(context));
@@ -93,6 +132,13 @@ public class CategoryFragment extends Fragment {
         title=view.findViewById(R.id.title);
         categoryRec=view.findViewById(R.id.categoryRec);
         scroll=view.findViewById(R.id.scroll);
+        retry=view.findViewById(R.id.retry);
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCategories();
+            }
+        });
     }
 
 

@@ -13,11 +13,21 @@
         android:id="@+id/splashTitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="16dp"
         android:text="@string/profile"
         android:textColor="@color/fourth"
         android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_settings"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="40dp"
+        app:tint="@color/fourth" />
 
     <com.google.android.material.tabs.TabLayout
         android:layout_below="@id/splashTitle2"
@@ -27,13 +37,12 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="6dp"
         android:background="@color/first"
+        app:tabRippleColor="@color/second"
+        app:tabGravity="fill"
+        app:tabIndicatorGravity="stretch"
+        app:tabIndicator="@drawable/tab_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
-
-
-
 
     </com.google.android.material.tabs.TabLayout>
 

@@ -1,23 +1,32 @@
 package com.elishi.android.Adapter.Category;
 
 import android.content.Context;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.elishi.android.Common.Constant;
 import com.elishi.android.Common.PlaceHolderColors;
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Fragment.Product.Products;
 import com.elishi.android.Modal.Category.AllCategory;
+import com.elishi.android.Modal.Category.SubCategory;
 import com.elishi.android.R;
+import com.elishi.android.View.CustomViews.AppTextView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,19 +37,22 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
     private ArrayList<AllCategory> allCategories = new ArrayList<>();
     private Context context;
     private FragmentManager fragmentManager;
-    private Boolean isSecond=true;
+    private Boolean isFirst=true;
+    private ViewHolder oldHolder;
+    private RecyclerView subRecyclerView;
 
-    public AllCategoryAdapter(ArrayList<AllCategory> allCategories, Context context, FragmentManager fragmentManager) {
+    public AllCategoryAdapter(ArrayList<AllCategory> allCategories, Context context, FragmentManager fragmentManager, RecyclerView subRecyclerView) {
         this.allCategories = allCategories;
         this.context = context;
         this.fragmentManager = fragmentManager;
+        this.subRecyclerView = subRecyclerView;
     }
 
     @NonNull
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.all_category_design, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.category_item, parent, false);
         return new AllCategoryAdapter.ViewHolder(view);
     }
 
@@ -48,142 +60,106 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
     public void onBindViewHolder(@NonNull @NotNull AllCategoryAdapter.ViewHolder holder, int position) {
         AllCategory category = allCategories.get(position);
         holder.title.setTypeface(Utils.getBoldFont(context));
-        holder.title.setText(category.getTitle_tm());
-        String language = Utils.getLanguage(context, "language");
+        holder.title.setText(category.getCategory_name_tm());
+        String language = Utils.getLanguage(context);
         if (language.equals("ru")) {
-            holder.title.setText(category.getTitle_ru());
-        } else if (language.equals("en")) {
-            holder.title.setText(category.getTitle_en());
+            holder.title.setText(category.getCategory_name_ru());
+        }
+        if (language.equals("en")) {
+            holder.title.setText(category.getCategory_name_en());
+        }
+        setPassive(holder);
+        if(isFirst){
+            setActive(holder);
+            setSubCategory(category);
+            isFirst=false;
+            oldHolder=holder;
         }
 
-        if (category.getImages() != null) {
-            switch (category.getImages().size()) {
-                case 1:
-                    setTemplate1(holder.imgContainer,category);
-                    break;
-                case 2:
-                    setTemplate2(holder.imgContainer,category);
-                    break;
-                case 3:
-                    setTemplate3(holder.imgContainer,category);
-                    break;
+        final int min = 0;
+        final int max = PlaceHolderColors.PLACEHOLDERS.length - 1;
+        final int r = new Random().nextInt((max - min) + 1) + min;
+        Glide.with(context)
+                .load(Constant.IMAGE_URL+category.getImage())
+                .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                .thumbnail(0.25f)
+                .into(holder.image);
 
-            }
-        }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.con.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.hideAdd(new Products(),Products.class.getSimpleName(),fragmentManager,R.id.content);
+                if(oldHolder!=null){
+                    setPassive(oldHolder);
+                }
+                setActive(holder);
+                setSubCategory(category);
+                oldHolder=holder;
             }
         });
 
+
     }
 
-
-
-
-
-    private void setTemplate2(LinearLayout imgContainer, AllCategory category) {
-        View view=LayoutInflater.from(context).inflate(R.layout.category_template_1, imgContainer,false);
-        ImageView img1=view.findViewById(R.id.img1);
-        ImageView img2=view.findViewById(R.id.img2);
-        final int min = 0;
-        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
-        final int r = new Random().nextInt((max - min) + 1) + min;
-        Glide.with(context)
-                .load(category.getImages().get(0))
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                .into(img1);
-
-        Glide.with(context)
-                .load(category.getImages().get(1))
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                .into(img2);
-
-        imgContainer.removeAllViews();
-        imgContainer.addView(view);
-    }
-
-    private void setTemplate1(LinearLayout imgContainer, AllCategory category) {
-        View view=LayoutInflater.from(context).inflate(R.layout.category_template_3, imgContainer,false);
-        ImageView img1=view.findViewById(R.id.img1);
-        final int min = 0;
-        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
-        final int r = new Random().nextInt((max - min) + 1) + min;
-        Glide.with(context)
-                .load(category.getImages().get(0))
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                .into(img1);
-
-
-        imgContainer.removeAllViews();
-        imgContainer.addView(view);
-    }
-
-    private void setTemplate3(LinearLayout imgContainer, AllCategory category) {
-        if(isSecond){
-            View view=LayoutInflater.from(context).inflate(R.layout.category_template_2, imgContainer,false);
-            ImageView img1=view.findViewById(R.id.img1);
-            ImageView img2=view.findViewById(R.id.img2);
-            ImageView img3=view.findViewById(R.id.img3);
-
-            final int min = 0;
-            final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
-            final int r = new Random().nextInt((max - min) + 1) + min;
-
-            Glide.with(context)
-                    .load(category.getImages().get(0))
-                    .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                    .into(img1);
-
-            Glide.with(context)
-                    .load(category.getImages().get(1))
-                    .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                    .into(img2);
-
-            Glide.with(context)
-                    .load(category.getImages().get(2))
-                    .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                    .into(img3);
-
-            imgContainer.removeAllViews();
-            imgContainer.addView(view);
-            isSecond=false;
-        } else{
-            setTemplate4(imgContainer,category);
+    private void setSubCategory(AllCategory category) {
+        ArrayList<SubCategory> sub_category = null;
+        if(category.getSub_category()==null){
+            sub_category=new ArrayList<>();
+        } else {
+            sub_category=category.getSub_category();
+            Log.e("Size",category.getSub_category().size()+"");
         }
+
+        if(sub_category.size()>0){
+            if(sub_category.get(sub_category.size()-1).getId()!=-1){
+                sub_category.add(new SubCategory(-1,
+                        category.getCategory_name_tm(),
+                        category.getCategory_name_ru(),
+                        category.getCategory_name_en(),
+                        category.getId(),
+                        1,
+                        "",
+                        "",
+                        category.getImage()));
+            }
+        } else {
+            sub_category.add(new SubCategory(-1,
+                    category.getCategory_name_tm(),
+                    category.getCategory_name_ru(),
+                    category.getCategory_name_en(),
+                    category.getId(),
+                    1,
+                    "",
+                    "",
+                    category.getImage()));
+        }
+
+        subRecyclerView.setAdapter(new SubCategoryAdapter(sub_category,context,fragmentManager));
+        subRecyclerView.setLayoutManager(new GridLayoutManager(context,2));
     }
 
-    private void setTemplate4(LinearLayout imgContainer, AllCategory category) {
-        View view=LayoutInflater.from(context).inflate(R.layout.category_template_4, imgContainer,false);
-        ImageView img1=view.findViewById(R.id.img1);
-        ImageView img2=view.findViewById(R.id.img2);
-        ImageView img3=view.findViewById(R.id.img3);
-
-        final int min = 0;
-        final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
-        final int r = new Random().nextInt((max - min) + 1) + min;
-
-        Glide.with(context)
-                .load(category.getImages().get(0))
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                .into(img1);
-
-        Glide.with(context)
-                .load(category.getImages().get(1))
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                .into(img2);
-
-        Glide.with(context)
-                .load(category.getImages().get(2))
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                .into(img3);
-
-        imgContainer.removeAllViews();
-        imgContainer.addView(view);
-        isSecond=true;
+    private void setPassive(ViewHolder holder) {
+        holder.stroke.setVisibility(View.GONE);
+        holder.title.setTextColor(context.getResources().getColor(R.color.gray3));
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        holder.image.setColorFilter(filter);
+        holder.imgBg.setBackgroundResource(R.drawable.category_cyrcle_passive);
+        holder.container.setBackgroundResource(android.R.color.transparent);
     }
+
+    private void setActive(ViewHolder holder) {
+        holder.stroke.setVisibility(View.VISIBLE);
+        holder.title.setTextColor(context.getResources().getColor(R.color.second));
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(1);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+        holder.image.setColorFilter(filter);
+        holder.imgBg.setBackgroundResource(R.drawable.category_cyrcle_active);
+        holder.container.setBackgroundResource(R.color.white);
+    }
+
 
     @Override
     public int getItemCount() {
@@ -191,13 +167,19 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout imgContainer;
-        private TextView title;
-
+        private RelativeLayout container,imgBg;
+        private AppTextView title;
+        private View stroke;
+        private ImageView image;
+        private LinearLayout con;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            imgContainer = itemView.findViewById(R.id.imgContainer);
-            title = itemView.findViewById(R.id.title);
+            container = itemView.findViewById(R.id.container);
+            stroke = itemView.findViewById(R.id.stroke);
+            image = itemView.findViewById(R.id.image);
+            title = itemView.findViewById(R.id.name);
+            imgBg = itemView.findViewById(R.id.imgBg);
+            con = itemView.findViewById(R.id.con);
         }
     }
 }

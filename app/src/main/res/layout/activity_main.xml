@@ -18,17 +18,24 @@
         android:layout_height="match_parent"/>
 
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNavigation"
+        android:indeterminate="true"
+        android:id="@+id/pagination"
+        android:visibility="gone"
+        />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="60dp"
+        app:backgroundTint="@color/white"
+        android:background="@color/white"
+        app:itemActiveIndicatorStyle="@color/white"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bottom_nav_bg"
         app:menu="@menu/bottom_menu"
-        app:itemIconSize="25dp"
-        android:paddingBottom="6dp"
-        android:showAsAction="always|withText"
-        app:elevation="22dp"
+        app:itemRippleColor="@color/second"
         app:labelVisibilityMode="unlabeled"
         />
 

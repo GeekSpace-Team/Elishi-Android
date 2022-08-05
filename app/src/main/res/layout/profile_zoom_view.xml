@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/iv_zoom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/first">
+
+
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/bannerSlider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/back1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="46dp"
+        android:background="@drawable/cyrcle"
+        android:padding="12dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/swipeback_arrow_left"
+        app:tint="@color/second" />
+
+    <ImageView
+        android:id="@+id/more1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/cyrcle"
+        android:padding="8dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_baseline_more_horiz_24"
+        app:tint="@color/second" />
+
+   <RelativeLayout
+       android:layout_above="@id/bottom"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="10dp"
+       android:layout_width="wrap_content"
+       android:background="@drawable/indicator_bg"
+       android:paddingTop="3dp"
+       android:paddingBottom="3dp"
+       android:layout_height="wrap_content">
+       <com.hrskrs.instadotlib.InstaDotView
+           android:id="@+id/indicator_view"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           app:dot_activeColor="@color/second"
+           app:dot_activeSize="10dp"
+           app:dot_inactiveColor="@color/third"
+           app:dot_inactiveSize="8dp"
+           app:dot_margin="6dp"
+           app:dot_mediumSize="6dp"
+           app:dot_smallSize="4dp"
+
+           />
+   </RelativeLayout>
+
+    <View
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/mini_top_round"
+        />
+
+
+
+</RelativeLayout>

@@ -3,12 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/first"
     tools:context=".Fragment.Profile.MyProducts">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myProductsRec"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myProductsRec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <include
+        layout="@layout/empty_page"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
 </RelativeLayout>

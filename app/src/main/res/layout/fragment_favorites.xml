@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,6 +15,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             app:elevation="0dp"
+            android:background="@color/first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -30,34 +31,21 @@
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|snap"
                 android:orientation="horizontal"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="52dp"
                 android:gravity="center_vertical"
-                android:paddingBottom="12dp"
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <com.elishi.android.View.CustomViews.AppTextView
                     android:id="@+id/title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:lines="2"
                     android:text="@string/favorites"
                     android:textColor="@color/fourth"
-                    android:textSize="18sp" />
-                <ImageView
-                    android:id="@+id/searchBtn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/main_gradient"
-                    app:srcCompat="@drawable/ic_search_icon"
-                    android:layout_gravity="center"
-                    android:padding="14dp"
-                    app:tint="@color/realWhite" />
+                    android:textSize="18sp"
+                    app:tvFont="bold" />
             </LinearLayout>
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -80,30 +68,15 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="16dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_weight="90"
-                android:id="@+id/extraRec"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_weight="90"
                 android:id="@+id/favRec"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:overScrollMode="never"/>
-            <ProgressBar
-                android:visibility="gone"
-                android:id="@+id/progress"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                />
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -111,8 +84,97 @@
 
 
 
+    <include
+        layout="@layout/no_internet"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_autoPlay="true"
+        android:layout_centerInParent="true"
+        app:lottie_loop="true"/>
 
 
 
+    <LinearLayout
+        android:id="@+id/noLogin"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_login" />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_login"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:tvFont="medium"
+            />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/loginText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/please_login"
+            android:lineSpacingExtra="20dp"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            app:tvFont="regular"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nofavs"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:background="@drawable/cyrcle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:alpha="0.8"
+            android:padding="30dp"
+            android:tint="@color/second"
+            android:src="@drawable/ic_baseline_favorite_24" />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_favs"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:tvFont="medium"
+            />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

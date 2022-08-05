@@ -5,16 +5,23 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.elishi.android.Activity.MainActivity;
 import com.elishi.android.Adapter.Profile.MyProductsAdapter;
+import com.elishi.android.Common.Utils;
+import com.elishi.android.Modal.Product.Product;
 import com.elishi.android.Modal.Profile.MyProduct;
 import com.elishi.android.R;
 import com.elishi.android.databinding.FragmentMyProductsBinding;
 import com.elishi.android.databinding.FragmentMyProfileBinding;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
@@ -24,8 +31,17 @@ public class MyProducts extends Fragment {
     private FragmentMyProductsBinding binding;
     private View view;
     private Context context;
-    private ArrayList<MyProduct> myProducts=new ArrayList<>();
+    public ArrayList<Product> myProducts=new ArrayList<>();
+    private LinearLayout empty;
+    private MaterialButton empty_retry;
     public MyProducts() {
+    }
+
+    public static MyProducts newInstance() {
+        Bundle args = new Bundle();
+        MyProducts fragment = new MyProducts();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -40,26 +56,39 @@ public class MyProducts extends Fragment {
                              Bundle savedInstanceState) {
         binding= FragmentMyProductsBinding.inflate(inflater,container,false);
         view=binding.getRoot();
+        empty=view.findViewById(R.id.empty);
+        empty_retry=view.findViewById(R.id.empty_retry);
         context=getContext();
-        setProducts();
+        empty_retry.setText(context.getResources().getString(R.string.add_product));
+        empty_retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.get().getBottomNavigationView().setSelectedItemId(R.id.add);
+            }
+        });
+
+        if(myProducts==null || myProducts.size()<=0){
+            empty.setVisibility(View.VISIBLE);
+        } else {
+            empty.setVisibility(View.GONE);
+            setProducts();
+        }
+        binding.swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                binding.swipeRefresh.setRefreshing(false);
+                MainActivity.get().getSupportFragmentManager().beginTransaction().replace(R.id.layout,new MyProfile(),MyProfile.class.getSimpleName()).commit();
+            }
+        });
         return view;
     }
 
     private void setProducts() {
-        myProducts.clear();
-        myProducts.add(new MyProduct(1,"https://i.pinimg.com/originals/92/65/d5/9265d507a842f9792f202ec0ba658ab0.jpg","Name"));
-        myProducts.add(new MyProduct(1,"https://i.pinimg.com/originals/e5/02/5d/e5025d708a599332a3ef3a31053c173f.jpg","Name"));
-        myProducts.add(new MyProduct(1,"https://i.pinimg.com/originals/e1/30/f0/e130f01e25e00ea06901bdb382abe93b.jpg","Name"));
-        myProducts.add(new MyProduct(1,"https://i.pinimg.com/originals/e5/02/5d/e5025d708a599332a3ef3a31053c173f.jpg","Name"));
-        myProducts.add(new MyProduct(1,"https://static01.nyt.com/images/2021/01/10/fashion/00NA-BEADWORK-03/00NA-BEADWORK-03-superJumbo.jpg","Name"));
-        myProducts.add(new MyProduct(1,"https://static01.nyt.com/images/2021/01/10/fashion/00NA-BEADWORK-04/00NA-BEADWORK-04-articleLarge.jpg?quality=75&auto=webp&disable=upscale","Name"));
-        myProducts.add(new MyProduct(1,"https://picklebarreltradingpost.com/wp-content/uploads/2018/07/Native-American-San-Carlos-Apache-beadwork-1024x683.jpg","Name"));
-        myProducts.add(new MyProduct(1,"https://i.pinimg.com/originals/d7/24/af/d724af4aadeb35a4f266e2030ec2badf.jpg","Name"));
-        myProducts.add(new MyProduct(1,"https://i.pinimg.com/originals/61/c4/75/61c47545e1568679e6322df7350fb96c.jpg","Name"));
-        myProducts.add(new MyProduct(1,"https://www.karliisfikirleri.com/wp-content/uploads/2018/10/evde-el-i%C5%9Fleri-777x400.jpg","Name"));
         binding.myProductsRec.setAdapter(new MyProductsAdapter(myProducts,context));
-        binding.myProductsRec.setLayoutManager(new GridLayoutManager(context,3));
+        binding.myProductsRec.setLayoutManager(new LinearLayoutManager(context));
     }
+
+
 
     @Override
     public void onDestroyView() {

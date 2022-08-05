@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Fade;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -20,8 +25,12 @@ import android.widget.TextView;
 import com.elishi.android.Adapter.Product.MultiSizeProductAdapter;
 import com.elishi.android.Adapter.Search.SearchHistoryAdapter;
 import com.elishi.android.Adapter.Search.SearchKeywordAdapter;
+import com.elishi.android.Api.APIClient;
+import com.elishi.android.Api.ApiInterface;
+import com.elishi.android.Common.Utils;
 import com.elishi.android.DateBase.SearchHistoryDB;
 import com.elishi.android.Modal.Product.Product;
+import com.elishi.android.Modal.Response.GBody;
 import com.elishi.android.Modal.Search.SearchHistory;
 import com.elishi.android.Modal.Search.SearchKeyword;
 import com.elishi.android.R;
@@ -30,42 +39,81 @@ import com.elishi.android.databinding.ActivitySearchPageBinding;
 import java.util.ArrayList;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchPage extends AppCompatActivity {
     private ActivitySearchPageBinding binding;
-    private ArrayList<SearchKeyword> keywords=new ArrayList<>();
-    private ArrayList<SearchHistory> histories=new ArrayList<>();
     private Context context=this;
     private String query="";
     private SearchHistoryDB db;
     private ArrayList<Product> products=new ArrayList<>();
+    private Integer limit=20;
+    private Integer page=1;
+    private MultiSizeProductAdapter productAdapter;
+    private boolean isMore=true;
+    private boolean isLoading=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.loadLocal(context);
         binding=ActivitySearchPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         db=new SearchHistoryDB(context);
-        setSearchKeywords();
-        setSearchHistory();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            binding.searchCard.setTransitionName("search");
+        }
+        // here we are initializing
+        // fade animation.
+        Fade fade = new Fade();
+        View decor = getWindow().getDecorView();
+
+        // here also we are excluding status bar,
+        // action bar and navigation bar from animation.
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+
+        // below methods are used for adding
+        // enter and exit transition.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(fade);
+            getWindow().setExitTransition(fade);
+        }
+
+        showKeyboard();
         setListener();
         setSearchResult();
+        checkMode();
+    }
+
+    private void showKeyboard() {
+        binding.search.requestFocus();
+        InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    private void hideKeyboard(){
+        binding.search.clearFocus();
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.search.getWindowToken(), 0);
     }
 
     private void setSearchResult() {
-        MultiSizeProductAdapter productAdapter=new MultiSizeProductAdapter(products,context,false);
-        GridLayoutManager gridLayoutManager=getLayoutManager();
-        binding.searchResultRec.setLayoutManager(gridLayoutManager);
+        productAdapter=new MultiSizeProductAdapter(products,context,false);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        binding.searchResultRec.setLayoutManager(staggeredGridLayoutManager);
         binding.searchResultRec.setAdapter(productAdapter);
-        OverScrollDecoratorHelper.setUpOverScroll(binding.searchResultRec,OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
-
-
     }
 
     private void setListener() {
         binding.searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                search();
+                page=1;
+                search(page);
             }
         });
 
@@ -78,11 +126,6 @@ public class SearchPage extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 query=binding.search.getText().toString();
-                if(query.isEmpty()){
-                    binding.searchResultContainer.setVisibility(View.GONE);
-                    binding.searchDetails.setVisibility(View.VISIBLE);
-                }
-                setSearchHistory();
             }
 
             @Override
@@ -95,7 +138,8 @@ public class SearchPage extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    search();
+                    page=1;
+                    search(page);
                     return true;
                 }
                 return false;
@@ -106,74 +150,94 @@ public class SearchPage extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(!recyclerView.canScrollVertically(1)){
+                if(!recyclerView.canScrollVertically(1) && !isLoading && isMore){
+                    page++;
+                    search(page);
                     binding.loadMoreProgress.setVisibility(View.VISIBLE);
-                } else{
-                    binding.loadMoreProgress.setVisibility(View.GONE);
                 }
             }
         });
     }
 
-    private void search() {
+    private void checkMode() {
+        int nightModeFlags =
+                getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        View view = getWindow().getDecorView();
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.setSystemUiVisibility(view.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                }
+                break;
 
+            case Configuration.UI_MODE_NIGHT_NO:
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.setSystemUiVisibility(view.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                }
+                break;
+        }
+    }
+
+    private void search(int p) {
         query=binding.search.getText().toString();
-        binding.search.clearFocus();
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(binding.search.getWindowToken(), 0);
-        if(query.trim().isEmpty())
+        if(query.trim().isEmpty()){
             return;
-        Cursor cursor1=db.getSelect(query);
-        if(cursor1.getCount()==0){
-            db.insert(query);
-            setSearchHistory();
         }
-    }
-
-    private void setSearchHistory() {
-        binding.searchResultContainer.setVisibility(View.GONE);
-        binding.searchDetails.setVisibility(View.VISIBLE);
-        histories.clear();
-        Cursor cursor=db.getAll();
-        if(cursor.getCount()==0){
-            binding.searchHistoryRec.setVisibility(View.GONE);
-            binding.historyTv.setVisibility(View.GONE);
-        } else{
-            binding.searchHistoryRec.setVisibility(View.VISIBLE);
-            binding.historyTv.setVisibility(View.VISIBLE);
-            while (cursor.moveToNext()){
-                histories.add(new SearchHistory(cursor.getInt(0),cursor.getString(1)));
-            }
-            binding.searchHistoryRec.setAdapter(new SearchHistoryAdapter(histories,context,binding.search));
-            binding.searchHistoryRec.setLayoutManager(new LinearLayoutManager(context));
+        Dialog progressDialog=Utils.getDialogProgressBar(context);
+        if(p==1){
+            products.clear();
+            progressDialog.show();
         }
-    }
-
-    private void setSearchKeywords() {
-        keywords.clear();
-        keywords.add(new SearchKeyword(1,"Haly"));
-        keywords.add(new SearchKeyword(1,"Haly"));
-        keywords.add(new SearchKeyword(1,"Haly"));
-        keywords.add(new SearchKeyword(1,"Haly"));
-        keywords.add(new SearchKeyword(1,"Haly"));
-        keywords.add(new SearchKeyword(1,"Haly"));
-        keywords.add(new SearchKeyword(1,"Haly"));
-        binding.topSearchRec.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-        binding.topSearchRec.setAdapter(new SearchKeywordAdapter(keywords,context,binding.search));
-        OverScrollDecoratorHelper.setUpOverScroll(binding.topSearchRec,OverScrollDecoratorHelper.ORIENTATION_HORIZONTAL);
-    }
-
-    private GridLayoutManager getLayoutManager() {
-        GridLayoutManager glm=new GridLayoutManager(context, 2);
-        glm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
+        isLoading=true;
+        hideKeyboard();
+        ApiInterface apiInterface= APIClient.getClient().create(ApiInterface.class);
+        Call<GBody<ArrayList<Product>>> call=apiInterface.search(p,query,limit,"Bearer "+ Utils.getSharedPreference(context,"tkn"));
+        call.enqueue(new Callback<GBody<ArrayList<Product>>>() {
             @Override
-            public int getSpanSize(int position) {
-                if((position+1)%5==0){
-                    return 2;
+            public void onResponse(Call<GBody<ArrayList<Product>>> call, Response<GBody<ArrayList<Product>>> response) {
+                if(response.isSuccessful() && response.body()!=null && response.body().getBody()!=null){
+                    products.addAll(response.body().getBody());
+                    if(p==1){
+                        setSearchResult();
+                    } else {
+                        try {
+                            productAdapter.notifyDataSetChanged();
+                        } catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    }
+                    if(response.body().getBody().size()<limit){
+                        isMore=false;
+                    }
+                } else {
+                    isMore=false;
                 }
-                return 1;
+                if(products.size()<=0){
+                    binding.empty.setVisibility(View.VISIBLE);
+                    binding.searchResultContainer.setVisibility(View.GONE);
+                } else {
+                    binding.empty.setVisibility(View.GONE);
+                    binding.searchResultContainer.setVisibility(View.VISIBLE);
+                }
+                binding.loadMoreProgress.setVisibility(View.GONE);
+                isLoading=false;
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<GBody<ArrayList<Product>>> call, Throwable t) {
+                if(products.size()<=0){
+                    binding.empty.setVisibility(View.VISIBLE);
+                    binding.searchResultContainer.setVisibility(View.GONE);
+                }
+                isLoading=false;
+                progressDialog.dismiss();
             }
         });
-        return glm;
     }
+
+
 }

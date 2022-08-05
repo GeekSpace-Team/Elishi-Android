@@ -16,7 +16,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        style="?attr/materialCardViewFilledStyle"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/imgCard"
         app:cardCornerRadius="15dp"
         app:cardElevation="3dp"
@@ -62,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgCardBg"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         android:text="@string/gift"
         android:textColor="@color/fourth"
         android:textSize="13sp"

@@ -31,9 +31,9 @@
                 android:id="@+id/logo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:transitionName="logo"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                android:src="@mipmap/ic_launcher_foreground" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <com.elishi.android.View.CustomViews.AppTextView
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:lineSpacingExtra="30sp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+        android:text="@string/splash_description"
         android:textColor="@color/fourth"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/logo_card"
@@ -75,8 +75,17 @@
         app:tvFont="regular" />
 
 
+    <ImageView
+        android:id="@+id/master_logo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="28dp"
 
-
+        android:src="@drawable/handicraft_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

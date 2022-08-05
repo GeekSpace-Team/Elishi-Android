@@ -1,6 +1,9 @@
 package com.elishi.android.Common;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,6 +16,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
@@ -20,24 +26,37 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.elishi.android.Activity.MainActivity;
+import com.elishi.android.Fragment.CategoryFragment;
+import com.elishi.android.Modal.Category.Category;
+import com.elishi.android.Modal.Home.BannerSlider;
 import com.elishi.android.Modal.Response.Message;
 import com.elishi.android.R;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class Utils {
     public static void hideAdd(Fragment fragment, String tagFragmentName, FragmentManager mFragmentManager, int frame) {
@@ -61,6 +80,26 @@ public class Utils {
         fragmentTransaction.commitNowAllowingStateLoss();
     }
 
+    public static void productFragment(Fragment fragment, String tagFragmentName, FragmentManager mFragmentManager, int frame) {
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        Fragment currentFragment = mFragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            try {
+                currentFragment.getView().setVisibility(View.GONE);
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+            fragmentTransaction.hide(currentFragment);
+        }
+        Fragment fragmentTemp = mFragmentManager.findFragmentByTag(tagFragmentName);
+        if (fragmentTemp != null) {
+            fragmentTransaction.remove(fragmentTemp);
+        }
+        fragmentTransaction.add(frame, fragment, tagFragmentName);
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNowAllowingStateLoss();
+    }
 
 
     public static void removeShow(Fragment fragment, String tagFragmentName, FragmentManager mFragmentManager, int frame) {
@@ -123,14 +162,15 @@ public class Utils {
         Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Gordita Ultra.otf");
         return font;
     }
+
     public static Typeface getMRC(Context context) {
         Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/m_rc.ttf");
         return font;
     }
 
 
-    public static Typeface getFontByName(Context context,String name) {
-        return Typeface.createFromAsset(context.getAssets(), "fonts/"+name);
+    public static Typeface getFontByName(Context context, String name) {
+        return Typeface.createFromAsset(context.getAssets(), "fonts/" + name);
     }
 
 
@@ -139,7 +179,7 @@ public class Utils {
         for (int i = 0; i < menuView.getChildCount(); i++) {
             final View iconView = menuView.findViewById(R.id.add);
             final ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(100, 100);
-            findIcon(context,iconView);
+            findIcon(context, iconView);
             Log.e("OK", "OK");
         }
     }
@@ -154,7 +194,7 @@ public class Utils {
                 }
             } else if (v instanceof ImageView) {
                 final FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(150, 100);
-                layoutParams.setMargins(0,0,0,0);
+                layoutParams.setMargins(0, 0, 0, 0);
                 ((ImageView) v).setLayoutParams(layoutParams);
 
             }
@@ -177,12 +217,12 @@ public class Utils {
         return updatedBitmap;
     }
 
-    public static String getLanguage(Context context,String name){
+    public static String getLanguage(Context context, String name) {
         SharedPreferences prefs = context.getSharedPreferences(name, MODE_PRIVATE);
         return prefs.getString(name, "");
     }
 
-    public static void setPreference(String name,String value,Context context){
+    public static void setPreference(String name, String value, Context context) {
         SharedPreferences.Editor editor = context.getSharedPreferences(name, MODE_PRIVATE).edit();
         editor.putString(name, value);
         editor.apply();
@@ -195,7 +235,7 @@ public class Utils {
     }
 
 
-    public static Bitmap blurRenderScript(Bitmap smallBitmap, int radius,Context mContext) {
+    public static Bitmap blurRenderScript(Bitmap smallBitmap, int radius, Context mContext) {
 
         try {
             smallBitmap = RGB565toARGB888(smallBitmap);
@@ -242,10 +282,14 @@ public class Utils {
     }
 
     public static void setLocale(String lang, Context context) {
+        if(lang.trim().isEmpty()){
+            lang="tm";
+        }
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
+
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
         //saved data to shared preferences
         SharedPreferences.Editor editor = context.getSharedPreferences("Settings", MODE_PRIVATE).edit();
@@ -267,19 +311,83 @@ public class Utils {
         return value;
     }
 
-    public static String checkMessage(Context context, Message message){
-        if(message==null){
+    public static String checkMessage(Context context, Message message) {
+        if (message == null) {
             return "";
         }
         String msg = message.getTm();
-        if(Utils.getLanguage(context).equals("ru")){
-            msg=message.getRu();
+        if (Utils.getLanguage(context).equals("ru")) {
+            msg = message.getRu();
         }
-        if(Utils.getLanguage(context).equals("en")){
-            msg=message.getEn();
+        if (Utils.getLanguage(context).equals("en")) {
+            msg = message.getEn();
         }
         return msg;
     }
+
+
+    public static void transparentStatusBar(Activity activity, boolean isTransparent, boolean fullscreen) {
+        if (isTransparent) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                int defaultStatusBarColor = activity.getWindow().getStatusBarColor();
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                // FOR TRANSPARENT NAVIGATION BAR
+                //activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    Log.d(TAG, "Setting Color Trans " + Color.TRANSPARENT);
+                    activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                }
+            }
+
+        } else {
+            if (fullscreen) {
+                View decorView = activity.getWindow().getDecorView();
+                int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN;
+                decorView.setSystemUiVisibility(uiOptions);
+
+            } else {
+                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    int defaultStatusBarColor = activity.getWindow().getStatusBarColor();
+                    activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                    activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    activity.getWindow().setStatusBarColor(activity.getResources().getColor(R.color.first));
+
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    }
+                }
+
+            }
+        }
+    }
+
+    public static Dialog getDialogProgressBar(Context context) {
+        Dialog dialog = new Dialog(context);
+
+        final ProgressBar progressBar = new ProgressBar(context);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        progressBar.setLayoutParams(lp);
+        progressBar.setBackgroundResource(android.R.color.transparent);
+        dialog.setContentView(progressBar);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);
+        window.setLayout(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        return dialog;
+    }
+
 
 
 }

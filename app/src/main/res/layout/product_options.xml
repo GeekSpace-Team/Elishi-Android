@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/top_round"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="80dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bottom_sheet_round"
+        />
+
+    <com.elishi.android.View.CustomViews.AppTextView
+        app:tvFont="bold"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/options"
+        android:textColor="@color/fourth"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/addFavCon"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp">
+
+
+
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            app:tvFont="medium"
+            android:id="@+id/addFav"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_fav"
+            android:textColor="@color/fourth"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/add"
+            android:textColor="@color/realWhite"
+            app:iconTint="@color/realWhite"
+            app:icon="@drawable/ic_baseline_add_24"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/callToUserCon"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp">
+
+
+
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            app:tvFont="medium"
+            android:id="@+id/callToUser"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/call_to_user"
+            android:textColor="@color/fourth"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/callButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/calls"
+            android:textColor="@color/realWhite"
+            app:iconTint="@color/realWhite"
+            app:icon="@drawable/ic_baseline_call_24"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/shareProductCon"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp">
+
+
+
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            app:tvFont="medium"
+            android:id="@+id/shareProduct"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shareProduct"
+            android:textColor="@color/fourth"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareProductButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/share"
+            android:textColor="@color/realWhite"
+            app:iconTint="@color/realWhite"
+            app:icon="@drawable/ic_baseline_share_24"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/shareAsImageCon"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp">
+
+
+
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            app:tvFont="medium"
+            android:id="@+id/shareAsImage"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shareAsImage"
+            android:textColor="@color/fourth"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:padding="8dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareAsImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/send"
+            app:icon="@drawable/ic_share"
+            android:textColor="@color/realWhite"
+            app:iconTint="@color/realWhite"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
+    <com.elishi.android.View.CustomViews.AppTextView
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:textAlignment="center"
+        android:text="@string/cancel"
+        android:textSize="16sp"
+        app:tvFont="medium"
+        android:textColor="@color/second"
+        />
+</LinearLayout>

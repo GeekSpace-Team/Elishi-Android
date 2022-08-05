@@ -1,17 +1,20 @@
 package com.elishi.android.Adapter.Home;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.elishi.android.Common.Click;
 import com.elishi.android.Common.Constant;
 import com.elishi.android.Common.PlaceHolderColors;
 import com.elishi.android.Common.RoundedBackground;
@@ -66,13 +69,13 @@ public class BannerSliderAdapter extends RecyclerView.Adapter<BannerSliderAdapte
             Glide.with(context)
                     .asGif()
                     .load(Constant.IMAGE_URL+imageUrl)
-                    .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                    .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                     .thumbnail(0.25f)
                     .into(holder.imageView);
         } else {
             Glide.with(context)
                     .load(Constant.IMAGE_URL+imageUrl)
-                    .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                    .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                     .thumbnail(0.25f)
                     .into(holder.imageView);
         }
@@ -80,6 +83,15 @@ public class BannerSliderAdapter extends RecyclerView.Adapter<BannerSliderAdapte
         if (position == sliderItems.size() - 2) {
             viewPager2.post(runnable);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bannerSlider.getSiteURL()!=null && !bannerSlider.getSiteURL().trim().isEmpty()){
+                    Click.bannerClick(bannerSlider,context);
+                }
+            }
+        });
     }
 
     @Override

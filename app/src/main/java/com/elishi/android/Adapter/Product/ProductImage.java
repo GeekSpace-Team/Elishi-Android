@@ -11,11 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.elishi.android.Common.Constant;
 import com.elishi.android.Common.PlaceHolderColors;
 import com.elishi.android.Modal.Home.BannerSlider;
 import com.elishi.android.R;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.stfalcon.imageviewer.StfalconImageViewer;
+import com.stfalcon.imageviewer.loader.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -42,9 +47,33 @@ public class ProductImage extends RecyclerView.Adapter<ProductImage.SliderViewHo
         final int max = PlaceHolderColors.PLACEHOLDERS.length-1;
         final int r = new Random().nextInt((max - min) + 1) + min;
         Glide.with(context)
-                .load(bannerSlider)
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                .load(Constant.IMAGE_URL+bannerSlider)
+                .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(holder.imageView);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageLoader<String> imageLoader=new ImageLoader<String>() {
+                    @Override
+                    public void loadImage(ImageView imageView, String image) {
+                        final int min = 0;
+                        final int max = PlaceHolderColors.PLACEHOLDERS.length - 1;
+                        final int r = new Random().nextInt((max - min) + 1) + min;
+                        Glide.with(context)
+                                .load(Constant.IMAGE_URL+image)
+                                .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                                .thumbnail(0.25f)
+                                .into(imageView);
+                    }
+                };
+                StfalconImageViewer.Builder<String> builder=new StfalconImageViewer.Builder<String>(context,sliderItems,imageLoader);
+                builder.withBackgroundColorResource(R.color.white);
+                builder.allowZooming(true);
+                builder.allowSwipeToDismiss(true);
+                builder.withHiddenStatusBar(false);
+                builder.show().setCurrentPosition(holder.getAbsoluteAdapterPosition());
+            }
+        });
     }
     @Override
     public int getItemCount() {

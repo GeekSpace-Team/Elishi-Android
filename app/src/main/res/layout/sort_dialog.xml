@@ -36,12 +36,11 @@
             android:id="@+id/firstButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <CheckBox
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:checked="true"
                 android:id="@+id/first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checked_bg"
                 />
             <com.elishi.android.View.CustomViews.AppTextView
                 android:layout_width="match_parent"
@@ -66,11 +65,10 @@
             android:id="@+id/secondButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <CheckBox
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checked_bg"
                 />
             <com.elishi.android.View.CustomViews.AppTextView
                 android:layout_width="match_parent"
@@ -95,11 +93,10 @@
             android:id="@+id/thirdButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <CheckBox
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/third"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checked_bg"
                 />
             <com.elishi.android.View.CustomViews.AppTextView
                 android:layout_width="match_parent"
@@ -125,11 +122,10 @@
             android:id="@+id/fourthButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <CheckBox
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/fourth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checked_bg"
                 />
             <com.elishi.android.View.CustomViews.AppTextView
                 android:layout_width="match_parent"
@@ -154,11 +150,10 @@
             android:id="@+id/fifthButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <CheckBox
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/fifth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checked_bg"
                 />
             <com.elishi.android.View.CustomViews.AppTextView
                 android:layout_width="match_parent"

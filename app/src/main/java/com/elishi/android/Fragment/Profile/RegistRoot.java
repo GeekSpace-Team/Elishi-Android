@@ -1,6 +1,7 @@
 package com.elishi.android.Fragment.Profile;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -11,11 +12,14 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.elishi.android.Activity.MainActivity;
 import com.elishi.android.Adapter.Profile.TabAdapter;
 import com.elishi.android.Common.Utils;
+import com.elishi.android.Fragment.Settings.Settings;
 import com.elishi.android.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -30,8 +34,15 @@ public class RegistRoot extends Fragment {
     private RelativeLayout bg;
     private TextView tv,splashTitle2;
     public static RegistRoot INSTANCE;
-
+    private ImageView settings;
     public RegistRoot() {
+    }
+
+    public static RegistRoot newInstance() {
+        Bundle args = new Bundle();
+        RegistRoot fragment = new RegistRoot();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -50,6 +61,7 @@ public class RegistRoot extends Fragment {
         setTabs();
         setFonts();
         setFontsToTabs();
+
         return view;
     }
 
@@ -113,7 +125,7 @@ public class RegistRoot extends Fragment {
 
     private void setPassiveTab(int i) {
         View tabView = tabLayout.getTabAt(i).view;
-        tabView.setBackgroundColor(context.getResources().getColor(R.color.first));
+//        tabView.setBackgroundColor(context.getResources().getColor(R.color.first));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tabView.setElevation(0f);
         }
@@ -121,7 +133,7 @@ public class RegistRoot extends Fragment {
 
     private void setActiveTab(int i) {
         View tabView = tabLayout.getTabAt(i).view;
-        tabView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.tab_indicator));
+//        tabView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.tab_indicator));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tabView.setElevation(12f);
         }
@@ -131,6 +143,14 @@ public class RegistRoot extends Fragment {
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.pager);
         splashTitle2 = view.findViewById(R.id.splashTitle2);
+        settings = view.findViewById(R.id.settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.hideAdd(new Settings(), Settings.class.getSimpleName(), getFragmentManager(), R.id.content);
+                MainActivity.fifthFragment = new Settings();
+            }
+        });
     }
 
 

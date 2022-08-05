@@ -36,6 +36,14 @@ public class TabAdapter extends FragmentPagerAdapter {
         fragmentTitle.add(title);
     }
 
+    public void removeFragments(){
+        try{
+            fragmentArrayList.clear();
+            notifyDataSetChanged();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
 
 
     @Nullable

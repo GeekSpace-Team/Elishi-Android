@@ -1,160 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/first"
-    android:layout_height="match_parent">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    android:layout_height="match_parent"
+    android:background="@color/first">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/container_full"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/first"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbar"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/white"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-            app:title="@string/app_name">
+            android:background="@color/first"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <RelativeLayout
-                android:background="@drawable/image_round_bg"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_collapseMode="parallax">
+                app:contentScrim="@color/white"
+                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+                app:title="@string/app_name">
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/blurImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="260dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image_round_bg"
-                    app:riv_corner_radius_bottom_left="@dimen/profileRadius"
-                    app:riv_corner_radius_bottom_right="@dimen/profileRadius" />
-
-                <LinearLayout
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/profileImage"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="82dp"
-                        android:layout_height="82dp"
-                        android:src="@drawable/ic_profile_image_placeholder"
-                        app:riv_corner_radius="50dp"
-                        android:scaleType="centerCrop"
-                        />
-
-                    <com.elishi.android.View.CustomViews.AppTextView
-                        android:id="@+id/username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="12dp"
-                        android:text="Username"
-                        app:tvFont="regular"
-                        android:textColor="@color/fourth"
-                        android:textSize="12sp"
-                        />
-
-                    <com.elishi.android.View.CustomViews.AppTextView
-                        android:id="@+id/location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="4dp"
-                        app:tvFont="regular"
-                        android:text="Region/Sublocation"
-                        android:textColor="@color/fourth"
-                        android:textSize="12sp"
-                        />
-
-                    <com.elishi.android.View.CustomViews.AppTextView
-                        app:tvFont="regular"
-                        android:id="@+id/phoneNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="4dp"
-                        android:text="+99361234567"
-                        android:textColor="@color/fourth"
-                        android:textSize="12sp"
-                        />
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-
-            <!-- The attribute app:layout_collapseMode="pin" is set so that
-                 sticks to the top when the user scrolls the view up-->
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="pin"
-                app:contentInsetLeft="0dp"
-                app:contentInsetStart="0dp"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:background="@drawable/image_round_bg"
+                    app:layout_collapseMode="parallax">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/blurImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/image_round_bg"
+                        app:riv_corner_radius_bottom_left="@dimen/profileRadius"
+                        app:riv_corner_radius_bottom_right="@dimen/profileRadius" />
+
+                    <RelativeLayout
+                        android:id="@+id/darkTransParent"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:background="@drawable/transparent_bg"
+                        android:scaleType="centerCrop"
+                        app:riv_corner_radius_bottom_left="@dimen/profileRadius"
+                        app:riv_corner_radius_bottom_right="@dimen/profileRadius" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="82dp"
+                            android:layout_height="82dp"
+                            android:layout_gravity="center_horizontal">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/profileImage"
+                                android:layout_width="82dp"
+                                android:layout_height="82dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_profile_image_placeholder"
+                                app:riv_corner_radius="50dp" />
+
+                            <ProgressBar
+                                android:id="@+id/progressImage"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_centerInParent="true"
+                                android:visibility="gone" />
+
+                            <ImageView
+                                android:id="@+id/editImage"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:background="@drawable/cyrcle"
+                                android:padding="6dp"
+                                app:srcCompat="@drawable/ic_edit" />
+                        </RelativeLayout>
+
+                        <com.elishi.android.View.CustomViews.AppTextView
+                            android:id="@+id/username"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="12dp"
+                            android:text="Username"
+                            android:textColor="@color/fourth"
+                            android:textSize="12sp"
+                            app:tvFont="regular" />
+
+                        <com.elishi.android.View.CustomViews.AppTextView
+                            android:id="@+id/location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="4dp"
+                            android:text="Region/Sublocation"
+                            android:textColor="@color/fourth"
+                            android:textSize="12sp"
+                            app:tvFont="regular" />
+
+                        <com.elishi.android.View.CustomViews.AppTextView
+                            android:id="@+id/phoneNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="4dp"
+                            android:text="+99361234567"
+                            android:textColor="@color/fourth"
+                            android:textSize="12sp"
+                            app:tvFont="regular" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+                <!-- The attribute app:layout_collapseMode="pin" is set so that
+                     sticks to the top when the user scrolls the view up-->
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetStart="0dp"
+                    android:layout_marginTop="25dp"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:padding="16dp">
+                        android:orientation="vertical">
 
-                        <com.elishi.android.View.CustomViews.AppTextView
-                            android:id="@+id/title"
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/profile"
-                            app:tvFont="bold"
-                            android:textColor="@color/fourth"
-                            android:textSize="18sp" />
+                            android:gravity="center_vertical"
+                            android:padding="16dp">
 
-                        <ImageView
-                            android:id="@+id/menuIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_baseline_menu_24"
-                            app:tint="@color/fourth" />
+                            <com.elishi.android.View.CustomViews.AppTextView
+                                android:id="@+id/title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/profile"
+                                android:textColor="@color/fourth"
+                                android:textSize="18sp"
+                                app:tvFont="bold" />
+
+                            <ImageView
+                                android:id="@+id/menuIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_baseline_menu_24"
+                                app:tint="@color/fourth" />
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
+                </androidx.appcompat.widget.Toolbar>
 
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
             android:id="@+id/con1"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.google.android.material.tabs.TabLayout
-                android:background="@drawable/tab_round_bg"
                 android:id="@+id/tab_layout2"
                 style="@style/SecondTabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:background="@drawable/tab_round_bg">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -170,14 +206,32 @@
             <!--In textview we will be adding the text that i have
                 added earlier in strings.xml file.This is simply the
                 the content to be scrolled -->
-           <androidx.viewpager.widget.ViewPager
-               android:id="@+id/viewPager"
-               android:layout_width="match_parent"
-               android:layout_height="0dp"
-               android:layout_weight="1"/>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
         </LinearLayout>
 
 
-<!--    </com.elishi.android.View.MyNestedScrollView>-->
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <include
+        layout="@layout/no_internet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_centerInParent="true"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
+</RelativeLayout>

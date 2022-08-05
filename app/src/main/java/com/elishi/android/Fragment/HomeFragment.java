@@ -1,13 +1,19 @@
 package com.elishi.android.Fragment;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,9 +27,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Handler;
 import android.transition.Fade;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -40,7 +49,9 @@ import com.elishi.android.Adapter.Category.ShortCategoryAdapter;
 import com.elishi.android.Adapter.Home.VipAdapter;
 import com.elishi.android.Api.APIClient;
 import com.elishi.android.Api.ApiInterface;
+import com.elishi.android.BuildConfig;
 import com.elishi.android.Common.AppSnackBar;
+import com.elishi.android.Common.Click;
 import com.elishi.android.Common.Constant;
 import com.elishi.android.Common.EventType;
 import com.elishi.android.Common.PlaceHolderColors;
@@ -48,6 +59,7 @@ import com.elishi.android.Common.Utils;
 import com.elishi.android.Modal.Home.Ads;
 import com.elishi.android.Modal.Home.BannerSlider;
 import com.elishi.android.Modal.Category.Category;
+import com.elishi.android.Modal.Home.DeviceVersion;
 import com.elishi.android.Modal.Home.Event;
 import com.elishi.android.Modal.Home.EventProducts;
 import com.elishi.android.Modal.Home.EventProductsBody;
@@ -106,6 +118,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<Events> events = new ArrayList<>();
     private Boolean isEvent = true;
     private GBody<GetHome> body;
+    public static boolean isFirst=true;
 
     public HomeFragment() {
     }
@@ -123,6 +136,29 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 //        view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        // we are adding fade animation
+        // between two imageviews.
+        Fade fade = new Fade();
+        View decor = getActivity().getWindow().getDecorView();
+
+        // below 3 lines of code is to exclude
+        // action bar,title bar and navigation
+        // bar from animation.
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container), true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+
+        // we are adding fade animation
+        // for enter transition.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getActivity().getWindow().setEnterTransition(fade);
+            // we are also setting fade
+            // animation for exit transition.
+            getActivity().getWindow().setExitTransition(fade);
+        }
+
+
 
         context = getContext();
 
@@ -146,9 +182,31 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<GBody<GetHome>> call, Response<GBody<GetHome>> response) {
                 if (response.isSuccessful() && !response.body().getError() && response.body().getBody() != null) {
-                    binding.swipeRefresh.setRefreshing(false);
-                    hideError();
+
                     body = response.body();
+                    binding.swipeRefresh.setRefreshing(false);
+                    if(body.getBody().getDeviceVersion()!=null && body.getBody().getDeviceVersion().size()>0){
+                        String version= BuildConfig.VERSION_NAME;
+                        String versionRequired="0";
+                        for(DeviceVersion v:body.getBody().getDeviceVersion()){
+                            if(v.getType().equals("androidVersion")){
+                                version=v.getValue();
+                            }
+                            if(v.getType().equals("androidVersionRequirement")){
+                                versionRequired=v.getValue();
+                            }
+                        }
+
+                        if(!version.equals(BuildConfig.VERSION_NAME)){
+                            if(versionRequired.equals("0")){
+                                showUpdateDialog(true);
+                            } else if(versionRequired.equals("1")){
+                                showUpdateDialog(false);
+                                return;
+                            }
+                        }
+                    }
+                    hideError();
                     if (body.getBody().getBanner() != null && body.getBody().getBanner().size() > 0) {
                         sliderItems = body.getBody().getBanner();
                         binding.bannerSlider.setVisibility(View.VISIBLE);
@@ -161,6 +219,7 @@ public class HomeFragment extends Fragment {
                     } else {
                         binding.shortCategory.setVisibility(View.GONE);
                     }
+
                     if (body.getBody().getNewProducts() != null && body.getBody().getNewProducts().size() > 0) {
                         newProducts = body.getBody().getNewProducts();
                         binding.newProducts.setVisibility(View.VISIBLE);
@@ -207,15 +266,20 @@ public class HomeFragment extends Fragment {
                     eventProductsPos = 0;
                     adsPos = 0;
                     ready();
+                    isFirst=false;
                 } else if (response.body().getError()) {
                     String msg = Utils.checkMessage(context, response.body().getMessage());
-                    showSnackbar(msg);
+                    if(!msg.isEmpty())
+                        showSnackbar(msg);
                     showError();
                 } else {
                     String msg = Utils.checkMessage(context, response.body().getMessage());
-                    showSnackbar(msg);
+                    if(!msg.isEmpty())
+                        showSnackbar(msg);
                     showError();
                 }
+
+
 
             }
 
@@ -239,16 +303,24 @@ public class HomeFragment extends Fragment {
     }
 
     private void showError() {
-        view.findViewById(R.id.noInternetContainer).setVisibility(View.VISIBLE);
-        binding.secondCon.setVisibility(View.GONE);
-        binding.loading.setVisibility(View.GONE);
+        try{
+            view.findViewById(R.id.noInternetContainer).setVisibility(View.VISIBLE);
+            binding.secondCon.setVisibility(View.GONE);
+            binding.loading.setVisibility(View.GONE);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     private void hideError() {
-        view.findViewById(R.id.noInternetContainer).setVisibility(View.GONE);
-        binding.secondCon.setVisibility(View.VISIBLE);
-        binding.loading.setVisibility(View.GONE);
-        binding.swipeRefresh.setRefreshing(false);
+        try {
+            view.findViewById(R.id.noInternetContainer).setVisibility(View.GONE);
+            binding.secondCon.setVisibility(View.VISIBLE);
+            binding.loading.setVisibility(View.GONE);
+            binding.swipeRefresh.setRefreshing(false);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     private void ready() {
@@ -281,7 +353,7 @@ public class HomeFragment extends Fragment {
                             eventProductsPos++;
                         }
                     }
-                    if(eventProductsPos<eventProducts.size()-1){
+                    if(eventProductsPos<eventProducts.size()){
                         for(int k=eventProductsPos;k<eventProducts.size();k++){
                             events.add(new Events(eventProducts.get(k), EventType.EVENT_PRODUCTS));
                         }
@@ -301,7 +373,7 @@ public class HomeFragment extends Fragment {
                         }
                         pos++;
                     }
-                    if(adsPos<largeAds.size()-1){
+                    if(adsPos<largeAds.size()){
                         for(int k=adsPos;k<largeAds.size();k++){
                             events.add(new Events(largeAds.get(k), EventType.ADS));
                         }
@@ -312,15 +384,24 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        binding.events.setAdapter(new EventAdapter(events, context));
-                        binding.events.setLayoutManager(new LinearLayoutManager(context));
-//                        binding.events.setNestedScrollingEnabled(false);
-                        binding.events.setOverScrollMode(View.OVER_SCROLL_NEVER);
-                    }
-                });
+                try{
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if (binding != null) {
+                                    binding.events.setAdapter(new EventAdapter(events, context));
+                                    binding.events.setLayoutManager(new LinearLayoutManager(context));
+                                    binding.events.setOverScrollMode(View.OVER_SCROLL_NEVER);
+                                }
+                            } catch (Exception ex){
+                                ex.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
             }
         });
         new Handler().postDelayed(new Runnable() {
@@ -351,12 +432,25 @@ public class HomeFragment extends Fragment {
                 getHome();
             }
         });
+        binding.search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SearchPage.class);
+                // below method is used to make scene transition
+                // and adding fade animation in it.
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        (Activity) context, binding.search, ViewCompat.getTransitionName(binding.search));
+                // starting our activity with below method.
+                startActivity(intent, options.toBundle());
+            }
+        });
+
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 
     private void setVipUsers() {
@@ -397,6 +491,9 @@ public class HomeFragment extends Fragment {
         vipUsers = view.findViewById(R.id.vipUsers);
         trendProductsTitle = view.findViewById(R.id.trendProductsTitle);
         trend_products = view.findViewById(R.id.trend_products);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            binding.search.setTransitionName("search");
+        }
     }
 
     private void setFonts() {
@@ -405,6 +502,38 @@ public class HomeFragment extends Fragment {
         binding.searchEdit.setTypeface(Utils.getRegularFont(context));
     }
 
+    private void showUpdateDialog(boolean b) {
+        if(!isFirst)
+            return;
+        Dialog dialog = new Dialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.update_dialog, null, false);
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.CENTER);
+        window.getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        Button updateButton = dialog.findViewById(R.id.updateButton);
+        TextView updateTitle = dialog.findViewById(R.id.updateTitle);
+
+        updateTitle.setTypeface(Utils.getRegularFont(context));
+        updateButton.setTypeface(Utils.getMediumFont(context));
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String appPackageName = context.getPackageName(); // getPackageName() from Context or Activity object
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+            }
+        });
+
+        dialog.setCancelable(b);
+        window.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+    }
 
     private GridLayoutManager getLayoutManager() {
         GridLayoutManager glm = new GridLayoutManager(context, 2);
@@ -511,33 +640,48 @@ public class HomeFragment extends Fragment {
     };
 
     private void setMiniAds() {
-        if (miniAds.size() > 0 && miniAdsPos < miniAds.size()) {
-            final int min = 0;
-            final int max = PlaceHolderColors.PLACEHOLDERS.length - 1;
-            final int r = new Random().nextInt((max - min) + 1) + min;
-            String imageUrl = miniAds.get(miniAdsPos).getAds_image();
-            String extension = "";
-            if (imageUrl.contains(".")) {
-                extension = imageUrl.substring(imageUrl.lastIndexOf("."));
+        try {
+            if (miniAds.size() > 0 && miniAdsPos < miniAds.size()) {
+                final int min = 0;
+                final int max = PlaceHolderColors.PLACEHOLDERS.length - 1;
+                final int r = new Random().nextInt((max - min) + 1) + min;
+                String imageUrl = miniAds.get(miniAdsPos).getAds_image();
+                String extension = "";
+                if (imageUrl.contains(".")) {
+                    extension = imageUrl.substring(imageUrl.lastIndexOf("."));
+                }
+                if (extension.toLowerCase().contains("gif")) {
+                    Glide.with(context)
+                            .asGif()
+                            .load(Constant.IMAGE_URL + imageUrl)
+                            .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                            .thumbnail(0.25f)
+                            .into(binding.miniAds);
+                } else {
+                    Glide.with(context)
+                            .load(Constant.IMAGE_URL + imageUrl)
+                            .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                            .thumbnail(0.25f)
+                            .into(binding.miniAds);
+                }
+
+                binding.miniAds.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try{
+                            Click.adsClick(miniAds.get(miniAdsPos-1),context);
+                        } catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+                miniAdsPos++;
+            } else if(miniAds.size()>0){
+                miniAdsPos = 0;
+                setMiniAds();
             }
-            if (extension.toLowerCase().contains("gif")) {
-                Glide.with(context)
-                        .asGif()
-                        .load(Constant.IMAGE_URL + imageUrl)
-                        .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                        .thumbnail(0.25f)
-                        .into(binding.miniAds);
-            } else {
-                Glide.with(context)
-                        .load(Constant.IMAGE_URL + imageUrl)
-                        .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
-                        .thumbnail(0.25f)
-                        .into(binding.miniAds);
-            }
-            miniAdsPos++;
-        } else {
-            miniAdsPos=0;
-            setMiniAds();
+        } catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 
@@ -550,12 +694,20 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        sliderHandler.postDelayed(sliderRunnable, BANNER_DELAY);
+        if(sliderItems.size()>0 || miniAds.size()>0){
+            sliderHandler.postDelayed(sliderRunnable, BANNER_DELAY);
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
         viewPager2.setCurrentItem(0);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sliderHandler.removeCallbacks(sliderRunnable);
     }
 }

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/first"
+    tools:context=".Fragment.AddProductFragment">
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/indicator">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    android:textAlignment="center"
+                    android:textColor="@color/fourth"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/enter_name"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <com.elishi.android.View.CustomViews.AppEditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/white_round"
+                    android:hint="@string/enter_product_name"
+                    android:inputType="text"
+                    android:padding="16dp"
+                    android:textColor="@color/fourth"
+                    android:textColorHint="@color/third"
+                    android:textSize="12sp"
+                    app:editTextFont="regular" />
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/price"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <com.elishi.android.View.CustomViews.AppEditText
+                    android:id="@+id/price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/white_round"
+                    android:hint="0"
+                    android:inputType="numberDecimal"
+                    android:padding="16dp"
+                    android:textColor="@color/fourth"
+                    android:textColorHint="@color/third"
+                    android:textSize="12sp"
+                    app:editTextFont="regular" />
+
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/select_category"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:id="@+id/subCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/white_round"
+                    android:hint="@string/select_category"
+                    android:inputType="numberDecimal"
+                    android:padding="16dp"
+                    android:textColor="@color/fourth"
+                    android:textColorHint="@color/third"
+                    android:textSize="12sp"
+                    app:tvFont="regular" />
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/size_"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <com.elishi.android.View.CustomViews.AppEditText
+                    android:id="@+id/size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/white_round"
+                    android:hint="12x16” (30.5x40.6 m)..."
+                    android:inputType="text"
+                    android:padding="16dp"
+                    android:textColor="@color/fourth"
+                    android:textColorHint="@color/third"
+                    android:textSize="12sp"
+                    app:editTextFont="regular" />
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/description_product"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <com.elishi.android.View.CustomViews.AppEditText
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/white_round"
+                    android:gravity="top"
+                    android:hint="@string/product_desc_"
+                    android:inputType="text|textMultiLine"
+                    android:padding="16dp"
+                    android:textColor="@color/fourth"
+                    android:textColorHint="@color/third"
+                    android:textSize="12sp"
+                    app:editTextFont="regular" />
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/select_main_image"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <RelativeLayout
+                    android:id="@+id/firstImageCon"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/white_round">
+
+
+                    <ImageView
+                        android:id="@+id/main_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_margin="16dp"
+                        android:scaleType="fitCenter" />
+
+                    <LinearLayout
+                        android:id="@+id/uploadContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_upload_main_image"
+                            app:tint="@color/fourth" />
+
+                        <com.elishi.android.View.CustomViews.AppTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="@string/click_to_select_image"
+                            android:textColor="@color/third"
+                            android:textSize="12sp"
+                            app:tvFont="regular" />
+
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/remove"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/remove_img_bg"
+                        android:padding="6dp"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_baseline_delete_outline_24"
+                        app:tint="@color/realWhite" />
+
+                    <RelativeLayout
+                        android:id="@+id/in_progress"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/remove_img_bg"
+                        android:padding="6dp"
+                        android:visibility="gone">
+
+                        <ProgressBar
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </RelativeLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/error"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_centerInParent="true"
+                        android:padding="6dp"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/red_transparent"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:padding="8dp"
+                                app:srcCompat="@drawable/ic_baseline_error_outline_24"
+                                app:tint="@color/realWhite" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/success"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_centerInParent="true"
+                        android:padding="6dp"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/success_transparent"
+                        app:cardCornerRadius="6dp"
+                        app:cardElevation="0dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:padding="8dp"
+                                app:srcCompat="@drawable/ic_baseline_check_circle_outline_24"
+                                app:tint="@color/realWhite" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/select_other_image"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/imgCon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="10dp"
+                    app:strokeColor="@android:color/transparent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/addImageButton"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="30dp"
+                            app:srcCompat="@drawable/ic_add_image"
+                            app:tint="@color/fourth" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/imgRec"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    android:visibility="gone" />
+
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/phone_number"
+                    android:textColor="@color/fourth"
+                    android:textSize="14sp"
+                    app:tvFont="medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp">
+
+                    <com.elishi.android.View.CustomViews.AppEditText
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/white_round"
+                        android:enabled="false"
+                        android:hint="+99361234567"
+                        android:inputType="phone"
+                        android:maxLength="12"
+                        android:padding="16dp"
+                        android:textColor="@color/fourth"
+                        android:textColorHint="@color/third"
+                        android:textSize="12sp"
+                        app:editTextFont="regular" />
+                </RelativeLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/okButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="22dp"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:padding="8dp"
+                    android:text="@string/edit"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/limitContainer"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_limit" />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/reachLimit"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:tvFont="medium"
+            />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/adminNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/toAddMore"
+            android:lineSpacingExtra="20dp"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            app:tvFont="regular"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/noLogin"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_login" />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_login"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:tvFont="medium"
+            />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/loginText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/please_login"
+            android:lineSpacingExtra="20dp"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            app:tvFont="regular"
+            />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/no_internet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        app:lottie_rawRes="@raw/loading"
+        app:lottie_autoPlay="true"
+        android:layout_centerInParent="true"
+        app:lottie_loop="true"/>
+
+
+</RelativeLayout>

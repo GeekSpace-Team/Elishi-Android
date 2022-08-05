@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.elishi.android.Common.Utils;
 import com.elishi.android.R;
 import com.elishi.android.databinding.FragmentHolidayViewBinding;
 
@@ -31,6 +32,8 @@ public class HolidayView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        context=getContext();
+        Utils.loadLocal(context);
         binding=FragmentHolidayViewBinding.inflate(inflater,container,false);
         // Inflate the layout for this fragment
         return binding.getRoot();

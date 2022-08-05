@@ -3,37 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/home"
-        android:title=""
-        app:showAsAction="always"
+        android:title="Baş sahypa"
         android:icon="@drawable/first_icon"
         android:enabled="true"
         />
     <item
         android:id="@+id/category"
-        android:title=""
-        app:showAsAction="always"
+        android:title="Kategoriýalar"
         android:icon="@drawable/second_icon"
         android:enabled="true"
         />
     <item
         android:id="@+id/add"
-        android:title=""
-        app:showAsAction="always"
+        android:title="Haryt goşmak"
         android:icon="@drawable/third_icon"
-
         android:enabled="true"
         />
     <item
         android:id="@+id/fav"
-        android:title=""
-        app:showAsAction="always"
+        android:title="Halanlarym"
         android:icon="@drawable/fourth_icon"
         android:enabled="true"
         />
     <item
         android:id="@+id/profile"
-        android:title=""
-        app:showAsAction="always"
+        android:title="Profil"
         android:icon="@drawable/fifth_icon"
         android:enabled="true"
         />

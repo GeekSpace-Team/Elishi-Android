@@ -94,7 +94,7 @@
 
                 <TextView
                     android:id="@+id/timer"
-                    android:text="00:28"
+                    android:text="00:00"
                     android:textSize="14sp"
                     android:layout_marginStart="6dp"
                     android:textColor="@color/fourth"
@@ -110,7 +110,17 @@
                 android:layout_marginTop="22dp"
                 android:text="@string/verify_code__"
                 android:textColor="@color/second"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="18sp"
+
+                />
+
+            <ProgressBar
+                android:id="@+id/progressSendCode"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
                 />
 
         </LinearLayout>

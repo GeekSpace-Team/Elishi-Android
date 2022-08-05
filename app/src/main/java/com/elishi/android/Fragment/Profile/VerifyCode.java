@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,7 +40,7 @@ public class VerifyCode extends Fragment {
     private Context context;
     private FragmentVerifyCodeBinding binding;
     private String phoneNumber, which;
-
+    private CountDownTimer countDownTimer;
     public VerifyCode(String phoneNumber, String which) {
         this.phoneNumber = phoneNumber;
         this.which = which;
@@ -64,6 +65,38 @@ public class VerifyCode extends Fragment {
     }
 
     private void setListener() {
+        binding.sendAgain.setVisibility(View.GONE);
+        binding.progressSendCode.setVisibility(View.GONE);
+        countDownTimer = new CountDownTimer(60000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                try {
+                    String time = String.format("%02d:%02d", ((millisUntilFinished / 1000) % 3600) / 60, ((millisUntilFinished / 1000) % 60));
+                    binding.timer.setText(time);
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+
+            public void onFinish() {
+                try {
+                    binding.sendAgain.setVisibility(View.VISIBLE);
+                    binding.timer.setText("00:00");
+                    binding.sendAgain.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            binding.progressSendCode.setVisibility(View.VISIBLE);
+                            binding.sendAgain.setVisibility(View.GONE);
+                            getCode();
+                        }
+
+
+                    });
+                } catch (Exception exception){
+                    exception.printStackTrace();
+                }
+            }
+        }.start();
         binding.next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +110,7 @@ public class VerifyCode extends Fragment {
                 showProgress();
                 // Open Profile Page here
                 ApiInterface apiInterface = APIClient.getClient().create(ApiInterface.class);
-                PhoneCode body = new PhoneCode(phoneNumber, binding.code.getText().toString());
+                PhoneCode body = new PhoneCode(phoneNumber, binding.code.getText().toString(),which);
                 Call<GBody<UserBody>> call = apiInterface.codeVerification(body);
                 call.enqueue(new Callback<GBody<UserBody>>() {
                     @Override
@@ -129,12 +162,66 @@ public class VerifyCode extends Fragment {
         });
     }
 
+    private void getCode() {
+        ApiInterface apiInterface= APIClient.getClient().create(ApiInterface.class);
+        Call<GBody<UserBody>> call=apiInterface.phoneVerification(new PhoneCode(phoneNumber,"","createAccount"));
+        call.enqueue(new Callback<GBody<UserBody>>() {
+            @Override
+            public void onResponse(Call<GBody<UserBody>> call, Response<GBody<UserBody>> response) {
+                if(response.isSuccessful()){
+                    UserBody body=response.body().getBody();
+                    String msg=Utils.checkMessage(context,response.body().getMessage());
+                    if(!msg.isEmpty()){
+                        AppSnackBar snackBar=new AppSnackBar(context,view);
+                        snackBar.setTitle(msg);
+                        snackBar.actionText(R.string.cancel);
+                        snackBar.show();
+                    }
+                    setListener();
+
+
+                } else {
+                    AppSnackBar snackBar=new AppSnackBar(context,view);
+                    snackBar.setTitle(R.string.error_message);
+                    snackBar.actionText(R.string.cancel);
+                    snackBar.show();
+                    binding.progressSendCode.setVisibility(View.GONE);
+                    binding.sendAgain.setVisibility(View.VISIBLE);
+                    binding.timer.setText("00:00");
+                }
+                hideProgress();
+
+            }
+
+            @Override
+            public void onFailure(Call<GBody<UserBody>> call, Throwable t) {
+                AppSnackBar snackBar=new AppSnackBar(context,view);
+                snackBar.setTitle(R.string.error_message);
+                snackBar.actionText(R.string.cancel);
+                snackBar.show();
+                hideProgress();
+                binding.progressSendCode.setVisibility(View.GONE);
+                binding.sendAgain.setVisibility(View.VISIBLE);
+                binding.timer.setText("00:00");
+            }
+        });
+    }
+
     private void exist(UserBody body) {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.layout, new MyProfile(), MyProfile.class.getSimpleName()).commit();
         Utils.setPreference("tkn", body.getUser().getToken(), context);
         Utils.setPreference("userId", body.getUser().getId() + "", context);
         Utils.setPreference("phoneNumber", body.getUser().getPhone_number(), context);
         Utils.setPreference("fullname", body.getUser().getFullname(), context);
+        Utils.setPreference("district_name_tm", body.getUser().getDistrict_name_tm(), context);
+        Utils.setPreference("district_name_ru", body.getUser().getDistrict_name_ru(), context);
+        Utils.setPreference("district_name_en", body.getUser().getDistrict_name_en(), context);
+        Utils.setPreference("region_name_tm", body.getUser().getRegion_name_tm(), context);
+        Utils.setPreference("region_name_ru", body.getUser().getRegion_name_ru(), context);
+        Utils.setPreference("region_name_en", body.getUser().getRegion_name_en(), context);
+        Utils.setPreference("product_limit", body.getUser().getProduct_limit()+"", context);
+        if (body.getUser().getProfile_image() != null)
+            Utils.setPreference("profile_image", body.getUser().getProfile_image(), context);
     }
 
     private void showDialog() {
@@ -206,6 +293,7 @@ public class VerifyCode extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        countDownTimer.cancel();
         binding = null;
     }
 }

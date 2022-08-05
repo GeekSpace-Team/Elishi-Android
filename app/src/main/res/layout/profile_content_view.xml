@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/top_round"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/con1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <com.elishi.android.View.CustomViews.AppTextView
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Some product name here"
+                    android:textColor="@color/fourth"
+                    android:textSize="20sp"
+                    app:tvFont="bold"
+
+                    />
+
+
+            </LinearLayout>
+
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="100 TMT"
+                android:textColor="@color/second"
+                android:textSize="16sp"
+                app:tvFont="medium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/imagesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:id="@+id/imagesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/images"
+                android:textColor="@color/fourth"
+                android:textSize="18sp"
+                app:tvFont="medium" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imagesRec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:overScrollMode="never" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/descContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <com.elishi.android.View.CustomViews.AppTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/description_product"
+                android:textColor="@color/fourth"
+                android:textSize="18sp"
+                app:tvFont="medium" />
+
+            <kr.co.prnd.readmore.ReadMoreTextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:lineSpacingExtra="10dp"
+                android:text="@string/content"
+                android:textColor="@color/fourth"
+                android:textSize="14sp"
+                app:readMoreColor="@color/second"
+                app:readMoreMaxLine="4"
+                app:readMoreText="@string/read_more2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
+            <FrameLayout
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/similarContainer"
+        android:layout_below="@+id/con1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/similarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/similar"
+            android:textColor="@color/fourth"
+            android:textSize="18sp"
+            app:tvFont="medium" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/similarRec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:overScrollMode="never" />
+    </LinearLayout>
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/profileImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-35dp"
+        android:layout_marginEnd="16dp"
+        android:rotation="0"
+        android:scaleType="centerCrop"
+        android:src="@drawable/first_icon"
+        android:visibility="gone"
+        app:riv_corner_radius="50dp" />
+
+</RelativeLayout>

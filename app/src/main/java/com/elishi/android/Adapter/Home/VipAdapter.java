@@ -47,7 +47,7 @@ public class VipAdapter extends RecyclerView.Adapter<VipAdapter.ViewHolder> {
         final int r = new Random().nextInt((max - min) + 1) + min;
         Glide.with(context)
                 .load(Constant.IMAGE_URL+user.getProfile_image())
-                .placeholder(PlaceHolderColors.PLACEHOLDERS[r])
+                .timeout(60000).placeholder(PlaceHolderColors.PLACEHOLDERS[r])
                 .into(holder.image);
         holder.name.setText(user.getFullname());
         holder.name.setSingleLine();

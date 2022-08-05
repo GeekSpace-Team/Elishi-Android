@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class Settings extends Fragment {
     private FragmentSettingsBinding binding;
     private Context context;
     private Boolean isNightMode=false;
+    public String type="";
     public Settings() {
     }
 
@@ -53,6 +55,7 @@ public class Settings extends Fragment {
                              Bundle savedInstanceState) {
         binding=FragmentSettingsBinding.inflate(getLayoutInflater(),container,false);
         context=getContext();
+        Utils.loadLocal(context);
         checkTheme();
         setListener();
         checkLang();
@@ -79,7 +82,7 @@ public class Settings extends Fragment {
         binding.mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                View view2 = getActivity().getWindow().getDecorView();
                 RippleAnimation.create(view).setDuration(800).setOnAnimationEndListener(new RippleAnimation.OnAnimationEndListener() {
                     @Override
                     public void onAnimationEnd() {
@@ -92,9 +95,12 @@ public class Settings extends Fragment {
                     }
                 }).start();
                 if(isNightMode){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        view2.setSystemUiVisibility(view2.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    }
                     binding.bg.setBackgroundColor(Color.parseColor("#F0F4F4"));
-                    binding.back.setColorFilter(ContextCompat.getColor(context, R.color.realBlack), android.graphics.PorterDuff.Mode.SRC_IN);
-                    binding.mode.setColorFilter(ContextCompat.getColor(context, R.color.realBlack), android.graphics.PorterDuff.Mode.SRC_IN);
+                    binding.back.setColorFilter(ContextCompat.getColor(context, R.color.realBlack), PorterDuff.Mode.SRC_IN);
+                    binding.mode.setColorFilter(ContextCompat.getColor(context, R.color.realBlack), PorterDuff.Mode.SRC_IN);
                     binding.title.setTextColor(context.getResources().getColor(R.color.realBlack));
                     binding.ruLangTv.setTextColor(context.getResources().getColor(R.color.realBlack));
                     binding.tmLangTv.setTextColor(context.getResources().getColor(R.color.realBlack));
@@ -110,16 +116,25 @@ public class Settings extends Fragment {
                     Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, R.drawable.bottom_nav_bg);
                     Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
                     DrawableCompat.setTint(wrappedDrawable, Color.parseColor("#FFFFFF"));
-                    BottomNavigationView bottomNavigationView=getActivity().findViewById(R.id.bottomNavigation);
-                    RelativeLayout main=getActivity().findViewById(R.id.main);
-                    bottomNavigationView.setBackground(wrappedDrawable);
-                    main.setBackgroundColor(Color.parseColor("#F0F4F4"));
+                    try {
+                        BottomNavigationView bottomNavigationView=getActivity().findViewById(R.id.bottomNavigation);
+                        RelativeLayout main=getActivity().findViewById(R.id.main);
+                        bottomNavigationView.setBackground(wrappedDrawable);
+                        main.setBackgroundColor(Color.parseColor("#F0F4F4"));
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                    }
                     isNightMode=false;
                     Utils.setPreference("mode","light",context);
+
+
                 } else{
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        view2.setSystemUiVisibility(view2.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    }
                     binding.bg.setBackgroundColor(Color.parseColor("#121212"));
-                    binding.back.setColorFilter(ContextCompat.getColor(context, R.color.realWhite), android.graphics.PorterDuff.Mode.SRC_IN);
-                    binding.mode.setColorFilter(ContextCompat.getColor(context, R.color.realWhite), android.graphics.PorterDuff.Mode.SRC_IN);
+                    binding.back.setColorFilter(ContextCompat.getColor(context, R.color.realWhite), PorterDuff.Mode.SRC_IN);
+                    binding.mode.setColorFilter(ContextCompat.getColor(context, R.color.realWhite), PorterDuff.Mode.SRC_IN);
                     binding.title.setTextColor(context.getResources().getColor(R.color.realWhite));
                     binding.ruLangTv.setTextColor(context.getResources().getColor(R.color.realWhite));
                     binding.tmLangTv.setTextColor(context.getResources().getColor(R.color.realWhite));
@@ -135,13 +150,19 @@ public class Settings extends Fragment {
                     }
                     Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, R.drawable.bottom_nav_bg);
                     Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                    DrawableCompat.setTint(wrappedDrawable, Color.parseColor("#1F1B24"));
-                    BottomNavigationView bottomNavigationView=getActivity().findViewById(R.id.bottomNavigation);
-                    RelativeLayout main=getActivity().findViewById(R.id.main);
-                    bottomNavigationView.setBackground(wrappedDrawable);
-                    main.setBackgroundColor(Color.parseColor("#121212"));
+                    try {
+                        DrawableCompat.setTint(wrappedDrawable, Color.parseColor("#1F1B24"));
+                        BottomNavigationView bottomNavigationView=getActivity().findViewById(R.id.bottomNavigation);
+                        RelativeLayout main=getActivity().findViewById(R.id.main);
+                        bottomNavigationView.setBackground(wrappedDrawable);
+                        main.setBackgroundColor(Color.parseColor("#121212"));
+                    } catch (Exception ex){
+
+                    }
                     isNightMode=true;
                     Utils.setPreference("mode","night",context);
+
+
                 }
 
 
@@ -183,6 +204,17 @@ public class Settings extends Fragment {
             }
         });
 
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        if(type.equals("first")){
+            binding.back.setVisibility(View.GONE);
+        }
+
 
     }
 
@@ -220,6 +252,9 @@ public class Settings extends Fragment {
         MainActivity.isChangeTheme=true;
     }
 
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        Utils.transparentStatusBar(getActivity(),false,false);
+    }
 }

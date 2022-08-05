@@ -29,7 +29,7 @@ public class CreateAccountRoot extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getFragmentManager().beginTransaction().replace(R.id.createAccountRoot,new PhoneVerification("createAccount"),PhoneVerification.class.getSimpleName()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.createAccountRoot,PhoneVerification.newInstance("createAccount"),PhoneVerification.class.getSimpleName()).commit();
         return inflater.inflate(R.layout.fragment_create_account_root, container, false);
     }
 

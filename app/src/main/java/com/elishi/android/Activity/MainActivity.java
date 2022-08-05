@@ -10,6 +10,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
@@ -17,7 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.elishi.android.Api.APIClient;
+import com.elishi.android.Api.ApiInterface;
+import com.elishi.android.Common.Click;
 import com.elishi.android.Common.Utils;
 import com.elishi.android.Fragment.AddProductFragment;
 import com.elishi.android.Fragment.CategoryFragment;
@@ -26,17 +33,32 @@ import com.elishi.android.Fragment.FavoritesFragment;
 import com.elishi.android.Fragment.Holiday.HolidayView;
 import com.elishi.android.Fragment.HomeFragment;
 import com.elishi.android.Fragment.Product.Products;
+import com.elishi.android.Fragment.Profile.EditProfile;
 import com.elishi.android.Fragment.Profile.MyProfile;
 import com.elishi.android.Fragment.Profile.ProfileRootFragment;
 import com.elishi.android.Fragment.Settings.Settings;
+import com.elishi.android.Modal.Home.BannerSlider;
+import com.elishi.android.Modal.Home.NotifBody;
+import com.elishi.android.Modal.Response.GBody;
 import com.elishi.android.R;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -48,37 +70,280 @@ public class MainActivity extends AppCompatActivity {
     public static Fragment fifthFragment = new ProfileRootFragment();
     public static Boolean isChangeTheme=false;
     private FirebaseAnalytics mFirebaseAnalytics;
-
+    private static MainActivity INSTANCE;
+    private LinearProgressIndicator pagination;
+    private String topic="topic";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Utils.loadLocal(context);
+        INSTANCE=this;
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "some_test_id");
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "some_test_name");
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "some_test_image");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        checkMode();
 
+        fireBaseMessage();
 
-        FirebaseMessaging.getInstance().subscribeToTopic("general")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                    }
-                });
 
         getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
         setContentView(R.layout.activity_main);
         initComponents();
         bottomNavSettings();
 
+        notifToken();
+        checkIntent();
+        setListener();
+    }
 
+    private void setListener() {
+        if(!Utils.getSharedPreference(context,"finishTour").equals("1")){
+            homeTour();
+        }
+    }
+
+    private void homeTour() {
+        TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(bottomNavigationView.findViewById(R.id.home), context.getResources().getString(R.string.home_intro_title),
+                        context.getResources().getString(R.string.home_message))
+                        .outerCircleColor(R.color.second)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.realWhite)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.realWhite)      // Specify the color of the title text
+                        .descriptionTextSize(10)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.realWhite)  // Specify the color of the description text
+                        .textColor(R.color.realWhite)            // Specify a color for both the title and description text
+                        .textTypeface(Utils.getMediumFont(context))  // Specify a typeface for the text
+                        .dimColor(R.color.realBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                        categoryTour();
+                    }
+                });
+    }
+
+    private void categoryTour() {
+        TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(bottomNavigationView.findViewById(R.id.category), context.getResources().getString(R.string.category),
+                        context.getResources().getString(R.string.category_message))
+                        .outerCircleColor(R.color.second)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.realWhite)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.realWhite)      // Specify the color of the title text
+                        .descriptionTextSize(10)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.realWhite)  // Specify the color of the description text
+                        .textColor(R.color.realWhite)            // Specify a color for both the title and description text
+                        .textTypeface(Utils.getMediumFont(context))  // Specify a typeface for the text
+                        .dimColor(R.color.realBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                        addProductTour();
+                        bottomNavigationView.setSelectedItemId(R.id.category);
+                    }
+                });
+    }
+
+    private void addProductTour() {
+        TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(bottomNavigationView.findViewById(R.id.add), context.getResources().getString(R.string.add_product),
+                        context.getResources().getString(R.string.add_product_message))
+                        .outerCircleColor(R.color.second)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.realWhite)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.realWhite)      // Specify the color of the title text
+                        .descriptionTextSize(10)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.realWhite)  // Specify the color of the description text
+                        .textColor(R.color.realWhite)            // Specify a color for both the title and description text
+                        .textTypeface(Utils.getMediumFont(context))  // Specify a typeface for the text
+                        .dimColor(R.color.realBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                        favouriteTour();
+                        bottomNavigationView.setSelectedItemId(R.id.add);
+                    }
+                });
+    }
+
+    private void favouriteTour() {
+        TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(bottomNavigationView.findViewById(R.id.fav), context.getResources().getString(R.string.favorites),
+                        context.getResources().getString(R.string.favorites_message))
+                        .outerCircleColor(R.color.second)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.realWhite)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.realWhite)      // Specify the color of the title text
+                        .descriptionTextSize(10)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.realWhite)  // Specify the color of the description text
+                        .textColor(R.color.realWhite)            // Specify a color for both the title and description text
+                        .textTypeface(Utils.getMediumFont(context))  // Specify a typeface for the text
+                        .dimColor(R.color.realBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                        profileTour();
+                        bottomNavigationView.setSelectedItemId(R.id.fav);
+                    }
+                });
+    }
+
+    private void profileTour() {
+        TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(bottomNavigationView.findViewById(R.id.profile), context.getResources().getString(R.string.profile),
+                        context.getResources().getString(R.string.profile_message))
+                        .outerCircleColor(R.color.second)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.realWhite)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.realWhite)      // Specify the color of the title text
+                        .descriptionTextSize(10)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.realWhite)  // Specify the color of the description text
+                        .textColor(R.color.realWhite)            // Specify a color for both the title and description text
+                        .textTypeface(Utils.getMediumFont(context))  // Specify a typeface for the text
+                        .dimColor(R.color.realBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);
+                        Utils.setPreference("finishTour","1",context);
+                        bottomNavigationView.setSelectedItemId(R.id.profile);
+                    }
+                });
+    }
+
+    private void notifToken() {
+        if(!Utils.getSharedPreference(context,"tkn").isEmpty()){
+            NotifBody notifBody=new NotifBody(Utils.getSharedPreference(context,"notif_token"));
+            ApiInterface apiInterface= APIClient.getClient().create(ApiInterface.class);
+            Call<GBody<ResponseBody>> call=apiInterface.updateNotificationToken("Bearer "+Utils.getSharedPreference(context,"tkn"),notifBody);
+            call.enqueue(new Callback<GBody<ResponseBody>>() {
+                @Override
+                public void onResponse(Call<GBody<ResponseBody>> call, Response<GBody<ResponseBody>> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<GBody<ResponseBody>> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    private void fireBaseMessage() {
+        try {
+            if (!Utils.getSharedPreference(context, "tkn").isEmpty()) {
+                int user_id = Integer.parseInt(Utils.getSharedPreference(context, "userId"));
+                int sum = (user_id / 1000) + 1;
+                topic = "topic" + sum;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic(topic).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.e("Success ", topic + "");
+            }
+        });
+    }
+
+    private void checkIntent() {
+        String url = getIntent().getStringExtra("url");
+        if(url!=null && !url.trim().isEmpty()){
+            try {
+                BannerSlider bannerSlider=new BannerSlider(0,"","","",
+                        0,0,url,"","",0);
+                Click.bannerClick(bannerSlider,context);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {
+        }
+
+    }
+
+
+
+    public static MainActivity get(){
+        return INSTANCE;
+    }
+
+    public BottomNavigationView getBottomNavigationView(){
+        return bottomNavigationView;
+    }
+
+    private void checkMode() {
+        int nightModeFlags =
+                getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        View view = getWindow().getDecorView();
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.setSystemUiVisibility(view.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                }
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.setSystemUiVisibility(view.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                }
+                break;
+        }
     }
 
 
     private void initComponents() {
         bottomNavigationView = findViewById(R.id.bottomNavigation);
+        pagination = findViewById(R.id.pagination);
+    }
+
+    public LinearProgressIndicator getPagination(){
+        return pagination;
     }
 
     private void bottomNavSettings() {
@@ -177,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             Integer indexBottomNav = savedInstanceState.getInt("indexBottomNav");
             if (indexBottomNav != null) {
-                if(indexBottomNav==R.id.profile){
+                if(indexBottomNav==R.id.profile && isChangeTheme){
                     fifthFragment=new Settings();
                     isChangeTheme=false;
                 }
@@ -211,6 +476,7 @@ public class MainActivity extends AppCompatActivity {
         AddProductFragment addProductFragment = (AddProductFragment) getSupportFragmentManager().findFragmentByTag(AddProductFragment.class.getSimpleName());
 
         if ((home != null && home.isVisible())) {
+            HomeFragment.isFirst=true;
             finish();
             getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
         }
@@ -244,5 +510,17 @@ public class MainActivity extends AppCompatActivity {
             fifthFragment=new ProfileRootFragment();
         }
 
+        EditProfile editProfile = (EditProfile) getSupportFragmentManager().findFragmentByTag(EditProfile.class.getSimpleName());
+        if(editProfile!=null && editProfile.isVisible()){
+            Utils.removeShow(new ProfileRootFragment(),ProfileRootFragment.class.getSimpleName(),getSupportFragmentManager(),R.id.content);
+            fifthFragment=new ProfileRootFragment();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Utils.loadLocal(context);
     }
 }

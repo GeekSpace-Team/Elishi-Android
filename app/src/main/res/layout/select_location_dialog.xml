@@ -8,6 +8,7 @@
 
 
         <LinearLayout
+            android:id="@+id/container"
             android:padding="16dp"
             android:orientation="vertical"
             android:layout_width="match_parent"

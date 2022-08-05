@@ -3,18 +3,28 @@ package com.elishi.android.Modal.Category;
 import java.util.ArrayList;
 
 public class AllCategory {
-    private Integer id;
-    private ArrayList<String> images=new ArrayList<>();
-    private String title_tm;
-    private String title_ru;
-    private String title_en;
+   private Integer id;
+   private String category_name_tm;
+   private String category_name_ru;
+   private String category_name_en;
+   private Integer status;
+   private String updated_at;
+   private Boolean is_main;
+   private String created_at;
+   private String image;
+   private ArrayList<SubCategory> sub_category=new ArrayList<>();
 
-    public AllCategory(Integer id, ArrayList<String> images, String title_tm, String title_ru, String title_en) {
+    public AllCategory(Integer id, String category_name_tm, String category_name_ru, String category_name_en, Integer status, String updated_at, Boolean is_main, String created_at, String image, ArrayList<SubCategory> sub_category) {
         this.id = id;
-        this.images = images;
-        this.title_tm = title_tm;
-        this.title_ru = title_ru;
-        this.title_en = title_en;
+        this.category_name_tm = category_name_tm;
+        this.category_name_ru = category_name_ru;
+        this.category_name_en = category_name_en;
+        this.status = status;
+        this.updated_at = updated_at;
+        this.is_main = is_main;
+        this.created_at = created_at;
+        this.image = image;
+        this.sub_category = sub_category;
     }
 
     public Integer getId() {
@@ -25,35 +35,75 @@ public class AllCategory {
         this.id = id;
     }
 
-    public ArrayList<String> getImages() {
-        return images;
+    public String getCategory_name_tm() {
+        return category_name_tm;
     }
 
-    public void setImages(ArrayList<String> images) {
-        this.images = images;
+    public void setCategory_name_tm(String category_name_tm) {
+        this.category_name_tm = category_name_tm;
     }
 
-    public String getTitle_tm() {
-        return title_tm;
+    public String getCategory_name_ru() {
+        return category_name_ru;
     }
 
-    public void setTitle_tm(String title_tm) {
-        this.title_tm = title_tm;
+    public void setCategory_name_ru(String category_name_ru) {
+        this.category_name_ru = category_name_ru;
     }
 
-    public String getTitle_ru() {
-        return title_ru;
+    public String getCategory_name_en() {
+        return category_name_en;
     }
 
-    public void setTitle_ru(String title_ru) {
-        this.title_ru = title_ru;
+    public void setCategory_name_en(String category_name_en) {
+        this.category_name_en = category_name_en;
     }
 
-    public String getTitle_en() {
-        return title_en;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setTitle_en(String title_en) {
-        this.title_en = title_en;
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public Boolean getIs_main() {
+        return is_main;
+    }
+
+    public void setIs_main(Boolean is_main) {
+        this.is_main = is_main;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public ArrayList<SubCategory> getSub_category() {
+        return sub_category;
+    }
+
+    public void setSub_category(ArrayList<SubCategory> sub_category) {
+        this.sub_category = sub_category;
     }
 }

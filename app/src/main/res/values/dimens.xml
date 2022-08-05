@@ -9,5 +9,7 @@
     <dimen name="profileRadius">25dp</dimen>
     <dimen name="marginTop">20dp</dimen>
     <dimen name="cornerRadius">12dp</dimen>
-    <dimen name="product_width">250dp</dimen>
+    <dimen name="product_width">200dp</dimen>
+    <dimen name="header_height">600dp</dimen>
+    <dimen name="miniProductHeight">80dp</dimen>
 </resources>

@@ -8,10 +8,10 @@
 
     <RelativeLayout
         android:id="@+id/topBar"
-        android:gravity="center_vertical"
-        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="16dp">
 
         <com.elishi.android.View.CustomViews.AppTextView
             android:id="@+id/title"
@@ -42,9 +42,9 @@
 
     <View
         android:id="@+id/line1"
-        android:layout_below="@id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
+        android:layout_height="0.5dp"
+        android:layout_below="@id/topBar" />
 
     <LinearLayout
         android:id="@+id/linear"
@@ -65,6 +65,50 @@
             android:hint="@string/search"
             app:editTextFont="regular"
             android:textSize="14sp"
+            android:imeOptions="actionSearch"
+            android:textColorHint="@color/solid"
+            android:background="@drawable/white_round"
+            android:textColor="@color/fourth"
+            />
+
+        <com.elishi.android.View.CustomViews.AppEditText
+            android:visibility="gone"
+            android:id="@+id/min"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:padding="16dp"
+            android:layout_weight="1"
+            android:inputType="numberDecimal"
+            android:hint="Min"
+            app:editTextFont="regular"
+            android:textSize="14sp"
+            android:textColorHint="@color/solid"
+            android:background="@drawable/white_round"
+            android:textColor="@color/fourth"
+            />
+
+        <com.elishi.android.View.CustomViews.AppTextView
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="-"
+            app:tvFont="bold"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            />
+
+        <com.elishi.android.View.CustomViews.AppEditText
+            android:id="@+id/max"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_height="50dp"
+            android:padding="16dp"
+            android:layout_weight="1"
+            android:inputType="numberDecimal"
+            android:hint="Max"
+            app:editTextFont="regular"
+            android:textSize="14sp"
             android:textColorHint="@color/solid"
             android:background="@drawable/white_round"
             android:textColor="@color/fourth"
@@ -82,7 +126,7 @@
         android:layout_below="@id/linear"
         android:layout_marginTop="20dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/acceptBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

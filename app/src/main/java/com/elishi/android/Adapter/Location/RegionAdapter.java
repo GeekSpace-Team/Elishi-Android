@@ -24,7 +24,7 @@ import com.elishi.android.R;
 import java.util.ArrayList;
 
 public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder> {
-    private ArrayList<Locations> regions=new ArrayList<>();
+    private ArrayList<Locations> regions = new ArrayList<>();
     private Context context;
     private Dialog dialog;
     RecyclerView old_rec = null;
@@ -39,30 +39,40 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(context).inflate(R.layout.location_design, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.location_design, parent, false);
         return new RegionAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
-        Locations region=regions.get(position);
-        holder.con.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(holder.subLocationRec.getVisibility()==View.VISIBLE){
-                    collapse(holder.subLocationRec, holder.arrow);
-                } else {
-                    expand(holder.subLocationRec, holder.arrow);
-                }
-            }
-        });
-
+        Locations region = regions.get(position);
+        if(region.getSub_locations()==null || region.getSub_locations().size()<=0){
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
         holder.region.setText(region.getRegion_name_tm());
         holder.region.setTypeface(Utils.getRegularFont(context));
-        SubLocationAdapter subLocationAdapter=new SubLocationAdapter(region.getSub_locations(),context,dialog);
-        holder.subLocationRec.setAdapter(subLocationAdapter);
-        holder.subLocationRec.setLayoutManager(new LinearLayoutManager(context));
+        if (Utils.getLanguage(context).equals("ru")) {
+            holder.region.setText(region.getRegion_name_ru());
+        } else if (Utils.getLanguage(context).equals("en")) {
+            holder.region.setText(region.getRegion_name_en());
+        }
+        if (region.getSub_locations() != null && region.getSub_locations().size() > 0) {
+            SubLocationAdapter subLocationAdapter = new SubLocationAdapter(region.getSub_locations(), context, dialog);
+            holder.subLocationRec.setAdapter(subLocationAdapter);
+            holder.subLocationRec.setLayoutManager(new LinearLayoutManager(context));
+            holder.con.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (holder.subLocationRec.getVisibility() == View.VISIBLE) {
+                        collapse(holder.subLocationRec, holder.arrow);
+                    } else {
+                        expand(holder.subLocationRec, holder.arrow);
+                    }
+                }
+            });
+        }
     }
 
     private void collapse(RecyclerView recyclerView, ImageView arrow) {
@@ -150,12 +160,13 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder
         RecyclerView subLocationRec;
         ImageView arrow;
         LinearLayout con;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            subLocationRec=itemView.findViewById(R.id.subLocRec);
-            region=itemView.findViewById(R.id.region);
-            arrow=itemView.findViewById(R.id.arrow);
-            con=itemView.findViewById(R.id.con);
+            subLocationRec = itemView.findViewById(R.id.subLocRec);
+            region = itemView.findViewById(R.id.region);
+            arrow = itemView.findViewById(R.id.arrow);
+            con = itemView.findViewById(R.id.con);
         }
     }
 }

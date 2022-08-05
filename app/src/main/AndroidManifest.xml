@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.elishi.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:hardwareAccelerated="true"
-        android:largeHeap="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/app_icon_launch"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/app_icon_launch_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Elishi"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon">
+        <meta-data android:name="google_analytics_automatic_screen_reporting_enabled" android:value="true" />
+        <activity
+            android:name=".Activity.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.WalkThrough"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ConstantActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.Product.ProductView"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter
+                android:autoVerify="true"
+                tools:targetApi="m">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="www.elishi.com.tm" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.Search.SearchPage"
             android:exported="false" />
@@ -25,9 +52,9 @@
             android:exported="false"
             android:theme="@style/ProductPage" />
         <activity
-            android:theme="@style/Splash"
             android:name=".Activity.SplashScreen"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,13 +64,11 @@
         <activity
             android:name=".Activity.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
 
         <service
             android:name=".Service.MyFirebaseMessagingService"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

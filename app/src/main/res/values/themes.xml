@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Elishi" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Elishi" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/second</item>
         <item name="colorPrimaryDark">@color/first</item>
         <item name="colorAccent">@color/second</item>
@@ -12,14 +12,13 @@
 
         <!-- enable window content transitions -->
         <item name="android:windowActivityTransitions" tools:targetApi="lollipop">true</item>
-
-
-
+        <item name="colorSurface">@color/dialogBg</item>
+        <item name="colorOnSurface">@color/fourth</item>
 
 
     </style>
 
-    <style name="ProductPage" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="ProductPage" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/second</item>
         <item name="colorPrimaryDark">@color/first</item>
         <item name="colorAccent">@color/second</item>
@@ -79,13 +78,16 @@
     </style>
 
 
-    <style name="FullScreenDialog" parent="Theme.AppCompat.Light.Dialog">
+    <style name="FullScreenDialog" parent="Theme.Material3.DayNight.Dialog">
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:padding">0dp</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="colorPrimary">@color/second</item>
+        <item name="colorPrimaryDark">@color/second</item>
+        <item name="colorAccent">@color/second</item>
     </style>
     <style name="Animation" />
     <style name="WindowAnimationFadeInOut">
@@ -117,6 +119,17 @@
     </style>
 
 
+    <style name="NewDialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
 
 
